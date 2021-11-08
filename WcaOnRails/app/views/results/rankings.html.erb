@@ -1,5 +1,9 @@
 <% provide(:title, t(".title")) %>
 
+<% content_for :robots_head do %>
+  <meta name="robots" content="noindex" />
+<% end %>
+
 <div class="container">
   <h1><%= yield(:title) %></h1>
 
