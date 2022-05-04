@@ -83,22 +83,16 @@ if [ "$environment" != "development" ]; then
 fi
 
 # Install chef client
-if ! command -v chef-solo &> /dev/null || ! chef-solo --version | grep 16.17.51 &> /dev/null; then
-  curl -Ls https://omnitruck.chef.io/install.sh | bash -s -- -v 16.17.51
-  /opt/chef/embedded/bin/gem install berkshelf -v "7.2.2"
+if ! command -v chef-solo &> /dev/null || ! chef-solo --version | grep 17.10.3 &> /dev/null; then
+  curl -Ls https://omnitruck.chef.io/install.sh | bash -s -- -v 17.10.3
+  /opt/chef/embedded/bin/gem install berkshelf -v "8.0.0"
 fi
-
-berks_lib_file=$(/opt/chef/embedded/bin/gem which berkshelf)
-berks_lib_dir=$(dirname "$berks_lib_file")
-berks_root_dir=$(dirname "$berks_lib_dir")
-
-berks_executable="$berks_root_dir/bin/berks"
 
 # Install cookbooks from Cheffile
 (
   cd $repo_root/chef
-  /opt/chef/embedded/bin/ruby "$berks_executable" install
-  /opt/chef/embedded/bin/ruby "$berks_executable" vendor "$repo_root/chef/cookbooks"
+  /opt/chef/embedded/bin/berks install
+  /opt/chef/embedded/bin/berks vendor "$repo_root/chef/cookbooks"
 )
 
 mkdir -p /etc/chef
