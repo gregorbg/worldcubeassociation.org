@@ -435,14 +435,17 @@ template "#{repo_root}/webroot/results/includes/_config.php" do
 end
 
 #### Initialize rails gems/database
-execute "bundle config set --local path '/home/#{username}/.bundle'" do
-  user username
-  cwd rails_root
-  environment({
-    "RACK_ENV" => rails_env,
-  })
+if rails_env == "production"
+  template "#{rails_root}/.bundle/config" do
+    source "bundler-config.erb"
+    owner username
+    group username
+    variables({
+                username: username,
+              })
+  end
 end
-execute "bundle install #{'--deployment --without development test' if rails_env == 'production'}" do
+execute "bundle install" do
   user username
   cwd rails_root
   environment({
