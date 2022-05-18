@@ -45,3 +45,6 @@ pids/*.pid
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# cached third-party RBS signatures
+.gem_rbs_collection/
