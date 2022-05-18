@@ -1,0 +1,360 @@
+class RegistrationPayment < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[RegistrationPayment, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def registration_id: () -> Integer?
+
+    def registration_id=: (Integer?) -> Integer?
+
+    def registration_id?: () -> bool
+
+    def registration_id_changed?: () -> bool
+
+    def registration_id_change: () -> [ Integer?, Integer? ]
+
+    def registration_id_will_change!: () -> void
+
+    def registration_id_was: () -> Integer?
+
+    def registration_id_previously_changed?: () -> bool
+
+    def registration_id_previous_change: () -> Array[Integer?]?
+
+    def registration_id_previously_was: () -> Integer?
+
+    def registration_id_before_last_save: () -> Integer?
+
+    def registration_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def registration_id_in_database: () -> Integer?
+
+    def saved_change_to_registration_id: () -> Array[Integer?]?
+
+    def saved_change_to_registration_id?: () -> bool
+
+    def will_save_change_to_registration_id?: () -> bool
+
+    def restore_registration_id!: () -> void
+
+    def clear_registration_id_change: () -> void
+
+    def amount_lowest_denomination: () -> Integer?
+
+    def amount_lowest_denomination=: (Integer?) -> Integer?
+
+    def amount_lowest_denomination?: () -> bool
+
+    def amount_lowest_denomination_changed?: () -> bool
+
+    def amount_lowest_denomination_change: () -> [ Integer?, Integer? ]
+
+    def amount_lowest_denomination_will_change!: () -> void
+
+    def amount_lowest_denomination_was: () -> Integer?
+
+    def amount_lowest_denomination_previously_changed?: () -> bool
+
+    def amount_lowest_denomination_previous_change: () -> Array[Integer?]?
+
+    def amount_lowest_denomination_previously_was: () -> Integer?
+
+    def amount_lowest_denomination_before_last_save: () -> Integer?
+
+    def amount_lowest_denomination_change_to_be_saved: () -> Array[Integer?]?
+
+    def amount_lowest_denomination_in_database: () -> Integer?
+
+    def saved_change_to_amount_lowest_denomination: () -> Array[Integer?]?
+
+    def saved_change_to_amount_lowest_denomination?: () -> bool
+
+    def will_save_change_to_amount_lowest_denomination?: () -> bool
+
+    def restore_amount_lowest_denomination!: () -> void
+
+    def clear_amount_lowest_denomination_change: () -> void
+
+    def currency_code: () -> String?
+
+    def currency_code=: (String?) -> String?
+
+    def currency_code?: () -> bool
+
+    def currency_code_changed?: () -> bool
+
+    def currency_code_change: () -> [ String?, String? ]
+
+    def currency_code_will_change!: () -> void
+
+    def currency_code_was: () -> String?
+
+    def currency_code_previously_changed?: () -> bool
+
+    def currency_code_previous_change: () -> Array[String?]?
+
+    def currency_code_previously_was: () -> String?
+
+    def currency_code_before_last_save: () -> String?
+
+    def currency_code_change_to_be_saved: () -> Array[String?]?
+
+    def currency_code_in_database: () -> String?
+
+    def saved_change_to_currency_code: () -> Array[String?]?
+
+    def saved_change_to_currency_code?: () -> bool
+
+    def will_save_change_to_currency_code?: () -> bool
+
+    def restore_currency_code!: () -> void
+
+    def clear_currency_code_change: () -> void
+
+    def stripe_charge_id: () -> String?
+
+    def stripe_charge_id=: (String?) -> String?
+
+    def stripe_charge_id?: () -> bool
+
+    def stripe_charge_id_changed?: () -> bool
+
+    def stripe_charge_id_change: () -> [ String?, String? ]
+
+    def stripe_charge_id_will_change!: () -> void
+
+    def stripe_charge_id_was: () -> String?
+
+    def stripe_charge_id_previously_changed?: () -> bool
+
+    def stripe_charge_id_previous_change: () -> Array[String?]?
+
+    def stripe_charge_id_previously_was: () -> String?
+
+    def stripe_charge_id_before_last_save: () -> String?
+
+    def stripe_charge_id_change_to_be_saved: () -> Array[String?]?
+
+    def stripe_charge_id_in_database: () -> String?
+
+    def saved_change_to_stripe_charge_id: () -> Array[String?]?
+
+    def saved_change_to_stripe_charge_id?: () -> bool
+
+    def will_save_change_to_stripe_charge_id?: () -> bool
+
+    def restore_stripe_charge_id!: () -> void
+
+    def clear_stripe_charge_id_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def refunded_registration_payment_id: () -> Integer?
+
+    def refunded_registration_payment_id=: (Integer?) -> Integer?
+
+    def refunded_registration_payment_id?: () -> bool
+
+    def refunded_registration_payment_id_changed?: () -> bool
+
+    def refunded_registration_payment_id_change: () -> [ Integer?, Integer? ]
+
+    def refunded_registration_payment_id_will_change!: () -> void
+
+    def refunded_registration_payment_id_was: () -> Integer?
+
+    def refunded_registration_payment_id_previously_changed?: () -> bool
+
+    def refunded_registration_payment_id_previous_change: () -> Array[Integer?]?
+
+    def refunded_registration_payment_id_previously_was: () -> Integer?
+
+    def refunded_registration_payment_id_before_last_save: () -> Integer?
+
+    def refunded_registration_payment_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def refunded_registration_payment_id_in_database: () -> Integer?
+
+    def saved_change_to_refunded_registration_payment_id: () -> Array[Integer?]?
+
+    def saved_change_to_refunded_registration_payment_id?: () -> bool
+
+    def will_save_change_to_refunded_registration_payment_id?: () -> bool
+
+    def restore_refunded_registration_payment_id!: () -> void
+
+    def clear_refunded_registration_payment_id_change: () -> void
+
+    def user_id: () -> Integer?
+
+    def user_id=: (Integer?) -> Integer?
+
+    def user_id?: () -> bool
+
+    def user_id_changed?: () -> bool
+
+    def user_id_change: () -> [ Integer?, Integer? ]
+
+    def user_id_will_change!: () -> void
+
+    def user_id_was: () -> Integer?
+
+    def user_id_previously_changed?: () -> bool
+
+    def user_id_previous_change: () -> Array[Integer?]?
+
+    def user_id_previously_was: () -> Integer?
+
+    def user_id_before_last_save: () -> Integer?
+
+    def user_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def user_id_in_database: () -> Integer?
+
+    def saved_change_to_user_id: () -> Array[Integer?]?
+
+    def saved_change_to_user_id?: () -> bool
+
+    def will_save_change_to_user_id?: () -> bool
+
+    def restore_user_id!: () -> void
+
+    def clear_user_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def registration: () -> Registration
+  def registration=: (Registration?) -> Registration?
+  def reload_registration: () -> Registration?
+  def build_registration: (untyped) -> Registration
+  def create_registration: (untyped) -> Registration
+  def create_registration!: (untyped) -> Registration
+  def user: () -> User
+  def user=: (User?) -> User?
+  def reload_user: () -> User?
+  def build_user: (untyped) -> User
+  def create_user: (untyped) -> User
+  def create_user!: (untyped) -> User
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[RegistrationPayment, Integer]
+    include Enumerable[RegistrationPayment]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[RegistrationPayment, Integer]
+  end
+end

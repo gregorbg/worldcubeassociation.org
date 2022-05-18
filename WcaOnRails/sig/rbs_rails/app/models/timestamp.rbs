@@ -1,0 +1,96 @@
+class Timestamp < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Timestamp, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def name: () -> String
+
+    def name=: (String) -> String
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def date: () -> ActiveSupport::TimeWithZone?
+
+    def date=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def date?: () -> bool
+
+    def date_changed?: () -> bool
+
+    def date_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def date_will_change!: () -> void
+
+    def date_was: () -> ActiveSupport::TimeWithZone?
+
+    def date_previously_changed?: () -> bool
+
+    def date_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def date_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def date_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def date_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def date_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_date: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_date?: () -> bool
+
+    def will_save_change_to_date?: () -> bool
+
+    def restore_date!: () -> void
+
+    def clear_date_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Timestamp, String]
+    include Enumerable[Timestamp]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Timestamp, String]
+  end
+end

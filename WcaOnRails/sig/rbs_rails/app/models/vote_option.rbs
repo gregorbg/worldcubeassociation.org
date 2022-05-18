@@ -1,0 +1,148 @@
+class VoteOption < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[VoteOption, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def vote_id: () -> Integer
+
+    def vote_id=: (Integer) -> Integer
+
+    def vote_id?: () -> bool
+
+    def vote_id_changed?: () -> bool
+
+    def vote_id_change: () -> [ Integer?, Integer? ]
+
+    def vote_id_will_change!: () -> void
+
+    def vote_id_was: () -> Integer?
+
+    def vote_id_previously_changed?: () -> bool
+
+    def vote_id_previous_change: () -> Array[Integer?]?
+
+    def vote_id_previously_was: () -> Integer?
+
+    def vote_id_before_last_save: () -> Integer?
+
+    def vote_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def vote_id_in_database: () -> Integer?
+
+    def saved_change_to_vote_id: () -> Array[Integer?]?
+
+    def saved_change_to_vote_id?: () -> bool
+
+    def will_save_change_to_vote_id?: () -> bool
+
+    def restore_vote_id!: () -> void
+
+    def clear_vote_id_change: () -> void
+
+    def poll_option_id: () -> Integer
+
+    def poll_option_id=: (Integer) -> Integer
+
+    def poll_option_id?: () -> bool
+
+    def poll_option_id_changed?: () -> bool
+
+    def poll_option_id_change: () -> [ Integer?, Integer? ]
+
+    def poll_option_id_will_change!: () -> void
+
+    def poll_option_id_was: () -> Integer?
+
+    def poll_option_id_previously_changed?: () -> bool
+
+    def poll_option_id_previous_change: () -> Array[Integer?]?
+
+    def poll_option_id_previously_was: () -> Integer?
+
+    def poll_option_id_before_last_save: () -> Integer?
+
+    def poll_option_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def poll_option_id_in_database: () -> Integer?
+
+    def saved_change_to_poll_option_id: () -> Array[Integer?]?
+
+    def saved_change_to_poll_option_id?: () -> bool
+
+    def will_save_change_to_poll_option_id?: () -> bool
+
+    def restore_poll_option_id!: () -> void
+
+    def clear_poll_option_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def users: () -> User::ActiveRecord_Associations_CollectionProxy
+  def users=: (User::ActiveRecord_Associations_CollectionProxy | Array[User]) -> (User::ActiveRecord_Associations_CollectionProxy | Array[User])
+  def user_ids: () -> Array[Integer]
+  def user_ids=: (Array[Integer]) -> Array[Integer]
+
+  def vote: () -> Vote
+  def vote=: (Vote?) -> Vote?
+  def reload_vote: () -> Vote?
+  def build_vote: (untyped) -> Vote
+  def create_vote: (untyped) -> Vote
+  def create_vote!: (untyped) -> Vote
+  def poll_option: () -> PollOption
+  def poll_option=: (PollOption?) -> PollOption?
+  def reload_poll_option: () -> PollOption?
+  def build_poll_option: (untyped) -> PollOption
+  def create_poll_option: (untyped) -> PollOption
+  def create_poll_option!: (untyped) -> PollOption
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[VoteOption, Integer]
+    include Enumerable[VoteOption]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[VoteOption, Integer]
+  end
+end

@@ -1,0 +1,188 @@
+class Vote < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Vote, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def user_id: () -> Integer
+
+    def user_id=: (Integer) -> Integer
+
+    def user_id?: () -> bool
+
+    def user_id_changed?: () -> bool
+
+    def user_id_change: () -> [ Integer?, Integer? ]
+
+    def user_id_will_change!: () -> void
+
+    def user_id_was: () -> Integer?
+
+    def user_id_previously_changed?: () -> bool
+
+    def user_id_previous_change: () -> Array[Integer?]?
+
+    def user_id_previously_was: () -> Integer?
+
+    def user_id_before_last_save: () -> Integer?
+
+    def user_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def user_id_in_database: () -> Integer?
+
+    def saved_change_to_user_id: () -> Array[Integer?]?
+
+    def saved_change_to_user_id?: () -> bool
+
+    def will_save_change_to_user_id?: () -> bool
+
+    def restore_user_id!: () -> void
+
+    def clear_user_id_change: () -> void
+
+    def comment: () -> String?
+
+    def comment=: (String?) -> String?
+
+    def comment?: () -> bool
+
+    def comment_changed?: () -> bool
+
+    def comment_change: () -> [ String?, String? ]
+
+    def comment_will_change!: () -> void
+
+    def comment_was: () -> String?
+
+    def comment_previously_changed?: () -> bool
+
+    def comment_previous_change: () -> Array[String?]?
+
+    def comment_previously_was: () -> String?
+
+    def comment_before_last_save: () -> String?
+
+    def comment_change_to_be_saved: () -> Array[String?]?
+
+    def comment_in_database: () -> String?
+
+    def saved_change_to_comment: () -> Array[String?]?
+
+    def saved_change_to_comment?: () -> bool
+
+    def will_save_change_to_comment?: () -> bool
+
+    def restore_comment!: () -> void
+
+    def clear_comment_change: () -> void
+
+    def poll_id: () -> Integer?
+
+    def poll_id=: (Integer?) -> Integer?
+
+    def poll_id?: () -> bool
+
+    def poll_id_changed?: () -> bool
+
+    def poll_id_change: () -> [ Integer?, Integer? ]
+
+    def poll_id_will_change!: () -> void
+
+    def poll_id_was: () -> Integer?
+
+    def poll_id_previously_changed?: () -> bool
+
+    def poll_id_previous_change: () -> Array[Integer?]?
+
+    def poll_id_previously_was: () -> Integer?
+
+    def poll_id_before_last_save: () -> Integer?
+
+    def poll_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def poll_id_in_database: () -> Integer?
+
+    def saved_change_to_poll_id: () -> Array[Integer?]?
+
+    def saved_change_to_poll_id?: () -> bool
+
+    def will_save_change_to_poll_id?: () -> bool
+
+    def restore_poll_id!: () -> void
+
+    def clear_poll_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def vote_options: () -> VoteOption::ActiveRecord_Associations_CollectionProxy
+  def vote_options=: (VoteOption::ActiveRecord_Associations_CollectionProxy | Array[VoteOption]) -> (VoteOption::ActiveRecord_Associations_CollectionProxy | Array[VoteOption])
+  def vote_option_ids: () -> Array[Integer]
+  def vote_option_ids=: (Array[Integer]) -> Array[Integer]
+  def poll_options: () -> PollOption::ActiveRecord_Associations_CollectionProxy
+  def poll_options=: (PollOption::ActiveRecord_Associations_CollectionProxy | Array[PollOption]) -> (PollOption::ActiveRecord_Associations_CollectionProxy | Array[PollOption])
+  def poll_option_ids: () -> Array[Integer]
+  def poll_option_ids=: (Array[Integer]) -> Array[Integer]
+
+  def user: () -> User
+  def user=: (User?) -> User?
+  def reload_user: () -> User?
+  def build_user: (untyped) -> User
+  def create_user: (untyped) -> User
+  def create_user!: (untyped) -> User
+  def poll: () -> Poll
+  def poll=: (Poll?) -> Poll?
+  def reload_poll: () -> Poll?
+  def build_poll: (untyped) -> Poll
+  def create_poll: (untyped) -> Poll
+  def create_poll!: (untyped) -> Poll
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Vote, Integer]
+    include Enumerable[Vote]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Vote, Integer]
+  end
+end

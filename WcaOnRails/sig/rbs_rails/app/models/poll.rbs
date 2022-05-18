@@ -1,0 +1,323 @@
+class Poll < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Poll, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def question: () -> String?
+
+    def question=: (String?) -> String?
+
+    def question?: () -> bool
+
+    def question_changed?: () -> bool
+
+    def question_change: () -> [ String?, String? ]
+
+    def question_will_change!: () -> void
+
+    def question_was: () -> String?
+
+    def question_previously_changed?: () -> bool
+
+    def question_previous_change: () -> Array[String?]?
+
+    def question_previously_was: () -> String?
+
+    def question_before_last_save: () -> String?
+
+    def question_change_to_be_saved: () -> Array[String?]?
+
+    def question_in_database: () -> String?
+
+    def saved_change_to_question: () -> Array[String?]?
+
+    def saved_change_to_question?: () -> bool
+
+    def will_save_change_to_question?: () -> bool
+
+    def restore_question!: () -> void
+
+    def clear_question_change: () -> void
+
+    def multiple: () -> bool
+
+    def multiple=: (bool) -> bool
+
+    def multiple?: () -> bool
+
+    def multiple_changed?: () -> bool
+
+    def multiple_change: () -> [ bool?, bool? ]
+
+    def multiple_will_change!: () -> void
+
+    def multiple_was: () -> bool?
+
+    def multiple_previously_changed?: () -> bool
+
+    def multiple_previous_change: () -> Array[bool?]?
+
+    def multiple_previously_was: () -> bool?
+
+    def multiple_before_last_save: () -> bool?
+
+    def multiple_change_to_be_saved: () -> Array[bool?]?
+
+    def multiple_in_database: () -> bool?
+
+    def saved_change_to_multiple: () -> Array[bool?]?
+
+    def saved_change_to_multiple?: () -> bool
+
+    def will_save_change_to_multiple?: () -> bool
+
+    def restore_multiple!: () -> void
+
+    def clear_multiple_change: () -> void
+
+    def deadline: () -> ActiveSupport::TimeWithZone
+
+    def deadline=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def deadline?: () -> bool
+
+    def deadline_changed?: () -> bool
+
+    def deadline_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def deadline_will_change!: () -> void
+
+    def deadline_was: () -> ActiveSupport::TimeWithZone?
+
+    def deadline_previously_changed?: () -> bool
+
+    def deadline_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def deadline_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def deadline_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def deadline_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def deadline_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_deadline: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_deadline?: () -> bool
+
+    def will_save_change_to_deadline?: () -> bool
+
+    def restore_deadline!: () -> void
+
+    def clear_deadline_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def comment: () -> String?
+
+    def comment=: (String?) -> String?
+
+    def comment?: () -> bool
+
+    def comment_changed?: () -> bool
+
+    def comment_change: () -> [ String?, String? ]
+
+    def comment_will_change!: () -> void
+
+    def comment_was: () -> String?
+
+    def comment_previously_changed?: () -> bool
+
+    def comment_previous_change: () -> Array[String?]?
+
+    def comment_previously_was: () -> String?
+
+    def comment_before_last_save: () -> String?
+
+    def comment_change_to_be_saved: () -> Array[String?]?
+
+    def comment_in_database: () -> String?
+
+    def saved_change_to_comment: () -> Array[String?]?
+
+    def saved_change_to_comment?: () -> bool
+
+    def will_save_change_to_comment?: () -> bool
+
+    def restore_comment!: () -> void
+
+    def clear_comment_change: () -> void
+
+    def confirmed_at: () -> ActiveSupport::TimeWithZone?
+
+    def confirmed_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def confirmed_at?: () -> bool
+
+    def confirmed_at_changed?: () -> bool
+
+    def confirmed_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def confirmed_at_will_change!: () -> void
+
+    def confirmed_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def confirmed_at_previously_changed?: () -> bool
+
+    def confirmed_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def confirmed_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def confirmed_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def confirmed_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def confirmed_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_confirmed_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_confirmed_at?: () -> bool
+
+    def will_save_change_to_confirmed_at?: () -> bool
+
+    def restore_confirmed_at!: () -> void
+
+    def clear_confirmed_at_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def poll_options: () -> PollOption::ActiveRecord_Associations_CollectionProxy
+  def poll_options=: (PollOption::ActiveRecord_Associations_CollectionProxy | Array[PollOption]) -> (PollOption::ActiveRecord_Associations_CollectionProxy | Array[PollOption])
+  def poll_option_ids: () -> Array[Integer]
+  def poll_option_ids=: (Array[Integer]) -> Array[Integer]
+  def votes: () -> Vote::ActiveRecord_Associations_CollectionProxy
+  def votes=: (Vote::ActiveRecord_Associations_CollectionProxy | Array[Vote]) -> (Vote::ActiveRecord_Associations_CollectionProxy | Array[Vote])
+  def vote_ids: () -> Array[Integer]
+  def vote_ids=: (Array[Integer]) -> Array[Integer]
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def self.confirmed: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def confirmed: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Poll, Integer]
+    include Enumerable[Poll]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Poll, Integer]
+  end
+end

@@ -1,0 +1,138 @@
+class EligibleCountryIso2ForChampionship < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[EligibleCountryIso2ForChampionship, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def championship_type: () -> String
+
+    def championship_type=: (String) -> String
+
+    def championship_type?: () -> bool
+
+    def championship_type_changed?: () -> bool
+
+    def championship_type_change: () -> [ String?, String? ]
+
+    def championship_type_will_change!: () -> void
+
+    def championship_type_was: () -> String?
+
+    def championship_type_previously_changed?: () -> bool
+
+    def championship_type_previous_change: () -> Array[String?]?
+
+    def championship_type_previously_was: () -> String?
+
+    def championship_type_before_last_save: () -> String?
+
+    def championship_type_change_to_be_saved: () -> Array[String?]?
+
+    def championship_type_in_database: () -> String?
+
+    def saved_change_to_championship_type: () -> Array[String?]?
+
+    def saved_change_to_championship_type?: () -> bool
+
+    def will_save_change_to_championship_type?: () -> bool
+
+    def restore_championship_type!: () -> void
+
+    def clear_championship_type_change: () -> void
+
+    def eligible_country_iso2: () -> String
+
+    def eligible_country_iso2=: (String) -> String
+
+    def eligible_country_iso2?: () -> bool
+
+    def eligible_country_iso2_changed?: () -> bool
+
+    def eligible_country_iso2_change: () -> [ String?, String? ]
+
+    def eligible_country_iso2_will_change!: () -> void
+
+    def eligible_country_iso2_was: () -> String?
+
+    def eligible_country_iso2_previously_changed?: () -> bool
+
+    def eligible_country_iso2_previous_change: () -> Array[String?]?
+
+    def eligible_country_iso2_previously_was: () -> String?
+
+    def eligible_country_iso2_before_last_save: () -> String?
+
+    def eligible_country_iso2_change_to_be_saved: () -> Array[String?]?
+
+    def eligible_country_iso2_in_database: () -> String?
+
+    def saved_change_to_eligible_country_iso2: () -> Array[String?]?
+
+    def saved_change_to_eligible_country_iso2?: () -> bool
+
+    def will_save_change_to_eligible_country_iso2?: () -> bool
+
+    def restore_eligible_country_iso2!: () -> void
+
+    def clear_eligible_country_iso2_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def championship: () -> Championship
+  def championship=: (Championship?) -> Championship?
+  def reload_championship: () -> Championship?
+  def build_championship: (untyped) -> Championship
+  def create_championship: (untyped) -> Championship
+  def create_championship!: (untyped) -> Championship
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[EligibleCountryIso2ForChampionship, Integer]
+    include Enumerable[EligibleCountryIso2ForChampionship]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[EligibleCountryIso2ForChampionship, Integer]
+  end
+end

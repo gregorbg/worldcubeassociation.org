@@ -1,0 +1,244 @@
+class Continent < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Continent, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def name: () -> String
+
+    def name=: (String) -> String
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def recordName: () -> String
+
+    def recordName=: (String) -> String
+
+    def recordName?: () -> bool
+
+    def recordName_changed?: () -> bool
+
+    def recordName_change: () -> [ String?, String? ]
+
+    def recordName_will_change!: () -> void
+
+    def recordName_was: () -> String?
+
+    def recordName_previously_changed?: () -> bool
+
+    def recordName_previous_change: () -> Array[String?]?
+
+    def recordName_previously_was: () -> String?
+
+    def recordName_before_last_save: () -> String?
+
+    def recordName_change_to_be_saved: () -> Array[String?]?
+
+    def recordName_in_database: () -> String?
+
+    def saved_change_to_recordName: () -> Array[String?]?
+
+    def saved_change_to_recordName?: () -> bool
+
+    def will_save_change_to_recordName?: () -> bool
+
+    def restore_recordName!: () -> void
+
+    def clear_recordName_change: () -> void
+
+    def latitude: () -> Integer
+
+    def latitude=: (Integer) -> Integer
+
+    def latitude?: () -> bool
+
+    def latitude_changed?: () -> bool
+
+    def latitude_change: () -> [ Integer?, Integer? ]
+
+    def latitude_will_change!: () -> void
+
+    def latitude_was: () -> Integer?
+
+    def latitude_previously_changed?: () -> bool
+
+    def latitude_previous_change: () -> Array[Integer?]?
+
+    def latitude_previously_was: () -> Integer?
+
+    def latitude_before_last_save: () -> Integer?
+
+    def latitude_change_to_be_saved: () -> Array[Integer?]?
+
+    def latitude_in_database: () -> Integer?
+
+    def saved_change_to_latitude: () -> Array[Integer?]?
+
+    def saved_change_to_latitude?: () -> bool
+
+    def will_save_change_to_latitude?: () -> bool
+
+    def restore_latitude!: () -> void
+
+    def clear_latitude_change: () -> void
+
+    def longitude: () -> Integer
+
+    def longitude=: (Integer) -> Integer
+
+    def longitude?: () -> bool
+
+    def longitude_changed?: () -> bool
+
+    def longitude_change: () -> [ Integer?, Integer? ]
+
+    def longitude_will_change!: () -> void
+
+    def longitude_was: () -> Integer?
+
+    def longitude_previously_changed?: () -> bool
+
+    def longitude_previous_change: () -> Array[Integer?]?
+
+    def longitude_previously_was: () -> Integer?
+
+    def longitude_before_last_save: () -> Integer?
+
+    def longitude_change_to_be_saved: () -> Array[Integer?]?
+
+    def longitude_in_database: () -> Integer?
+
+    def saved_change_to_longitude: () -> Array[Integer?]?
+
+    def saved_change_to_longitude?: () -> bool
+
+    def will_save_change_to_longitude?: () -> bool
+
+    def restore_longitude!: () -> void
+
+    def clear_longitude_change: () -> void
+
+    def zoom: () -> Integer
+
+    def zoom=: (Integer) -> Integer
+
+    def zoom?: () -> bool
+
+    def zoom_changed?: () -> bool
+
+    def zoom_change: () -> [ Integer?, Integer? ]
+
+    def zoom_will_change!: () -> void
+
+    def zoom_was: () -> Integer?
+
+    def zoom_previously_changed?: () -> bool
+
+    def zoom_previous_change: () -> Array[Integer?]?
+
+    def zoom_previously_was: () -> Integer?
+
+    def zoom_before_last_save: () -> Integer?
+
+    def zoom_change_to_be_saved: () -> Array[Integer?]?
+
+    def zoom_in_database: () -> Integer?
+
+    def saved_change_to_zoom: () -> Array[Integer?]?
+
+    def saved_change_to_zoom?: () -> bool
+
+    def will_save_change_to_zoom?: () -> bool
+
+    def restore_zoom!: () -> void
+
+    def clear_zoom_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def countries: () -> Country::ActiveRecord_Associations_CollectionProxy
+  def countries=: (Country::ActiveRecord_Associations_CollectionProxy | Array[Country]) -> (Country::ActiveRecord_Associations_CollectionProxy | Array[Country])
+  def country_ids: () -> Array[Integer]
+  def country_ids=: (Array[Integer]) -> Array[Integer]
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Continent, String]
+    include Enumerable[Continent]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Continent, String]
+  end
+end

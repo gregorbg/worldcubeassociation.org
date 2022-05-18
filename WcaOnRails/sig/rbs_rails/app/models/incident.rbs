@@ -1,0 +1,399 @@
+class Incident < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Incident, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def title: () -> String?
+
+    def title=: (String?) -> String?
+
+    def title?: () -> bool
+
+    def title_changed?: () -> bool
+
+    def title_change: () -> [ String?, String? ]
+
+    def title_will_change!: () -> void
+
+    def title_was: () -> String?
+
+    def title_previously_changed?: () -> bool
+
+    def title_previous_change: () -> Array[String?]?
+
+    def title_previously_was: () -> String?
+
+    def title_before_last_save: () -> String?
+
+    def title_change_to_be_saved: () -> Array[String?]?
+
+    def title_in_database: () -> String?
+
+    def saved_change_to_title: () -> Array[String?]?
+
+    def saved_change_to_title?: () -> bool
+
+    def will_save_change_to_title?: () -> bool
+
+    def restore_title!: () -> void
+
+    def clear_title_change: () -> void
+
+    def private_description: () -> String?
+
+    def private_description=: (String?) -> String?
+
+    def private_description?: () -> bool
+
+    def private_description_changed?: () -> bool
+
+    def private_description_change: () -> [ String?, String? ]
+
+    def private_description_will_change!: () -> void
+
+    def private_description_was: () -> String?
+
+    def private_description_previously_changed?: () -> bool
+
+    def private_description_previous_change: () -> Array[String?]?
+
+    def private_description_previously_was: () -> String?
+
+    def private_description_before_last_save: () -> String?
+
+    def private_description_change_to_be_saved: () -> Array[String?]?
+
+    def private_description_in_database: () -> String?
+
+    def saved_change_to_private_description: () -> Array[String?]?
+
+    def saved_change_to_private_description?: () -> bool
+
+    def will_save_change_to_private_description?: () -> bool
+
+    def restore_private_description!: () -> void
+
+    def clear_private_description_change: () -> void
+
+    def private_wrc_decision: () -> String?
+
+    def private_wrc_decision=: (String?) -> String?
+
+    def private_wrc_decision?: () -> bool
+
+    def private_wrc_decision_changed?: () -> bool
+
+    def private_wrc_decision_change: () -> [ String?, String? ]
+
+    def private_wrc_decision_will_change!: () -> void
+
+    def private_wrc_decision_was: () -> String?
+
+    def private_wrc_decision_previously_changed?: () -> bool
+
+    def private_wrc_decision_previous_change: () -> Array[String?]?
+
+    def private_wrc_decision_previously_was: () -> String?
+
+    def private_wrc_decision_before_last_save: () -> String?
+
+    def private_wrc_decision_change_to_be_saved: () -> Array[String?]?
+
+    def private_wrc_decision_in_database: () -> String?
+
+    def saved_change_to_private_wrc_decision: () -> Array[String?]?
+
+    def saved_change_to_private_wrc_decision?: () -> bool
+
+    def will_save_change_to_private_wrc_decision?: () -> bool
+
+    def restore_private_wrc_decision!: () -> void
+
+    def clear_private_wrc_decision_change: () -> void
+
+    def public_summary: () -> String?
+
+    def public_summary=: (String?) -> String?
+
+    def public_summary?: () -> bool
+
+    def public_summary_changed?: () -> bool
+
+    def public_summary_change: () -> [ String?, String? ]
+
+    def public_summary_will_change!: () -> void
+
+    def public_summary_was: () -> String?
+
+    def public_summary_previously_changed?: () -> bool
+
+    def public_summary_previous_change: () -> Array[String?]?
+
+    def public_summary_previously_was: () -> String?
+
+    def public_summary_before_last_save: () -> String?
+
+    def public_summary_change_to_be_saved: () -> Array[String?]?
+
+    def public_summary_in_database: () -> String?
+
+    def saved_change_to_public_summary: () -> Array[String?]?
+
+    def saved_change_to_public_summary?: () -> bool
+
+    def will_save_change_to_public_summary?: () -> bool
+
+    def restore_public_summary!: () -> void
+
+    def clear_public_summary_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def resolved_at: () -> ActiveSupport::TimeWithZone?
+
+    def resolved_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def resolved_at?: () -> bool
+
+    def resolved_at_changed?: () -> bool
+
+    def resolved_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def resolved_at_will_change!: () -> void
+
+    def resolved_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def resolved_at_previously_changed?: () -> bool
+
+    def resolved_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def resolved_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def resolved_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def resolved_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def resolved_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_resolved_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_resolved_at?: () -> bool
+
+    def will_save_change_to_resolved_at?: () -> bool
+
+    def restore_resolved_at!: () -> void
+
+    def clear_resolved_at_change: () -> void
+
+    def digest_worthy: () -> bool?
+
+    def digest_worthy=: (bool?) -> bool?
+
+    def digest_worthy?: () -> bool
+
+    def digest_worthy_changed?: () -> bool
+
+    def digest_worthy_change: () -> [ bool?, bool? ]
+
+    def digest_worthy_will_change!: () -> void
+
+    def digest_worthy_was: () -> bool?
+
+    def digest_worthy_previously_changed?: () -> bool
+
+    def digest_worthy_previous_change: () -> Array[bool?]?
+
+    def digest_worthy_previously_was: () -> bool?
+
+    def digest_worthy_before_last_save: () -> bool?
+
+    def digest_worthy_change_to_be_saved: () -> Array[bool?]?
+
+    def digest_worthy_in_database: () -> bool?
+
+    def saved_change_to_digest_worthy: () -> Array[bool?]?
+
+    def saved_change_to_digest_worthy?: () -> bool
+
+    def will_save_change_to_digest_worthy?: () -> bool
+
+    def restore_digest_worthy!: () -> void
+
+    def clear_digest_worthy_change: () -> void
+
+    def digest_sent_at: () -> ActiveSupport::TimeWithZone?
+
+    def digest_sent_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def digest_sent_at?: () -> bool
+
+    def digest_sent_at_changed?: () -> bool
+
+    def digest_sent_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def digest_sent_at_will_change!: () -> void
+
+    def digest_sent_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def digest_sent_at_previously_changed?: () -> bool
+
+    def digest_sent_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def digest_sent_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def digest_sent_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def digest_sent_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def digest_sent_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_digest_sent_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_digest_sent_at?: () -> bool
+
+    def will_save_change_to_digest_sent_at?: () -> bool
+
+    def restore_digest_sent_at!: () -> void
+
+    def clear_digest_sent_at_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def incident_tags: () -> IncidentTag::ActiveRecord_Associations_CollectionProxy
+  def incident_tags=: (IncidentTag::ActiveRecord_Associations_CollectionProxy | Array[IncidentTag]) -> (IncidentTag::ActiveRecord_Associations_CollectionProxy | Array[IncidentTag])
+  def incident_tag_ids: () -> Array[Integer]
+  def incident_tag_ids=: (Array[Integer]) -> Array[Integer]
+  def incident_competitions: () -> IncidentCompetition::ActiveRecord_Associations_CollectionProxy
+  def incident_competitions=: (IncidentCompetition::ActiveRecord_Associations_CollectionProxy | Array[IncidentCompetition]) -> (IncidentCompetition::ActiveRecord_Associations_CollectionProxy | Array[IncidentCompetition])
+  def incident_competition_ids: () -> Array[Integer]
+  def incident_competition_ids=: (Array[Integer]) -> Array[Integer]
+  def competitions: () -> Competition::ActiveRecord_Associations_CollectionProxy
+  def competitions=: (Competition::ActiveRecord_Associations_CollectionProxy | Array[Competition]) -> (Competition::ActiveRecord_Associations_CollectionProxy | Array[Competition])
+  def competition_ids: () -> Array[Integer]
+  def competition_ids=: (Array[Integer]) -> Array[Integer]
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def self.resolved: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def resolved: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Incident, Integer]
+    include Enumerable[Incident]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Incident, Integer]
+  end
+end

@@ -1,0 +1,519 @@
+class Round < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Round, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_event_id: () -> Integer
+
+    def competition_event_id=: (Integer) -> Integer
+
+    def competition_event_id?: () -> bool
+
+    def competition_event_id_changed?: () -> bool
+
+    def competition_event_id_change: () -> [ Integer?, Integer? ]
+
+    def competition_event_id_will_change!: () -> void
+
+    def competition_event_id_was: () -> Integer?
+
+    def competition_event_id_previously_changed?: () -> bool
+
+    def competition_event_id_previous_change: () -> Array[Integer?]?
+
+    def competition_event_id_previously_was: () -> Integer?
+
+    def competition_event_id_before_last_save: () -> Integer?
+
+    def competition_event_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def competition_event_id_in_database: () -> Integer?
+
+    def saved_change_to_competition_event_id: () -> Array[Integer?]?
+
+    def saved_change_to_competition_event_id?: () -> bool
+
+    def will_save_change_to_competition_event_id?: () -> bool
+
+    def restore_competition_event_id!: () -> void
+
+    def clear_competition_event_id_change: () -> void
+
+    def format_id: () -> String
+
+    def format_id=: (String) -> String
+
+    def format_id?: () -> bool
+
+    def format_id_changed?: () -> bool
+
+    def format_id_change: () -> [ String?, String? ]
+
+    def format_id_will_change!: () -> void
+
+    def format_id_was: () -> String?
+
+    def format_id_previously_changed?: () -> bool
+
+    def format_id_previous_change: () -> Array[String?]?
+
+    def format_id_previously_was: () -> String?
+
+    def format_id_before_last_save: () -> String?
+
+    def format_id_change_to_be_saved: () -> Array[String?]?
+
+    def format_id_in_database: () -> String?
+
+    def saved_change_to_format_id: () -> Array[String?]?
+
+    def saved_change_to_format_id?: () -> bool
+
+    def will_save_change_to_format_id?: () -> bool
+
+    def restore_format_id!: () -> void
+
+    def clear_format_id_change: () -> void
+
+    def number: () -> Integer
+
+    def number=: (Integer) -> Integer
+
+    def number?: () -> bool
+
+    def number_changed?: () -> bool
+
+    def number_change: () -> [ Integer?, Integer? ]
+
+    def number_will_change!: () -> void
+
+    def number_was: () -> Integer?
+
+    def number_previously_changed?: () -> bool
+
+    def number_previous_change: () -> Array[Integer?]?
+
+    def number_previously_was: () -> Integer?
+
+    def number_before_last_save: () -> Integer?
+
+    def number_change_to_be_saved: () -> Array[Integer?]?
+
+    def number_in_database: () -> Integer?
+
+    def saved_change_to_number: () -> Array[Integer?]?
+
+    def saved_change_to_number?: () -> bool
+
+    def will_save_change_to_number?: () -> bool
+
+    def restore_number!: () -> void
+
+    def clear_number_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def time_limit: () -> String?
+
+    def time_limit=: (String?) -> String?
+
+    def time_limit?: () -> bool
+
+    def time_limit_changed?: () -> bool
+
+    def time_limit_change: () -> [ String?, String? ]
+
+    def time_limit_will_change!: () -> void
+
+    def time_limit_was: () -> String?
+
+    def time_limit_previously_changed?: () -> bool
+
+    def time_limit_previous_change: () -> Array[String?]?
+
+    def time_limit_previously_was: () -> String?
+
+    def time_limit_before_last_save: () -> String?
+
+    def time_limit_change_to_be_saved: () -> Array[String?]?
+
+    def time_limit_in_database: () -> String?
+
+    def saved_change_to_time_limit: () -> Array[String?]?
+
+    def saved_change_to_time_limit?: () -> bool
+
+    def will_save_change_to_time_limit?: () -> bool
+
+    def restore_time_limit!: () -> void
+
+    def clear_time_limit_change: () -> void
+
+    def cutoff: () -> String?
+
+    def cutoff=: (String?) -> String?
+
+    def cutoff?: () -> bool
+
+    def cutoff_changed?: () -> bool
+
+    def cutoff_change: () -> [ String?, String? ]
+
+    def cutoff_will_change!: () -> void
+
+    def cutoff_was: () -> String?
+
+    def cutoff_previously_changed?: () -> bool
+
+    def cutoff_previous_change: () -> Array[String?]?
+
+    def cutoff_previously_was: () -> String?
+
+    def cutoff_before_last_save: () -> String?
+
+    def cutoff_change_to_be_saved: () -> Array[String?]?
+
+    def cutoff_in_database: () -> String?
+
+    def saved_change_to_cutoff: () -> Array[String?]?
+
+    def saved_change_to_cutoff?: () -> bool
+
+    def will_save_change_to_cutoff?: () -> bool
+
+    def restore_cutoff!: () -> void
+
+    def clear_cutoff_change: () -> void
+
+    def advancement_condition: () -> String?
+
+    def advancement_condition=: (String?) -> String?
+
+    def advancement_condition?: () -> bool
+
+    def advancement_condition_changed?: () -> bool
+
+    def advancement_condition_change: () -> [ String?, String? ]
+
+    def advancement_condition_will_change!: () -> void
+
+    def advancement_condition_was: () -> String?
+
+    def advancement_condition_previously_changed?: () -> bool
+
+    def advancement_condition_previous_change: () -> Array[String?]?
+
+    def advancement_condition_previously_was: () -> String?
+
+    def advancement_condition_before_last_save: () -> String?
+
+    def advancement_condition_change_to_be_saved: () -> Array[String?]?
+
+    def advancement_condition_in_database: () -> String?
+
+    def saved_change_to_advancement_condition: () -> Array[String?]?
+
+    def saved_change_to_advancement_condition?: () -> bool
+
+    def will_save_change_to_advancement_condition?: () -> bool
+
+    def restore_advancement_condition!: () -> void
+
+    def clear_advancement_condition_change: () -> void
+
+    def scramble_set_count: () -> Integer
+
+    def scramble_set_count=: (Integer) -> Integer
+
+    def scramble_set_count?: () -> bool
+
+    def scramble_set_count_changed?: () -> bool
+
+    def scramble_set_count_change: () -> [ Integer?, Integer? ]
+
+    def scramble_set_count_will_change!: () -> void
+
+    def scramble_set_count_was: () -> Integer?
+
+    def scramble_set_count_previously_changed?: () -> bool
+
+    def scramble_set_count_previous_change: () -> Array[Integer?]?
+
+    def scramble_set_count_previously_was: () -> Integer?
+
+    def scramble_set_count_before_last_save: () -> Integer?
+
+    def scramble_set_count_change_to_be_saved: () -> Array[Integer?]?
+
+    def scramble_set_count_in_database: () -> Integer?
+
+    def saved_change_to_scramble_set_count: () -> Array[Integer?]?
+
+    def saved_change_to_scramble_set_count?: () -> bool
+
+    def will_save_change_to_scramble_set_count?: () -> bool
+
+    def restore_scramble_set_count!: () -> void
+
+    def clear_scramble_set_count_change: () -> void
+
+    def round_results: () -> String?
+
+    def round_results=: (String?) -> String?
+
+    def round_results?: () -> bool
+
+    def round_results_changed?: () -> bool
+
+    def round_results_change: () -> [ String?, String? ]
+
+    def round_results_will_change!: () -> void
+
+    def round_results_was: () -> String?
+
+    def round_results_previously_changed?: () -> bool
+
+    def round_results_previous_change: () -> Array[String?]?
+
+    def round_results_previously_was: () -> String?
+
+    def round_results_before_last_save: () -> String?
+
+    def round_results_change_to_be_saved: () -> Array[String?]?
+
+    def round_results_in_database: () -> String?
+
+    def saved_change_to_round_results: () -> Array[String?]?
+
+    def saved_change_to_round_results?: () -> bool
+
+    def will_save_change_to_round_results?: () -> bool
+
+    def restore_round_results!: () -> void
+
+    def clear_round_results_change: () -> void
+
+    def total_number_of_rounds: () -> Integer
+
+    def total_number_of_rounds=: (Integer) -> Integer
+
+    def total_number_of_rounds?: () -> bool
+
+    def total_number_of_rounds_changed?: () -> bool
+
+    def total_number_of_rounds_change: () -> [ Integer?, Integer? ]
+
+    def total_number_of_rounds_will_change!: () -> void
+
+    def total_number_of_rounds_was: () -> Integer?
+
+    def total_number_of_rounds_previously_changed?: () -> bool
+
+    def total_number_of_rounds_previous_change: () -> Array[Integer?]?
+
+    def total_number_of_rounds_previously_was: () -> Integer?
+
+    def total_number_of_rounds_before_last_save: () -> Integer?
+
+    def total_number_of_rounds_change_to_be_saved: () -> Array[Integer?]?
+
+    def total_number_of_rounds_in_database: () -> Integer?
+
+    def saved_change_to_total_number_of_rounds: () -> Array[Integer?]?
+
+    def saved_change_to_total_number_of_rounds?: () -> bool
+
+    def will_save_change_to_total_number_of_rounds?: () -> bool
+
+    def restore_total_number_of_rounds!: () -> void
+
+    def clear_total_number_of_rounds_change: () -> void
+
+    def old_type: () -> String?
+
+    def old_type=: (String?) -> String?
+
+    def old_type?: () -> bool
+
+    def old_type_changed?: () -> bool
+
+    def old_type_change: () -> [ String?, String? ]
+
+    def old_type_will_change!: () -> void
+
+    def old_type_was: () -> String?
+
+    def old_type_previously_changed?: () -> bool
+
+    def old_type_previous_change: () -> Array[String?]?
+
+    def old_type_previously_was: () -> String?
+
+    def old_type_before_last_save: () -> String?
+
+    def old_type_change_to_be_saved: () -> Array[String?]?
+
+    def old_type_in_database: () -> String?
+
+    def saved_change_to_old_type: () -> Array[String?]?
+
+    def saved_change_to_old_type?: () -> bool
+
+    def will_save_change_to_old_type?: () -> bool
+
+    def restore_old_type!: () -> void
+
+    def clear_old_type_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def wcif_extensions: () -> WcifExtension::ActiveRecord_Associations_CollectionProxy
+  def wcif_extensions=: (WcifExtension::ActiveRecord_Associations_CollectionProxy | Array[WcifExtension]) -> (WcifExtension::ActiveRecord_Associations_CollectionProxy | Array[WcifExtension])
+  def wcif_extension_ids: () -> Array[Integer]
+  def wcif_extension_ids=: (Array[Integer]) -> Array[Integer]
+  def competition: () -> Competition?
+  def competition=: (Competition?) -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  def reload_competition: () -> Competition?
+  def event: () -> Event?
+  def event=: (Event?) -> Event?
+  def build_event: (untyped) -> Event
+  def create_event: (untyped) -> Event
+  def create_event!: (untyped) -> Event
+  def reload_event: () -> Event?
+  def competition_event: () -> CompetitionEvent
+  def competition_event=: (CompetitionEvent?) -> CompetitionEvent?
+  def reload_competition_event: () -> CompetitionEvent?
+  def build_competition_event: (untyped) -> CompetitionEvent
+  def create_competition_event: (untyped) -> CompetitionEvent
+  def create_competition_event!: (untyped) -> CompetitionEvent
+  def format: () -> Format
+  def format=: (Format?) -> Format?
+  def reload_format: () -> Format?
+  def build_format: (untyped) -> Format
+  def create_format: (untyped) -> Format
+  def create_format!: (untyped) -> Format
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Round, Integer]
+    include Enumerable[Round]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Round, Integer]
+  end
+end

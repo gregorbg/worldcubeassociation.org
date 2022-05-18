@@ -1,0 +1,287 @@
+class Format < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Format, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def name: () -> String
+
+    def name=: (String) -> String
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def sort_by: () -> String
+
+    def sort_by=: (String) -> String
+
+    def sort_by?: () -> bool
+
+    def sort_by_changed?: () -> bool
+
+    def sort_by_change: () -> [ String?, String? ]
+
+    def sort_by_will_change!: () -> void
+
+    def sort_by_was: () -> String?
+
+    def sort_by_previously_changed?: () -> bool
+
+    def sort_by_previous_change: () -> Array[String?]?
+
+    def sort_by_previously_was: () -> String?
+
+    def sort_by_before_last_save: () -> String?
+
+    def sort_by_change_to_be_saved: () -> Array[String?]?
+
+    def sort_by_in_database: () -> String?
+
+    def saved_change_to_sort_by: () -> Array[String?]?
+
+    def saved_change_to_sort_by?: () -> bool
+
+    def will_save_change_to_sort_by?: () -> bool
+
+    def restore_sort_by!: () -> void
+
+    def clear_sort_by_change: () -> void
+
+    def sort_by_second: () -> String
+
+    def sort_by_second=: (String) -> String
+
+    def sort_by_second?: () -> bool
+
+    def sort_by_second_changed?: () -> bool
+
+    def sort_by_second_change: () -> [ String?, String? ]
+
+    def sort_by_second_will_change!: () -> void
+
+    def sort_by_second_was: () -> String?
+
+    def sort_by_second_previously_changed?: () -> bool
+
+    def sort_by_second_previous_change: () -> Array[String?]?
+
+    def sort_by_second_previously_was: () -> String?
+
+    def sort_by_second_before_last_save: () -> String?
+
+    def sort_by_second_change_to_be_saved: () -> Array[String?]?
+
+    def sort_by_second_in_database: () -> String?
+
+    def saved_change_to_sort_by_second: () -> Array[String?]?
+
+    def saved_change_to_sort_by_second?: () -> bool
+
+    def will_save_change_to_sort_by_second?: () -> bool
+
+    def restore_sort_by_second!: () -> void
+
+    def clear_sort_by_second_change: () -> void
+
+    def expected_solve_count: () -> Integer
+
+    def expected_solve_count=: (Integer) -> Integer
+
+    def expected_solve_count?: () -> bool
+
+    def expected_solve_count_changed?: () -> bool
+
+    def expected_solve_count_change: () -> [ Integer?, Integer? ]
+
+    def expected_solve_count_will_change!: () -> void
+
+    def expected_solve_count_was: () -> Integer?
+
+    def expected_solve_count_previously_changed?: () -> bool
+
+    def expected_solve_count_previous_change: () -> Array[Integer?]?
+
+    def expected_solve_count_previously_was: () -> Integer?
+
+    def expected_solve_count_before_last_save: () -> Integer?
+
+    def expected_solve_count_change_to_be_saved: () -> Array[Integer?]?
+
+    def expected_solve_count_in_database: () -> Integer?
+
+    def saved_change_to_expected_solve_count: () -> Array[Integer?]?
+
+    def saved_change_to_expected_solve_count?: () -> bool
+
+    def will_save_change_to_expected_solve_count?: () -> bool
+
+    def restore_expected_solve_count!: () -> void
+
+    def clear_expected_solve_count_change: () -> void
+
+    def trim_fastest_n: () -> Integer
+
+    def trim_fastest_n=: (Integer) -> Integer
+
+    def trim_fastest_n?: () -> bool
+
+    def trim_fastest_n_changed?: () -> bool
+
+    def trim_fastest_n_change: () -> [ Integer?, Integer? ]
+
+    def trim_fastest_n_will_change!: () -> void
+
+    def trim_fastest_n_was: () -> Integer?
+
+    def trim_fastest_n_previously_changed?: () -> bool
+
+    def trim_fastest_n_previous_change: () -> Array[Integer?]?
+
+    def trim_fastest_n_previously_was: () -> Integer?
+
+    def trim_fastest_n_before_last_save: () -> Integer?
+
+    def trim_fastest_n_change_to_be_saved: () -> Array[Integer?]?
+
+    def trim_fastest_n_in_database: () -> Integer?
+
+    def saved_change_to_trim_fastest_n: () -> Array[Integer?]?
+
+    def saved_change_to_trim_fastest_n?: () -> bool
+
+    def will_save_change_to_trim_fastest_n?: () -> bool
+
+    def restore_trim_fastest_n!: () -> void
+
+    def clear_trim_fastest_n_change: () -> void
+
+    def trim_slowest_n: () -> Integer
+
+    def trim_slowest_n=: (Integer) -> Integer
+
+    def trim_slowest_n?: () -> bool
+
+    def trim_slowest_n_changed?: () -> bool
+
+    def trim_slowest_n_change: () -> [ Integer?, Integer? ]
+
+    def trim_slowest_n_will_change!: () -> void
+
+    def trim_slowest_n_was: () -> Integer?
+
+    def trim_slowest_n_previously_changed?: () -> bool
+
+    def trim_slowest_n_previous_change: () -> Array[Integer?]?
+
+    def trim_slowest_n_previously_was: () -> Integer?
+
+    def trim_slowest_n_before_last_save: () -> Integer?
+
+    def trim_slowest_n_change_to_be_saved: () -> Array[Integer?]?
+
+    def trim_slowest_n_in_database: () -> Integer?
+
+    def saved_change_to_trim_slowest_n: () -> Array[Integer?]?
+
+    def saved_change_to_trim_slowest_n?: () -> bool
+
+    def will_save_change_to_trim_slowest_n?: () -> bool
+
+    def restore_trim_slowest_n!: () -> void
+
+    def clear_trim_slowest_n_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def preferred_formats: () -> PreferredFormat::ActiveRecord_Associations_CollectionProxy
+  def preferred_formats=: (PreferredFormat::ActiveRecord_Associations_CollectionProxy | Array[PreferredFormat]) -> (PreferredFormat::ActiveRecord_Associations_CollectionProxy | Array[PreferredFormat])
+  def preferred_format_ids: () -> Array[Integer]
+  def preferred_format_ids=: (Array[Integer]) -> Array[Integer]
+  def events: () -> Event::ActiveRecord_Associations_CollectionProxy
+  def events=: (Event::ActiveRecord_Associations_CollectionProxy | Array[Event]) -> (Event::ActiveRecord_Associations_CollectionProxy | Array[Event])
+  def event_ids: () -> Array[Integer]
+  def event_ids=: (Array[Integer]) -> Array[Integer]
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def self.recommended: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def recommended: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Format, String]
+    include Enumerable[Format]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Format, String]
+  end
+end

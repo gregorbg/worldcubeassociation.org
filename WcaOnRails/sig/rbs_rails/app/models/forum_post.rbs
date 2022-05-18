@@ -1,0 +1,1074 @@
+class ForumPost < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[ForumPost, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def post_id: () -> Integer
+
+    def post_id=: (Integer) -> Integer
+
+    def post_id?: () -> bool
+
+    def post_id_changed?: () -> bool
+
+    def post_id_change: () -> [ Integer?, Integer? ]
+
+    def post_id_will_change!: () -> void
+
+    def post_id_was: () -> Integer?
+
+    def post_id_previously_changed?: () -> bool
+
+    def post_id_previous_change: () -> Array[Integer?]?
+
+    def post_id_previously_was: () -> Integer?
+
+    def post_id_before_last_save: () -> Integer?
+
+    def post_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_id_in_database: () -> Integer?
+
+    def saved_change_to_post_id: () -> Array[Integer?]?
+
+    def saved_change_to_post_id?: () -> bool
+
+    def will_save_change_to_post_id?: () -> bool
+
+    def restore_post_id!: () -> void
+
+    def clear_post_id_change: () -> void
+
+    def topic_id: () -> Integer
+
+    def topic_id=: (Integer) -> Integer
+
+    def topic_id?: () -> bool
+
+    def topic_id_changed?: () -> bool
+
+    def topic_id_change: () -> [ Integer?, Integer? ]
+
+    def topic_id_will_change!: () -> void
+
+    def topic_id_was: () -> Integer?
+
+    def topic_id_previously_changed?: () -> bool
+
+    def topic_id_previous_change: () -> Array[Integer?]?
+
+    def topic_id_previously_was: () -> Integer?
+
+    def topic_id_before_last_save: () -> Integer?
+
+    def topic_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def topic_id_in_database: () -> Integer?
+
+    def saved_change_to_topic_id: () -> Array[Integer?]?
+
+    def saved_change_to_topic_id?: () -> bool
+
+    def will_save_change_to_topic_id?: () -> bool
+
+    def restore_topic_id!: () -> void
+
+    def clear_topic_id_change: () -> void
+
+    def forum_id: () -> Integer
+
+    def forum_id=: (Integer) -> Integer
+
+    def forum_id?: () -> bool
+
+    def forum_id_changed?: () -> bool
+
+    def forum_id_change: () -> [ Integer?, Integer? ]
+
+    def forum_id_will_change!: () -> void
+
+    def forum_id_was: () -> Integer?
+
+    def forum_id_previously_changed?: () -> bool
+
+    def forum_id_previous_change: () -> Array[Integer?]?
+
+    def forum_id_previously_was: () -> Integer?
+
+    def forum_id_before_last_save: () -> Integer?
+
+    def forum_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def forum_id_in_database: () -> Integer?
+
+    def saved_change_to_forum_id: () -> Array[Integer?]?
+
+    def saved_change_to_forum_id?: () -> bool
+
+    def will_save_change_to_forum_id?: () -> bool
+
+    def restore_forum_id!: () -> void
+
+    def clear_forum_id_change: () -> void
+
+    def poster_id: () -> Integer
+
+    def poster_id=: (Integer) -> Integer
+
+    def poster_id?: () -> bool
+
+    def poster_id_changed?: () -> bool
+
+    def poster_id_change: () -> [ Integer?, Integer? ]
+
+    def poster_id_will_change!: () -> void
+
+    def poster_id_was: () -> Integer?
+
+    def poster_id_previously_changed?: () -> bool
+
+    def poster_id_previous_change: () -> Array[Integer?]?
+
+    def poster_id_previously_was: () -> Integer?
+
+    def poster_id_before_last_save: () -> Integer?
+
+    def poster_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def poster_id_in_database: () -> Integer?
+
+    def saved_change_to_poster_id: () -> Array[Integer?]?
+
+    def saved_change_to_poster_id?: () -> bool
+
+    def will_save_change_to_poster_id?: () -> bool
+
+    def restore_poster_id!: () -> void
+
+    def clear_poster_id_change: () -> void
+
+    def icon_id: () -> Integer
+
+    def icon_id=: (Integer) -> Integer
+
+    def icon_id?: () -> bool
+
+    def icon_id_changed?: () -> bool
+
+    def icon_id_change: () -> [ Integer?, Integer? ]
+
+    def icon_id_will_change!: () -> void
+
+    def icon_id_was: () -> Integer?
+
+    def icon_id_previously_changed?: () -> bool
+
+    def icon_id_previous_change: () -> Array[Integer?]?
+
+    def icon_id_previously_was: () -> Integer?
+
+    def icon_id_before_last_save: () -> Integer?
+
+    def icon_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def icon_id_in_database: () -> Integer?
+
+    def saved_change_to_icon_id: () -> Array[Integer?]?
+
+    def saved_change_to_icon_id?: () -> bool
+
+    def will_save_change_to_icon_id?: () -> bool
+
+    def restore_icon_id!: () -> void
+
+    def clear_icon_id_change: () -> void
+
+    def poster_ip: () -> String
+
+    def poster_ip=: (String) -> String
+
+    def poster_ip?: () -> bool
+
+    def poster_ip_changed?: () -> bool
+
+    def poster_ip_change: () -> [ String?, String? ]
+
+    def poster_ip_will_change!: () -> void
+
+    def poster_ip_was: () -> String?
+
+    def poster_ip_previously_changed?: () -> bool
+
+    def poster_ip_previous_change: () -> Array[String?]?
+
+    def poster_ip_previously_was: () -> String?
+
+    def poster_ip_before_last_save: () -> String?
+
+    def poster_ip_change_to_be_saved: () -> Array[String?]?
+
+    def poster_ip_in_database: () -> String?
+
+    def saved_change_to_poster_ip: () -> Array[String?]?
+
+    def saved_change_to_poster_ip?: () -> bool
+
+    def will_save_change_to_poster_ip?: () -> bool
+
+    def restore_poster_ip!: () -> void
+
+    def clear_poster_ip_change: () -> void
+
+    def post_time: () -> Integer
+
+    def post_time=: (Integer) -> Integer
+
+    def post_time?: () -> bool
+
+    def post_time_changed?: () -> bool
+
+    def post_time_change: () -> [ Integer?, Integer? ]
+
+    def post_time_will_change!: () -> void
+
+    def post_time_was: () -> Integer?
+
+    def post_time_previously_changed?: () -> bool
+
+    def post_time_previous_change: () -> Array[Integer?]?
+
+    def post_time_previously_was: () -> Integer?
+
+    def post_time_before_last_save: () -> Integer?
+
+    def post_time_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_time_in_database: () -> Integer?
+
+    def saved_change_to_post_time: () -> Array[Integer?]?
+
+    def saved_change_to_post_time?: () -> bool
+
+    def will_save_change_to_post_time?: () -> bool
+
+    def restore_post_time!: () -> void
+
+    def clear_post_time_change: () -> void
+
+    def post_reported: () -> Integer
+
+    def post_reported=: (Integer) -> Integer
+
+    def post_reported?: () -> bool
+
+    def post_reported_changed?: () -> bool
+
+    def post_reported_change: () -> [ Integer?, Integer? ]
+
+    def post_reported_will_change!: () -> void
+
+    def post_reported_was: () -> Integer?
+
+    def post_reported_previously_changed?: () -> bool
+
+    def post_reported_previous_change: () -> Array[Integer?]?
+
+    def post_reported_previously_was: () -> Integer?
+
+    def post_reported_before_last_save: () -> Integer?
+
+    def post_reported_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_reported_in_database: () -> Integer?
+
+    def saved_change_to_post_reported: () -> Array[Integer?]?
+
+    def saved_change_to_post_reported?: () -> bool
+
+    def will_save_change_to_post_reported?: () -> bool
+
+    def restore_post_reported!: () -> void
+
+    def clear_post_reported_change: () -> void
+
+    def enable_bbcode: () -> Integer
+
+    def enable_bbcode=: (Integer) -> Integer
+
+    def enable_bbcode?: () -> bool
+
+    def enable_bbcode_changed?: () -> bool
+
+    def enable_bbcode_change: () -> [ Integer?, Integer? ]
+
+    def enable_bbcode_will_change!: () -> void
+
+    def enable_bbcode_was: () -> Integer?
+
+    def enable_bbcode_previously_changed?: () -> bool
+
+    def enable_bbcode_previous_change: () -> Array[Integer?]?
+
+    def enable_bbcode_previously_was: () -> Integer?
+
+    def enable_bbcode_before_last_save: () -> Integer?
+
+    def enable_bbcode_change_to_be_saved: () -> Array[Integer?]?
+
+    def enable_bbcode_in_database: () -> Integer?
+
+    def saved_change_to_enable_bbcode: () -> Array[Integer?]?
+
+    def saved_change_to_enable_bbcode?: () -> bool
+
+    def will_save_change_to_enable_bbcode?: () -> bool
+
+    def restore_enable_bbcode!: () -> void
+
+    def clear_enable_bbcode_change: () -> void
+
+    def enable_smilies: () -> Integer
+
+    def enable_smilies=: (Integer) -> Integer
+
+    def enable_smilies?: () -> bool
+
+    def enable_smilies_changed?: () -> bool
+
+    def enable_smilies_change: () -> [ Integer?, Integer? ]
+
+    def enable_smilies_will_change!: () -> void
+
+    def enable_smilies_was: () -> Integer?
+
+    def enable_smilies_previously_changed?: () -> bool
+
+    def enable_smilies_previous_change: () -> Array[Integer?]?
+
+    def enable_smilies_previously_was: () -> Integer?
+
+    def enable_smilies_before_last_save: () -> Integer?
+
+    def enable_smilies_change_to_be_saved: () -> Array[Integer?]?
+
+    def enable_smilies_in_database: () -> Integer?
+
+    def saved_change_to_enable_smilies: () -> Array[Integer?]?
+
+    def saved_change_to_enable_smilies?: () -> bool
+
+    def will_save_change_to_enable_smilies?: () -> bool
+
+    def restore_enable_smilies!: () -> void
+
+    def clear_enable_smilies_change: () -> void
+
+    def enable_magic_url: () -> Integer
+
+    def enable_magic_url=: (Integer) -> Integer
+
+    def enable_magic_url?: () -> bool
+
+    def enable_magic_url_changed?: () -> bool
+
+    def enable_magic_url_change: () -> [ Integer?, Integer? ]
+
+    def enable_magic_url_will_change!: () -> void
+
+    def enable_magic_url_was: () -> Integer?
+
+    def enable_magic_url_previously_changed?: () -> bool
+
+    def enable_magic_url_previous_change: () -> Array[Integer?]?
+
+    def enable_magic_url_previously_was: () -> Integer?
+
+    def enable_magic_url_before_last_save: () -> Integer?
+
+    def enable_magic_url_change_to_be_saved: () -> Array[Integer?]?
+
+    def enable_magic_url_in_database: () -> Integer?
+
+    def saved_change_to_enable_magic_url: () -> Array[Integer?]?
+
+    def saved_change_to_enable_magic_url?: () -> bool
+
+    def will_save_change_to_enable_magic_url?: () -> bool
+
+    def restore_enable_magic_url!: () -> void
+
+    def clear_enable_magic_url_change: () -> void
+
+    def enable_sig: () -> Integer
+
+    def enable_sig=: (Integer) -> Integer
+
+    def enable_sig?: () -> bool
+
+    def enable_sig_changed?: () -> bool
+
+    def enable_sig_change: () -> [ Integer?, Integer? ]
+
+    def enable_sig_will_change!: () -> void
+
+    def enable_sig_was: () -> Integer?
+
+    def enable_sig_previously_changed?: () -> bool
+
+    def enable_sig_previous_change: () -> Array[Integer?]?
+
+    def enable_sig_previously_was: () -> Integer?
+
+    def enable_sig_before_last_save: () -> Integer?
+
+    def enable_sig_change_to_be_saved: () -> Array[Integer?]?
+
+    def enable_sig_in_database: () -> Integer?
+
+    def saved_change_to_enable_sig: () -> Array[Integer?]?
+
+    def saved_change_to_enable_sig?: () -> bool
+
+    def will_save_change_to_enable_sig?: () -> bool
+
+    def restore_enable_sig!: () -> void
+
+    def clear_enable_sig_change: () -> void
+
+    def post_username: () -> String
+
+    def post_username=: (String) -> String
+
+    def post_username?: () -> bool
+
+    def post_username_changed?: () -> bool
+
+    def post_username_change: () -> [ String?, String? ]
+
+    def post_username_will_change!: () -> void
+
+    def post_username_was: () -> String?
+
+    def post_username_previously_changed?: () -> bool
+
+    def post_username_previous_change: () -> Array[String?]?
+
+    def post_username_previously_was: () -> String?
+
+    def post_username_before_last_save: () -> String?
+
+    def post_username_change_to_be_saved: () -> Array[String?]?
+
+    def post_username_in_database: () -> String?
+
+    def saved_change_to_post_username: () -> Array[String?]?
+
+    def saved_change_to_post_username?: () -> bool
+
+    def will_save_change_to_post_username?: () -> bool
+
+    def restore_post_username!: () -> void
+
+    def clear_post_username_change: () -> void
+
+    def post_subject: () -> String
+
+    def post_subject=: (String) -> String
+
+    def post_subject?: () -> bool
+
+    def post_subject_changed?: () -> bool
+
+    def post_subject_change: () -> [ String?, String? ]
+
+    def post_subject_will_change!: () -> void
+
+    def post_subject_was: () -> String?
+
+    def post_subject_previously_changed?: () -> bool
+
+    def post_subject_previous_change: () -> Array[String?]?
+
+    def post_subject_previously_was: () -> String?
+
+    def post_subject_before_last_save: () -> String?
+
+    def post_subject_change_to_be_saved: () -> Array[String?]?
+
+    def post_subject_in_database: () -> String?
+
+    def saved_change_to_post_subject: () -> Array[String?]?
+
+    def saved_change_to_post_subject?: () -> bool
+
+    def will_save_change_to_post_subject?: () -> bool
+
+    def restore_post_subject!: () -> void
+
+    def clear_post_subject_change: () -> void
+
+    def post_text: () -> String
+
+    def post_text=: (String) -> String
+
+    def post_text?: () -> bool
+
+    def post_text_changed?: () -> bool
+
+    def post_text_change: () -> [ String?, String? ]
+
+    def post_text_will_change!: () -> void
+
+    def post_text_was: () -> String?
+
+    def post_text_previously_changed?: () -> bool
+
+    def post_text_previous_change: () -> Array[String?]?
+
+    def post_text_previously_was: () -> String?
+
+    def post_text_before_last_save: () -> String?
+
+    def post_text_change_to_be_saved: () -> Array[String?]?
+
+    def post_text_in_database: () -> String?
+
+    def saved_change_to_post_text: () -> Array[String?]?
+
+    def saved_change_to_post_text?: () -> bool
+
+    def will_save_change_to_post_text?: () -> bool
+
+    def restore_post_text!: () -> void
+
+    def clear_post_text_change: () -> void
+
+    def post_checksum: () -> String
+
+    def post_checksum=: (String) -> String
+
+    def post_checksum?: () -> bool
+
+    def post_checksum_changed?: () -> bool
+
+    def post_checksum_change: () -> [ String?, String? ]
+
+    def post_checksum_will_change!: () -> void
+
+    def post_checksum_was: () -> String?
+
+    def post_checksum_previously_changed?: () -> bool
+
+    def post_checksum_previous_change: () -> Array[String?]?
+
+    def post_checksum_previously_was: () -> String?
+
+    def post_checksum_before_last_save: () -> String?
+
+    def post_checksum_change_to_be_saved: () -> Array[String?]?
+
+    def post_checksum_in_database: () -> String?
+
+    def saved_change_to_post_checksum: () -> Array[String?]?
+
+    def saved_change_to_post_checksum?: () -> bool
+
+    def will_save_change_to_post_checksum?: () -> bool
+
+    def restore_post_checksum!: () -> void
+
+    def clear_post_checksum_change: () -> void
+
+    def post_attachment: () -> Integer
+
+    def post_attachment=: (Integer) -> Integer
+
+    def post_attachment?: () -> bool
+
+    def post_attachment_changed?: () -> bool
+
+    def post_attachment_change: () -> [ Integer?, Integer? ]
+
+    def post_attachment_will_change!: () -> void
+
+    def post_attachment_was: () -> Integer?
+
+    def post_attachment_previously_changed?: () -> bool
+
+    def post_attachment_previous_change: () -> Array[Integer?]?
+
+    def post_attachment_previously_was: () -> Integer?
+
+    def post_attachment_before_last_save: () -> Integer?
+
+    def post_attachment_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_attachment_in_database: () -> Integer?
+
+    def saved_change_to_post_attachment: () -> Array[Integer?]?
+
+    def saved_change_to_post_attachment?: () -> bool
+
+    def will_save_change_to_post_attachment?: () -> bool
+
+    def restore_post_attachment!: () -> void
+
+    def clear_post_attachment_change: () -> void
+
+    def bbcode_bitfield: () -> String
+
+    def bbcode_bitfield=: (String) -> String
+
+    def bbcode_bitfield?: () -> bool
+
+    def bbcode_bitfield_changed?: () -> bool
+
+    def bbcode_bitfield_change: () -> [ String?, String? ]
+
+    def bbcode_bitfield_will_change!: () -> void
+
+    def bbcode_bitfield_was: () -> String?
+
+    def bbcode_bitfield_previously_changed?: () -> bool
+
+    def bbcode_bitfield_previous_change: () -> Array[String?]?
+
+    def bbcode_bitfield_previously_was: () -> String?
+
+    def bbcode_bitfield_before_last_save: () -> String?
+
+    def bbcode_bitfield_change_to_be_saved: () -> Array[String?]?
+
+    def bbcode_bitfield_in_database: () -> String?
+
+    def saved_change_to_bbcode_bitfield: () -> Array[String?]?
+
+    def saved_change_to_bbcode_bitfield?: () -> bool
+
+    def will_save_change_to_bbcode_bitfield?: () -> bool
+
+    def restore_bbcode_bitfield!: () -> void
+
+    def clear_bbcode_bitfield_change: () -> void
+
+    def bbcode_uid: () -> String
+
+    def bbcode_uid=: (String) -> String
+
+    def bbcode_uid?: () -> bool
+
+    def bbcode_uid_changed?: () -> bool
+
+    def bbcode_uid_change: () -> [ String?, String? ]
+
+    def bbcode_uid_will_change!: () -> void
+
+    def bbcode_uid_was: () -> String?
+
+    def bbcode_uid_previously_changed?: () -> bool
+
+    def bbcode_uid_previous_change: () -> Array[String?]?
+
+    def bbcode_uid_previously_was: () -> String?
+
+    def bbcode_uid_before_last_save: () -> String?
+
+    def bbcode_uid_change_to_be_saved: () -> Array[String?]?
+
+    def bbcode_uid_in_database: () -> String?
+
+    def saved_change_to_bbcode_uid: () -> Array[String?]?
+
+    def saved_change_to_bbcode_uid?: () -> bool
+
+    def will_save_change_to_bbcode_uid?: () -> bool
+
+    def restore_bbcode_uid!: () -> void
+
+    def clear_bbcode_uid_change: () -> void
+
+    def post_postcount: () -> Integer
+
+    def post_postcount=: (Integer) -> Integer
+
+    def post_postcount?: () -> bool
+
+    def post_postcount_changed?: () -> bool
+
+    def post_postcount_change: () -> [ Integer?, Integer? ]
+
+    def post_postcount_will_change!: () -> void
+
+    def post_postcount_was: () -> Integer?
+
+    def post_postcount_previously_changed?: () -> bool
+
+    def post_postcount_previous_change: () -> Array[Integer?]?
+
+    def post_postcount_previously_was: () -> Integer?
+
+    def post_postcount_before_last_save: () -> Integer?
+
+    def post_postcount_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_postcount_in_database: () -> Integer?
+
+    def saved_change_to_post_postcount: () -> Array[Integer?]?
+
+    def saved_change_to_post_postcount?: () -> bool
+
+    def will_save_change_to_post_postcount?: () -> bool
+
+    def restore_post_postcount!: () -> void
+
+    def clear_post_postcount_change: () -> void
+
+    def post_edit_time: () -> Integer
+
+    def post_edit_time=: (Integer) -> Integer
+
+    def post_edit_time?: () -> bool
+
+    def post_edit_time_changed?: () -> bool
+
+    def post_edit_time_change: () -> [ Integer?, Integer? ]
+
+    def post_edit_time_will_change!: () -> void
+
+    def post_edit_time_was: () -> Integer?
+
+    def post_edit_time_previously_changed?: () -> bool
+
+    def post_edit_time_previous_change: () -> Array[Integer?]?
+
+    def post_edit_time_previously_was: () -> Integer?
+
+    def post_edit_time_before_last_save: () -> Integer?
+
+    def post_edit_time_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_edit_time_in_database: () -> Integer?
+
+    def saved_change_to_post_edit_time: () -> Array[Integer?]?
+
+    def saved_change_to_post_edit_time?: () -> bool
+
+    def will_save_change_to_post_edit_time?: () -> bool
+
+    def restore_post_edit_time!: () -> void
+
+    def clear_post_edit_time_change: () -> void
+
+    def post_edit_reason: () -> String
+
+    def post_edit_reason=: (String) -> String
+
+    def post_edit_reason?: () -> bool
+
+    def post_edit_reason_changed?: () -> bool
+
+    def post_edit_reason_change: () -> [ String?, String? ]
+
+    def post_edit_reason_will_change!: () -> void
+
+    def post_edit_reason_was: () -> String?
+
+    def post_edit_reason_previously_changed?: () -> bool
+
+    def post_edit_reason_previous_change: () -> Array[String?]?
+
+    def post_edit_reason_previously_was: () -> String?
+
+    def post_edit_reason_before_last_save: () -> String?
+
+    def post_edit_reason_change_to_be_saved: () -> Array[String?]?
+
+    def post_edit_reason_in_database: () -> String?
+
+    def saved_change_to_post_edit_reason: () -> Array[String?]?
+
+    def saved_change_to_post_edit_reason?: () -> bool
+
+    def will_save_change_to_post_edit_reason?: () -> bool
+
+    def restore_post_edit_reason!: () -> void
+
+    def clear_post_edit_reason_change: () -> void
+
+    def post_edit_user: () -> Integer
+
+    def post_edit_user=: (Integer) -> Integer
+
+    def post_edit_user?: () -> bool
+
+    def post_edit_user_changed?: () -> bool
+
+    def post_edit_user_change: () -> [ Integer?, Integer? ]
+
+    def post_edit_user_will_change!: () -> void
+
+    def post_edit_user_was: () -> Integer?
+
+    def post_edit_user_previously_changed?: () -> bool
+
+    def post_edit_user_previous_change: () -> Array[Integer?]?
+
+    def post_edit_user_previously_was: () -> Integer?
+
+    def post_edit_user_before_last_save: () -> Integer?
+
+    def post_edit_user_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_edit_user_in_database: () -> Integer?
+
+    def saved_change_to_post_edit_user: () -> Array[Integer?]?
+
+    def saved_change_to_post_edit_user?: () -> bool
+
+    def will_save_change_to_post_edit_user?: () -> bool
+
+    def restore_post_edit_user!: () -> void
+
+    def clear_post_edit_user_change: () -> void
+
+    def post_edit_count: () -> Integer
+
+    def post_edit_count=: (Integer) -> Integer
+
+    def post_edit_count?: () -> bool
+
+    def post_edit_count_changed?: () -> bool
+
+    def post_edit_count_change: () -> [ Integer?, Integer? ]
+
+    def post_edit_count_will_change!: () -> void
+
+    def post_edit_count_was: () -> Integer?
+
+    def post_edit_count_previously_changed?: () -> bool
+
+    def post_edit_count_previous_change: () -> Array[Integer?]?
+
+    def post_edit_count_previously_was: () -> Integer?
+
+    def post_edit_count_before_last_save: () -> Integer?
+
+    def post_edit_count_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_edit_count_in_database: () -> Integer?
+
+    def saved_change_to_post_edit_count: () -> Array[Integer?]?
+
+    def saved_change_to_post_edit_count?: () -> bool
+
+    def will_save_change_to_post_edit_count?: () -> bool
+
+    def restore_post_edit_count!: () -> void
+
+    def clear_post_edit_count_change: () -> void
+
+    def post_edit_locked: () -> Integer
+
+    def post_edit_locked=: (Integer) -> Integer
+
+    def post_edit_locked?: () -> bool
+
+    def post_edit_locked_changed?: () -> bool
+
+    def post_edit_locked_change: () -> [ Integer?, Integer? ]
+
+    def post_edit_locked_will_change!: () -> void
+
+    def post_edit_locked_was: () -> Integer?
+
+    def post_edit_locked_previously_changed?: () -> bool
+
+    def post_edit_locked_previous_change: () -> Array[Integer?]?
+
+    def post_edit_locked_previously_was: () -> Integer?
+
+    def post_edit_locked_before_last_save: () -> Integer?
+
+    def post_edit_locked_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_edit_locked_in_database: () -> Integer?
+
+    def saved_change_to_post_edit_locked: () -> Array[Integer?]?
+
+    def saved_change_to_post_edit_locked?: () -> bool
+
+    def will_save_change_to_post_edit_locked?: () -> bool
+
+    def restore_post_edit_locked!: () -> void
+
+    def clear_post_edit_locked_change: () -> void
+
+    def post_visibility: () -> Integer
+
+    def post_visibility=: (Integer) -> Integer
+
+    def post_visibility?: () -> bool
+
+    def post_visibility_changed?: () -> bool
+
+    def post_visibility_change: () -> [ Integer?, Integer? ]
+
+    def post_visibility_will_change!: () -> void
+
+    def post_visibility_was: () -> Integer?
+
+    def post_visibility_previously_changed?: () -> bool
+
+    def post_visibility_previous_change: () -> Array[Integer?]?
+
+    def post_visibility_previously_was: () -> Integer?
+
+    def post_visibility_before_last_save: () -> Integer?
+
+    def post_visibility_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_visibility_in_database: () -> Integer?
+
+    def saved_change_to_post_visibility: () -> Array[Integer?]?
+
+    def saved_change_to_post_visibility?: () -> bool
+
+    def will_save_change_to_post_visibility?: () -> bool
+
+    def restore_post_visibility!: () -> void
+
+    def clear_post_visibility_change: () -> void
+
+    def post_delete_time: () -> Integer
+
+    def post_delete_time=: (Integer) -> Integer
+
+    def post_delete_time?: () -> bool
+
+    def post_delete_time_changed?: () -> bool
+
+    def post_delete_time_change: () -> [ Integer?, Integer? ]
+
+    def post_delete_time_will_change!: () -> void
+
+    def post_delete_time_was: () -> Integer?
+
+    def post_delete_time_previously_changed?: () -> bool
+
+    def post_delete_time_previous_change: () -> Array[Integer?]?
+
+    def post_delete_time_previously_was: () -> Integer?
+
+    def post_delete_time_before_last_save: () -> Integer?
+
+    def post_delete_time_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_delete_time_in_database: () -> Integer?
+
+    def saved_change_to_post_delete_time: () -> Array[Integer?]?
+
+    def saved_change_to_post_delete_time?: () -> bool
+
+    def will_save_change_to_post_delete_time?: () -> bool
+
+    def restore_post_delete_time!: () -> void
+
+    def clear_post_delete_time_change: () -> void
+
+    def post_delete_reason: () -> String
+
+    def post_delete_reason=: (String) -> String
+
+    def post_delete_reason?: () -> bool
+
+    def post_delete_reason_changed?: () -> bool
+
+    def post_delete_reason_change: () -> [ String?, String? ]
+
+    def post_delete_reason_will_change!: () -> void
+
+    def post_delete_reason_was: () -> String?
+
+    def post_delete_reason_previously_changed?: () -> bool
+
+    def post_delete_reason_previous_change: () -> Array[String?]?
+
+    def post_delete_reason_previously_was: () -> String?
+
+    def post_delete_reason_before_last_save: () -> String?
+
+    def post_delete_reason_change_to_be_saved: () -> Array[String?]?
+
+    def post_delete_reason_in_database: () -> String?
+
+    def saved_change_to_post_delete_reason: () -> Array[String?]?
+
+    def saved_change_to_post_delete_reason?: () -> bool
+
+    def will_save_change_to_post_delete_reason?: () -> bool
+
+    def restore_post_delete_reason!: () -> void
+
+    def clear_post_delete_reason_change: () -> void
+
+    def post_delete_user: () -> Integer
+
+    def post_delete_user=: (Integer) -> Integer
+
+    def post_delete_user?: () -> bool
+
+    def post_delete_user_changed?: () -> bool
+
+    def post_delete_user_change: () -> [ Integer?, Integer? ]
+
+    def post_delete_user_will_change!: () -> void
+
+    def post_delete_user_was: () -> Integer?
+
+    def post_delete_user_previously_changed?: () -> bool
+
+    def post_delete_user_previous_change: () -> Array[Integer?]?
+
+    def post_delete_user_previously_was: () -> Integer?
+
+    def post_delete_user_before_last_save: () -> Integer?
+
+    def post_delete_user_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_delete_user_in_database: () -> Integer?
+
+    def saved_change_to_post_delete_user: () -> Array[Integer?]?
+
+    def saved_change_to_post_delete_user?: () -> bool
+
+    def will_save_change_to_post_delete_user?: () -> bool
+
+    def restore_post_delete_user!: () -> void
+
+    def clear_post_delete_user_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def poster: () -> ForumUser
+  def poster=: (ForumUser?) -> ForumUser?
+  def reload_poster: () -> ForumUser?
+  def build_poster: (untyped) -> ForumUser
+  def create_poster: (untyped) -> ForumUser
+  def create_poster!: (untyped) -> ForumUser
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ForumPost, Integer]
+    include Enumerable[ForumPost]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ForumPost, Integer]
+  end
+end

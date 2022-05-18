@@ -1,0 +1,142 @@
+class Championship < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Championship, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_id: () -> String
+
+    def competition_id=: (String) -> String
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def championship_type: () -> String
+
+    def championship_type=: (String) -> String
+
+    def championship_type?: () -> bool
+
+    def championship_type_changed?: () -> bool
+
+    def championship_type_change: () -> [ String?, String? ]
+
+    def championship_type_will_change!: () -> void
+
+    def championship_type_was: () -> String?
+
+    def championship_type_previously_changed?: () -> bool
+
+    def championship_type_previous_change: () -> Array[String?]?
+
+    def championship_type_previously_was: () -> String?
+
+    def championship_type_before_last_save: () -> String?
+
+    def championship_type_change_to_be_saved: () -> Array[String?]?
+
+    def championship_type_in_database: () -> String?
+
+    def saved_change_to_championship_type: () -> Array[String?]?
+
+    def saved_change_to_championship_type?: () -> bool
+
+    def will_save_change_to_championship_type?: () -> bool
+
+    def restore_championship_type!: () -> void
+
+    def clear_championship_type_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def eligible_country_iso2s_for_championship: () -> EligibleCountryIso2ForChampionship::ActiveRecord_Associations_CollectionProxy
+  def eligible_country_iso2s_for_championship=: (EligibleCountryIso2ForChampionship::ActiveRecord_Associations_CollectionProxy | Array[EligibleCountryIso2ForChampionship]) -> (EligibleCountryIso2ForChampionship::ActiveRecord_Associations_CollectionProxy | Array[EligibleCountryIso2ForChampionship])
+  def eligible_country_iso2s_for_championship_ids: () -> Array[Integer]
+  def eligible_country_iso2s_for_championship_ids=: (Array[Integer]) -> Array[Integer]
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Championship, Integer]
+    include Enumerable[Championship]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Championship, Integer]
+  end
+end

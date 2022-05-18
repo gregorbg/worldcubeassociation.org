@@ -1,0 +1,183 @@
+class Country < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Country, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def name: () -> String
+
+    def name=: (String) -> String
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def continentId: () -> String
+
+    def continentId=: (String) -> String
+
+    def continentId?: () -> bool
+
+    def continentId_changed?: () -> bool
+
+    def continentId_change: () -> [ String?, String? ]
+
+    def continentId_will_change!: () -> void
+
+    def continentId_was: () -> String?
+
+    def continentId_previously_changed?: () -> bool
+
+    def continentId_previous_change: () -> Array[String?]?
+
+    def continentId_previously_was: () -> String?
+
+    def continentId_before_last_save: () -> String?
+
+    def continentId_change_to_be_saved: () -> Array[String?]?
+
+    def continentId_in_database: () -> String?
+
+    def saved_change_to_continentId: () -> Array[String?]?
+
+    def saved_change_to_continentId?: () -> bool
+
+    def will_save_change_to_continentId?: () -> bool
+
+    def restore_continentId!: () -> void
+
+    def clear_continentId_change: () -> void
+
+    def iso2: () -> String?
+
+    def iso2=: (String?) -> String?
+
+    def iso2?: () -> bool
+
+    def iso2_changed?: () -> bool
+
+    def iso2_change: () -> [ String?, String? ]
+
+    def iso2_will_change!: () -> void
+
+    def iso2_was: () -> String?
+
+    def iso2_previously_changed?: () -> bool
+
+    def iso2_previous_change: () -> Array[String?]?
+
+    def iso2_previously_was: () -> String?
+
+    def iso2_before_last_save: () -> String?
+
+    def iso2_change_to_be_saved: () -> Array[String?]?
+
+    def iso2_in_database: () -> String?
+
+    def saved_change_to_iso2: () -> Array[String?]?
+
+    def saved_change_to_iso2?: () -> bool
+
+    def will_save_change_to_iso2?: () -> bool
+
+    def restore_iso2!: () -> void
+
+    def clear_iso2_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def competitions: () -> Competition::ActiveRecord_Associations_CollectionProxy
+  def competitions=: (Competition::ActiveRecord_Associations_CollectionProxy | Array[Competition]) -> (Competition::ActiveRecord_Associations_CollectionProxy | Array[Competition])
+  def competition_ids: () -> Array[Integer]
+  def competition_ids=: (Array[Integer]) -> Array[Integer]
+  def band: () -> CountryBand?
+  def band=: (CountryBand?) -> CountryBand?
+  def build_band: (untyped) -> CountryBand
+  def create_band: (untyped) -> CountryBand
+  def create_band!: (untyped) -> CountryBand
+  def reload_band: () -> CountryBand?
+  def continent: () -> Continent
+  def continent=: (Continent?) -> Continent?
+  def reload_continent: () -> Continent?
+  def build_continent: (untyped) -> Continent
+  def create_continent: (untyped) -> Continent
+  def create_continent!: (untyped) -> Continent
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Country, String]
+    include Enumerable[Country]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Country, String]
+  end
+end

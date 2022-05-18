@@ -1,0 +1,318 @@
+class Scramble < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Scramble, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def scrambleId: () -> Integer
+
+    def scrambleId=: (Integer) -> Integer
+
+    def scrambleId?: () -> bool
+
+    def scrambleId_changed?: () -> bool
+
+    def scrambleId_change: () -> [ Integer?, Integer? ]
+
+    def scrambleId_will_change!: () -> void
+
+    def scrambleId_was: () -> Integer?
+
+    def scrambleId_previously_changed?: () -> bool
+
+    def scrambleId_previous_change: () -> Array[Integer?]?
+
+    def scrambleId_previously_was: () -> Integer?
+
+    def scrambleId_before_last_save: () -> Integer?
+
+    def scrambleId_change_to_be_saved: () -> Array[Integer?]?
+
+    def scrambleId_in_database: () -> Integer?
+
+    def saved_change_to_scrambleId: () -> Array[Integer?]?
+
+    def saved_change_to_scrambleId?: () -> bool
+
+    def will_save_change_to_scrambleId?: () -> bool
+
+    def restore_scrambleId!: () -> void
+
+    def clear_scrambleId_change: () -> void
+
+    def competitionId: () -> String
+
+    def competitionId=: (String) -> String
+
+    def competitionId?: () -> bool
+
+    def competitionId_changed?: () -> bool
+
+    def competitionId_change: () -> [ String?, String? ]
+
+    def competitionId_will_change!: () -> void
+
+    def competitionId_was: () -> String?
+
+    def competitionId_previously_changed?: () -> bool
+
+    def competitionId_previous_change: () -> Array[String?]?
+
+    def competitionId_previously_was: () -> String?
+
+    def competitionId_before_last_save: () -> String?
+
+    def competitionId_change_to_be_saved: () -> Array[String?]?
+
+    def competitionId_in_database: () -> String?
+
+    def saved_change_to_competitionId: () -> Array[String?]?
+
+    def saved_change_to_competitionId?: () -> bool
+
+    def will_save_change_to_competitionId?: () -> bool
+
+    def restore_competitionId!: () -> void
+
+    def clear_competitionId_change: () -> void
+
+    def eventId: () -> String
+
+    def eventId=: (String) -> String
+
+    def eventId?: () -> bool
+
+    def eventId_changed?: () -> bool
+
+    def eventId_change: () -> [ String?, String? ]
+
+    def eventId_will_change!: () -> void
+
+    def eventId_was: () -> String?
+
+    def eventId_previously_changed?: () -> bool
+
+    def eventId_previous_change: () -> Array[String?]?
+
+    def eventId_previously_was: () -> String?
+
+    def eventId_before_last_save: () -> String?
+
+    def eventId_change_to_be_saved: () -> Array[String?]?
+
+    def eventId_in_database: () -> String?
+
+    def saved_change_to_eventId: () -> Array[String?]?
+
+    def saved_change_to_eventId?: () -> bool
+
+    def will_save_change_to_eventId?: () -> bool
+
+    def restore_eventId!: () -> void
+
+    def clear_eventId_change: () -> void
+
+    def roundTypeId: () -> String
+
+    def roundTypeId=: (String) -> String
+
+    def roundTypeId?: () -> bool
+
+    def roundTypeId_changed?: () -> bool
+
+    def roundTypeId_change: () -> [ String?, String? ]
+
+    def roundTypeId_will_change!: () -> void
+
+    def roundTypeId_was: () -> String?
+
+    def roundTypeId_previously_changed?: () -> bool
+
+    def roundTypeId_previous_change: () -> Array[String?]?
+
+    def roundTypeId_previously_was: () -> String?
+
+    def roundTypeId_before_last_save: () -> String?
+
+    def roundTypeId_change_to_be_saved: () -> Array[String?]?
+
+    def roundTypeId_in_database: () -> String?
+
+    def saved_change_to_roundTypeId: () -> Array[String?]?
+
+    def saved_change_to_roundTypeId?: () -> bool
+
+    def will_save_change_to_roundTypeId?: () -> bool
+
+    def restore_roundTypeId!: () -> void
+
+    def clear_roundTypeId_change: () -> void
+
+    def groupId: () -> String
+
+    def groupId=: (String) -> String
+
+    def groupId?: () -> bool
+
+    def groupId_changed?: () -> bool
+
+    def groupId_change: () -> [ String?, String? ]
+
+    def groupId_will_change!: () -> void
+
+    def groupId_was: () -> String?
+
+    def groupId_previously_changed?: () -> bool
+
+    def groupId_previous_change: () -> Array[String?]?
+
+    def groupId_previously_was: () -> String?
+
+    def groupId_before_last_save: () -> String?
+
+    def groupId_change_to_be_saved: () -> Array[String?]?
+
+    def groupId_in_database: () -> String?
+
+    def saved_change_to_groupId: () -> Array[String?]?
+
+    def saved_change_to_groupId?: () -> bool
+
+    def will_save_change_to_groupId?: () -> bool
+
+    def restore_groupId!: () -> void
+
+    def clear_groupId_change: () -> void
+
+    def isExtra: () -> bool
+
+    def isExtra=: (bool) -> bool
+
+    def isExtra?: () -> bool
+
+    def isExtra_changed?: () -> bool
+
+    def isExtra_change: () -> [ bool?, bool? ]
+
+    def isExtra_will_change!: () -> void
+
+    def isExtra_was: () -> bool?
+
+    def isExtra_previously_changed?: () -> bool
+
+    def isExtra_previous_change: () -> Array[bool?]?
+
+    def isExtra_previously_was: () -> bool?
+
+    def isExtra_before_last_save: () -> bool?
+
+    def isExtra_change_to_be_saved: () -> Array[bool?]?
+
+    def isExtra_in_database: () -> bool?
+
+    def saved_change_to_isExtra: () -> Array[bool?]?
+
+    def saved_change_to_isExtra?: () -> bool
+
+    def will_save_change_to_isExtra?: () -> bool
+
+    def restore_isExtra!: () -> void
+
+    def clear_isExtra_change: () -> void
+
+    def scrambleNum: () -> Integer
+
+    def scrambleNum=: (Integer) -> Integer
+
+    def scrambleNum?: () -> bool
+
+    def scrambleNum_changed?: () -> bool
+
+    def scrambleNum_change: () -> [ Integer?, Integer? ]
+
+    def scrambleNum_will_change!: () -> void
+
+    def scrambleNum_was: () -> Integer?
+
+    def scrambleNum_previously_changed?: () -> bool
+
+    def scrambleNum_previous_change: () -> Array[Integer?]?
+
+    def scrambleNum_previously_was: () -> Integer?
+
+    def scrambleNum_before_last_save: () -> Integer?
+
+    def scrambleNum_change_to_be_saved: () -> Array[Integer?]?
+
+    def scrambleNum_in_database: () -> Integer?
+
+    def saved_change_to_scrambleNum: () -> Array[Integer?]?
+
+    def saved_change_to_scrambleNum?: () -> bool
+
+    def will_save_change_to_scrambleNum?: () -> bool
+
+    def restore_scrambleNum!: () -> void
+
+    def clear_scrambleNum_change: () -> void
+
+    def scramble: () -> String
+
+    def scramble=: (String) -> String
+
+    def scramble?: () -> bool
+
+    def scramble_changed?: () -> bool
+
+    def scramble_change: () -> [ String?, String? ]
+
+    def scramble_will_change!: () -> void
+
+    def scramble_was: () -> String?
+
+    def scramble_previously_changed?: () -> bool
+
+    def scramble_previous_change: () -> Array[String?]?
+
+    def scramble_previously_was: () -> String?
+
+    def scramble_before_last_save: () -> String?
+
+    def scramble_change_to_be_saved: () -> Array[String?]?
+
+    def scramble_in_database: () -> String?
+
+    def saved_change_to_scramble: () -> Array[String?]?
+
+    def saved_change_to_scramble?: () -> bool
+
+    def will_save_change_to_scramble?: () -> bool
+
+    def restore_scramble!: () -> void
+
+    def clear_scramble_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Scramble, Integer]
+    include Enumerable[Scramble]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Scramble, Integer]
+  end
+end

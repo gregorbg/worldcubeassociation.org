@@ -1,0 +1,276 @@
+class RanksSingle < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[RanksSingle, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def personId: () -> String
+
+    def personId=: (String) -> String
+
+    def personId?: () -> bool
+
+    def personId_changed?: () -> bool
+
+    def personId_change: () -> [ String?, String? ]
+
+    def personId_will_change!: () -> void
+
+    def personId_was: () -> String?
+
+    def personId_previously_changed?: () -> bool
+
+    def personId_previous_change: () -> Array[String?]?
+
+    def personId_previously_was: () -> String?
+
+    def personId_before_last_save: () -> String?
+
+    def personId_change_to_be_saved: () -> Array[String?]?
+
+    def personId_in_database: () -> String?
+
+    def saved_change_to_personId: () -> Array[String?]?
+
+    def saved_change_to_personId?: () -> bool
+
+    def will_save_change_to_personId?: () -> bool
+
+    def restore_personId!: () -> void
+
+    def clear_personId_change: () -> void
+
+    def eventId: () -> String
+
+    def eventId=: (String) -> String
+
+    def eventId?: () -> bool
+
+    def eventId_changed?: () -> bool
+
+    def eventId_change: () -> [ String?, String? ]
+
+    def eventId_will_change!: () -> void
+
+    def eventId_was: () -> String?
+
+    def eventId_previously_changed?: () -> bool
+
+    def eventId_previous_change: () -> Array[String?]?
+
+    def eventId_previously_was: () -> String?
+
+    def eventId_before_last_save: () -> String?
+
+    def eventId_change_to_be_saved: () -> Array[String?]?
+
+    def eventId_in_database: () -> String?
+
+    def saved_change_to_eventId: () -> Array[String?]?
+
+    def saved_change_to_eventId?: () -> bool
+
+    def will_save_change_to_eventId?: () -> bool
+
+    def restore_eventId!: () -> void
+
+    def clear_eventId_change: () -> void
+
+    def best: () -> Integer
+
+    def best=: (Integer) -> Integer
+
+    def best?: () -> bool
+
+    def best_changed?: () -> bool
+
+    def best_change: () -> [ Integer?, Integer? ]
+
+    def best_will_change!: () -> void
+
+    def best_was: () -> Integer?
+
+    def best_previously_changed?: () -> bool
+
+    def best_previous_change: () -> Array[Integer?]?
+
+    def best_previously_was: () -> Integer?
+
+    def best_before_last_save: () -> Integer?
+
+    def best_change_to_be_saved: () -> Array[Integer?]?
+
+    def best_in_database: () -> Integer?
+
+    def saved_change_to_best: () -> Array[Integer?]?
+
+    def saved_change_to_best?: () -> bool
+
+    def will_save_change_to_best?: () -> bool
+
+    def restore_best!: () -> void
+
+    def clear_best_change: () -> void
+
+    def worldRank: () -> Integer
+
+    def worldRank=: (Integer) -> Integer
+
+    def worldRank?: () -> bool
+
+    def worldRank_changed?: () -> bool
+
+    def worldRank_change: () -> [ Integer?, Integer? ]
+
+    def worldRank_will_change!: () -> void
+
+    def worldRank_was: () -> Integer?
+
+    def worldRank_previously_changed?: () -> bool
+
+    def worldRank_previous_change: () -> Array[Integer?]?
+
+    def worldRank_previously_was: () -> Integer?
+
+    def worldRank_before_last_save: () -> Integer?
+
+    def worldRank_change_to_be_saved: () -> Array[Integer?]?
+
+    def worldRank_in_database: () -> Integer?
+
+    def saved_change_to_worldRank: () -> Array[Integer?]?
+
+    def saved_change_to_worldRank?: () -> bool
+
+    def will_save_change_to_worldRank?: () -> bool
+
+    def restore_worldRank!: () -> void
+
+    def clear_worldRank_change: () -> void
+
+    def continentRank: () -> Integer
+
+    def continentRank=: (Integer) -> Integer
+
+    def continentRank?: () -> bool
+
+    def continentRank_changed?: () -> bool
+
+    def continentRank_change: () -> [ Integer?, Integer? ]
+
+    def continentRank_will_change!: () -> void
+
+    def continentRank_was: () -> Integer?
+
+    def continentRank_previously_changed?: () -> bool
+
+    def continentRank_previous_change: () -> Array[Integer?]?
+
+    def continentRank_previously_was: () -> Integer?
+
+    def continentRank_before_last_save: () -> Integer?
+
+    def continentRank_change_to_be_saved: () -> Array[Integer?]?
+
+    def continentRank_in_database: () -> Integer?
+
+    def saved_change_to_continentRank: () -> Array[Integer?]?
+
+    def saved_change_to_continentRank?: () -> bool
+
+    def will_save_change_to_continentRank?: () -> bool
+
+    def restore_continentRank!: () -> void
+
+    def clear_continentRank_change: () -> void
+
+    def countryRank: () -> Integer
+
+    def countryRank=: (Integer) -> Integer
+
+    def countryRank?: () -> bool
+
+    def countryRank_changed?: () -> bool
+
+    def countryRank_change: () -> [ Integer?, Integer? ]
+
+    def countryRank_will_change!: () -> void
+
+    def countryRank_was: () -> Integer?
+
+    def countryRank_previously_changed?: () -> bool
+
+    def countryRank_previous_change: () -> Array[Integer?]?
+
+    def countryRank_previously_was: () -> Integer?
+
+    def countryRank_before_last_save: () -> Integer?
+
+    def countryRank_change_to_be_saved: () -> Array[Integer?]?
+
+    def countryRank_in_database: () -> Integer?
+
+    def saved_change_to_countryRank: () -> Array[Integer?]?
+
+    def saved_change_to_countryRank?: () -> bool
+
+    def will_save_change_to_countryRank?: () -> bool
+
+    def restore_countryRank!: () -> void
+
+    def clear_countryRank_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[RanksSingle, Integer]
+    include Enumerable[RanksSingle]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[RanksSingle, Integer]
+  end
+end

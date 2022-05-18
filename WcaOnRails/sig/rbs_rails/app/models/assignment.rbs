@@ -1,0 +1,216 @@
+class Assignment < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Assignment, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def registration_id: () -> Integer?
+
+    def registration_id=: (Integer?) -> Integer?
+
+    def registration_id?: () -> bool
+
+    def registration_id_changed?: () -> bool
+
+    def registration_id_change: () -> [ Integer?, Integer? ]
+
+    def registration_id_will_change!: () -> void
+
+    def registration_id_was: () -> Integer?
+
+    def registration_id_previously_changed?: () -> bool
+
+    def registration_id_previous_change: () -> Array[Integer?]?
+
+    def registration_id_previously_was: () -> Integer?
+
+    def registration_id_before_last_save: () -> Integer?
+
+    def registration_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def registration_id_in_database: () -> Integer?
+
+    def saved_change_to_registration_id: () -> Array[Integer?]?
+
+    def saved_change_to_registration_id?: () -> bool
+
+    def will_save_change_to_registration_id?: () -> bool
+
+    def restore_registration_id!: () -> void
+
+    def clear_registration_id_change: () -> void
+
+    def schedule_activity_id: () -> Integer?
+
+    def schedule_activity_id=: (Integer?) -> Integer?
+
+    def schedule_activity_id?: () -> bool
+
+    def schedule_activity_id_changed?: () -> bool
+
+    def schedule_activity_id_change: () -> [ Integer?, Integer? ]
+
+    def schedule_activity_id_will_change!: () -> void
+
+    def schedule_activity_id_was: () -> Integer?
+
+    def schedule_activity_id_previously_changed?: () -> bool
+
+    def schedule_activity_id_previous_change: () -> Array[Integer?]?
+
+    def schedule_activity_id_previously_was: () -> Integer?
+
+    def schedule_activity_id_before_last_save: () -> Integer?
+
+    def schedule_activity_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def schedule_activity_id_in_database: () -> Integer?
+
+    def saved_change_to_schedule_activity_id: () -> Array[Integer?]?
+
+    def saved_change_to_schedule_activity_id?: () -> bool
+
+    def will_save_change_to_schedule_activity_id?: () -> bool
+
+    def restore_schedule_activity_id!: () -> void
+
+    def clear_schedule_activity_id_change: () -> void
+
+    def station_number: () -> Integer?
+
+    def station_number=: (Integer?) -> Integer?
+
+    def station_number?: () -> bool
+
+    def station_number_changed?: () -> bool
+
+    def station_number_change: () -> [ Integer?, Integer? ]
+
+    def station_number_will_change!: () -> void
+
+    def station_number_was: () -> Integer?
+
+    def station_number_previously_changed?: () -> bool
+
+    def station_number_previous_change: () -> Array[Integer?]?
+
+    def station_number_previously_was: () -> Integer?
+
+    def station_number_before_last_save: () -> Integer?
+
+    def station_number_change_to_be_saved: () -> Array[Integer?]?
+
+    def station_number_in_database: () -> Integer?
+
+    def saved_change_to_station_number: () -> Array[Integer?]?
+
+    def saved_change_to_station_number?: () -> bool
+
+    def will_save_change_to_station_number?: () -> bool
+
+    def restore_station_number!: () -> void
+
+    def clear_station_number_change: () -> void
+
+    def assignment_code: () -> String
+
+    def assignment_code=: (String) -> String
+
+    def assignment_code?: () -> bool
+
+    def assignment_code_changed?: () -> bool
+
+    def assignment_code_change: () -> [ String?, String? ]
+
+    def assignment_code_will_change!: () -> void
+
+    def assignment_code_was: () -> String?
+
+    def assignment_code_previously_changed?: () -> bool
+
+    def assignment_code_previous_change: () -> Array[String?]?
+
+    def assignment_code_previously_was: () -> String?
+
+    def assignment_code_before_last_save: () -> String?
+
+    def assignment_code_change_to_be_saved: () -> Array[String?]?
+
+    def assignment_code_in_database: () -> String?
+
+    def saved_change_to_assignment_code: () -> Array[String?]?
+
+    def saved_change_to_assignment_code?: () -> bool
+
+    def will_save_change_to_assignment_code?: () -> bool
+
+    def restore_assignment_code!: () -> void
+
+    def clear_assignment_code_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def registration: () -> Registration
+  def registration=: (Registration?) -> Registration?
+  def reload_registration: () -> Registration?
+  def build_registration: (untyped) -> Registration
+  def create_registration: (untyped) -> Registration
+  def create_registration!: (untyped) -> Registration
+  def schedule_activity: () -> ScheduleActivity
+  def schedule_activity=: (ScheduleActivity?) -> ScheduleActivity?
+  def reload_schedule_activity: () -> ScheduleActivity?
+  def build_schedule_activity: (untyped) -> ScheduleActivity
+  def create_schedule_activity: (untyped) -> ScheduleActivity
+  def create_schedule_activity!: (untyped) -> ScheduleActivity
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Assignment, Integer]
+    include Enumerable[Assignment]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Assignment, Integer]
+  end
+end

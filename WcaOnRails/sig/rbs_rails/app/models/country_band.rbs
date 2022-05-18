@@ -1,0 +1,138 @@
+class CountryBand < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[CountryBand, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def number: () -> Integer
+
+    def number=: (Integer) -> Integer
+
+    def number?: () -> bool
+
+    def number_changed?: () -> bool
+
+    def number_change: () -> [ Integer?, Integer? ]
+
+    def number_will_change!: () -> void
+
+    def number_was: () -> Integer?
+
+    def number_previously_changed?: () -> bool
+
+    def number_previous_change: () -> Array[Integer?]?
+
+    def number_previously_was: () -> Integer?
+
+    def number_before_last_save: () -> Integer?
+
+    def number_change_to_be_saved: () -> Array[Integer?]?
+
+    def number_in_database: () -> Integer?
+
+    def saved_change_to_number: () -> Array[Integer?]?
+
+    def saved_change_to_number?: () -> bool
+
+    def will_save_change_to_number?: () -> bool
+
+    def restore_number!: () -> void
+
+    def clear_number_change: () -> void
+
+    def iso2: () -> String
+
+    def iso2=: (String) -> String
+
+    def iso2?: () -> bool
+
+    def iso2_changed?: () -> bool
+
+    def iso2_change: () -> [ String?, String? ]
+
+    def iso2_will_change!: () -> void
+
+    def iso2_was: () -> String?
+
+    def iso2_previously_changed?: () -> bool
+
+    def iso2_previous_change: () -> Array[String?]?
+
+    def iso2_previously_was: () -> String?
+
+    def iso2_before_last_save: () -> String?
+
+    def iso2_change_to_be_saved: () -> Array[String?]?
+
+    def iso2_in_database: () -> String?
+
+    def saved_change_to_iso2: () -> Array[String?]?
+
+    def saved_change_to_iso2?: () -> bool
+
+    def will_save_change_to_iso2?: () -> bool
+
+    def restore_iso2!: () -> void
+
+    def clear_iso2_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def country: () -> Country
+  def country=: (Country?) -> Country?
+  def reload_country: () -> Country?
+  def build_country: (untyped) -> Country
+  def create_country: (untyped) -> Country
+  def create_country!: (untyped) -> Country
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CountryBand, Integer]
+    include Enumerable[CountryBand]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CountryBand, Integer]
+  end
+end

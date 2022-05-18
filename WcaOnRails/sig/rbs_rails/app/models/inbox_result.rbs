@@ -1,0 +1,552 @@
+class InboxResult < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[InboxResult, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def personId: () -> String
+
+    def personId=: (String) -> String
+
+    def personId?: () -> bool
+
+    def personId_changed?: () -> bool
+
+    def personId_change: () -> [ String?, String? ]
+
+    def personId_will_change!: () -> void
+
+    def personId_was: () -> String?
+
+    def personId_previously_changed?: () -> bool
+
+    def personId_previous_change: () -> Array[String?]?
+
+    def personId_previously_was: () -> String?
+
+    def personId_before_last_save: () -> String?
+
+    def personId_change_to_be_saved: () -> Array[String?]?
+
+    def personId_in_database: () -> String?
+
+    def saved_change_to_personId: () -> Array[String?]?
+
+    def saved_change_to_personId?: () -> bool
+
+    def will_save_change_to_personId?: () -> bool
+
+    def restore_personId!: () -> void
+
+    def clear_personId_change: () -> void
+
+    def pos: () -> Integer
+
+    def pos=: (Integer) -> Integer
+
+    def pos?: () -> bool
+
+    def pos_changed?: () -> bool
+
+    def pos_change: () -> [ Integer?, Integer? ]
+
+    def pos_will_change!: () -> void
+
+    def pos_was: () -> Integer?
+
+    def pos_previously_changed?: () -> bool
+
+    def pos_previous_change: () -> Array[Integer?]?
+
+    def pos_previously_was: () -> Integer?
+
+    def pos_before_last_save: () -> Integer?
+
+    def pos_change_to_be_saved: () -> Array[Integer?]?
+
+    def pos_in_database: () -> Integer?
+
+    def saved_change_to_pos: () -> Array[Integer?]?
+
+    def saved_change_to_pos?: () -> bool
+
+    def will_save_change_to_pos?: () -> bool
+
+    def restore_pos!: () -> void
+
+    def clear_pos_change: () -> void
+
+    def competitionId: () -> String
+
+    def competitionId=: (String) -> String
+
+    def competitionId?: () -> bool
+
+    def competitionId_changed?: () -> bool
+
+    def competitionId_change: () -> [ String?, String? ]
+
+    def competitionId_will_change!: () -> void
+
+    def competitionId_was: () -> String?
+
+    def competitionId_previously_changed?: () -> bool
+
+    def competitionId_previous_change: () -> Array[String?]?
+
+    def competitionId_previously_was: () -> String?
+
+    def competitionId_before_last_save: () -> String?
+
+    def competitionId_change_to_be_saved: () -> Array[String?]?
+
+    def competitionId_in_database: () -> String?
+
+    def saved_change_to_competitionId: () -> Array[String?]?
+
+    def saved_change_to_competitionId?: () -> bool
+
+    def will_save_change_to_competitionId?: () -> bool
+
+    def restore_competitionId!: () -> void
+
+    def clear_competitionId_change: () -> void
+
+    def eventId: () -> String
+
+    def eventId=: (String) -> String
+
+    def eventId?: () -> bool
+
+    def eventId_changed?: () -> bool
+
+    def eventId_change: () -> [ String?, String? ]
+
+    def eventId_will_change!: () -> void
+
+    def eventId_was: () -> String?
+
+    def eventId_previously_changed?: () -> bool
+
+    def eventId_previous_change: () -> Array[String?]?
+
+    def eventId_previously_was: () -> String?
+
+    def eventId_before_last_save: () -> String?
+
+    def eventId_change_to_be_saved: () -> Array[String?]?
+
+    def eventId_in_database: () -> String?
+
+    def saved_change_to_eventId: () -> Array[String?]?
+
+    def saved_change_to_eventId?: () -> bool
+
+    def will_save_change_to_eventId?: () -> bool
+
+    def restore_eventId!: () -> void
+
+    def clear_eventId_change: () -> void
+
+    def roundTypeId: () -> String
+
+    def roundTypeId=: (String) -> String
+
+    def roundTypeId?: () -> bool
+
+    def roundTypeId_changed?: () -> bool
+
+    def roundTypeId_change: () -> [ String?, String? ]
+
+    def roundTypeId_will_change!: () -> void
+
+    def roundTypeId_was: () -> String?
+
+    def roundTypeId_previously_changed?: () -> bool
+
+    def roundTypeId_previous_change: () -> Array[String?]?
+
+    def roundTypeId_previously_was: () -> String?
+
+    def roundTypeId_before_last_save: () -> String?
+
+    def roundTypeId_change_to_be_saved: () -> Array[String?]?
+
+    def roundTypeId_in_database: () -> String?
+
+    def saved_change_to_roundTypeId: () -> Array[String?]?
+
+    def saved_change_to_roundTypeId?: () -> bool
+
+    def will_save_change_to_roundTypeId?: () -> bool
+
+    def restore_roundTypeId!: () -> void
+
+    def clear_roundTypeId_change: () -> void
+
+    def formatId: () -> String
+
+    def formatId=: (String) -> String
+
+    def formatId?: () -> bool
+
+    def formatId_changed?: () -> bool
+
+    def formatId_change: () -> [ String?, String? ]
+
+    def formatId_will_change!: () -> void
+
+    def formatId_was: () -> String?
+
+    def formatId_previously_changed?: () -> bool
+
+    def formatId_previous_change: () -> Array[String?]?
+
+    def formatId_previously_was: () -> String?
+
+    def formatId_before_last_save: () -> String?
+
+    def formatId_change_to_be_saved: () -> Array[String?]?
+
+    def formatId_in_database: () -> String?
+
+    def saved_change_to_formatId: () -> Array[String?]?
+
+    def saved_change_to_formatId?: () -> bool
+
+    def will_save_change_to_formatId?: () -> bool
+
+    def restore_formatId!: () -> void
+
+    def clear_formatId_change: () -> void
+
+    def value1: () -> Integer
+
+    def value1=: (Integer) -> Integer
+
+    def value1?: () -> bool
+
+    def value1_changed?: () -> bool
+
+    def value1_change: () -> [ Integer?, Integer? ]
+
+    def value1_will_change!: () -> void
+
+    def value1_was: () -> Integer?
+
+    def value1_previously_changed?: () -> bool
+
+    def value1_previous_change: () -> Array[Integer?]?
+
+    def value1_previously_was: () -> Integer?
+
+    def value1_before_last_save: () -> Integer?
+
+    def value1_change_to_be_saved: () -> Array[Integer?]?
+
+    def value1_in_database: () -> Integer?
+
+    def saved_change_to_value1: () -> Array[Integer?]?
+
+    def saved_change_to_value1?: () -> bool
+
+    def will_save_change_to_value1?: () -> bool
+
+    def restore_value1!: () -> void
+
+    def clear_value1_change: () -> void
+
+    def value2: () -> Integer
+
+    def value2=: (Integer) -> Integer
+
+    def value2?: () -> bool
+
+    def value2_changed?: () -> bool
+
+    def value2_change: () -> [ Integer?, Integer? ]
+
+    def value2_will_change!: () -> void
+
+    def value2_was: () -> Integer?
+
+    def value2_previously_changed?: () -> bool
+
+    def value2_previous_change: () -> Array[Integer?]?
+
+    def value2_previously_was: () -> Integer?
+
+    def value2_before_last_save: () -> Integer?
+
+    def value2_change_to_be_saved: () -> Array[Integer?]?
+
+    def value2_in_database: () -> Integer?
+
+    def saved_change_to_value2: () -> Array[Integer?]?
+
+    def saved_change_to_value2?: () -> bool
+
+    def will_save_change_to_value2?: () -> bool
+
+    def restore_value2!: () -> void
+
+    def clear_value2_change: () -> void
+
+    def value3: () -> Integer
+
+    def value3=: (Integer) -> Integer
+
+    def value3?: () -> bool
+
+    def value3_changed?: () -> bool
+
+    def value3_change: () -> [ Integer?, Integer? ]
+
+    def value3_will_change!: () -> void
+
+    def value3_was: () -> Integer?
+
+    def value3_previously_changed?: () -> bool
+
+    def value3_previous_change: () -> Array[Integer?]?
+
+    def value3_previously_was: () -> Integer?
+
+    def value3_before_last_save: () -> Integer?
+
+    def value3_change_to_be_saved: () -> Array[Integer?]?
+
+    def value3_in_database: () -> Integer?
+
+    def saved_change_to_value3: () -> Array[Integer?]?
+
+    def saved_change_to_value3?: () -> bool
+
+    def will_save_change_to_value3?: () -> bool
+
+    def restore_value3!: () -> void
+
+    def clear_value3_change: () -> void
+
+    def value4: () -> Integer
+
+    def value4=: (Integer) -> Integer
+
+    def value4?: () -> bool
+
+    def value4_changed?: () -> bool
+
+    def value4_change: () -> [ Integer?, Integer? ]
+
+    def value4_will_change!: () -> void
+
+    def value4_was: () -> Integer?
+
+    def value4_previously_changed?: () -> bool
+
+    def value4_previous_change: () -> Array[Integer?]?
+
+    def value4_previously_was: () -> Integer?
+
+    def value4_before_last_save: () -> Integer?
+
+    def value4_change_to_be_saved: () -> Array[Integer?]?
+
+    def value4_in_database: () -> Integer?
+
+    def saved_change_to_value4: () -> Array[Integer?]?
+
+    def saved_change_to_value4?: () -> bool
+
+    def will_save_change_to_value4?: () -> bool
+
+    def restore_value4!: () -> void
+
+    def clear_value4_change: () -> void
+
+    def value5: () -> Integer
+
+    def value5=: (Integer) -> Integer
+
+    def value5?: () -> bool
+
+    def value5_changed?: () -> bool
+
+    def value5_change: () -> [ Integer?, Integer? ]
+
+    def value5_will_change!: () -> void
+
+    def value5_was: () -> Integer?
+
+    def value5_previously_changed?: () -> bool
+
+    def value5_previous_change: () -> Array[Integer?]?
+
+    def value5_previously_was: () -> Integer?
+
+    def value5_before_last_save: () -> Integer?
+
+    def value5_change_to_be_saved: () -> Array[Integer?]?
+
+    def value5_in_database: () -> Integer?
+
+    def saved_change_to_value5: () -> Array[Integer?]?
+
+    def saved_change_to_value5?: () -> bool
+
+    def will_save_change_to_value5?: () -> bool
+
+    def restore_value5!: () -> void
+
+    def clear_value5_change: () -> void
+
+    def best: () -> Integer
+
+    def best=: (Integer) -> Integer
+
+    def best?: () -> bool
+
+    def best_changed?: () -> bool
+
+    def best_change: () -> [ Integer?, Integer? ]
+
+    def best_will_change!: () -> void
+
+    def best_was: () -> Integer?
+
+    def best_previously_changed?: () -> bool
+
+    def best_previous_change: () -> Array[Integer?]?
+
+    def best_previously_was: () -> Integer?
+
+    def best_before_last_save: () -> Integer?
+
+    def best_change_to_be_saved: () -> Array[Integer?]?
+
+    def best_in_database: () -> Integer?
+
+    def saved_change_to_best: () -> Array[Integer?]?
+
+    def saved_change_to_best?: () -> bool
+
+    def will_save_change_to_best?: () -> bool
+
+    def restore_best!: () -> void
+
+    def clear_best_change: () -> void
+
+    def average: () -> Integer
+
+    def average=: (Integer) -> Integer
+
+    def average?: () -> bool
+
+    def average_changed?: () -> bool
+
+    def average_change: () -> [ Integer?, Integer? ]
+
+    def average_will_change!: () -> void
+
+    def average_was: () -> Integer?
+
+    def average_previously_changed?: () -> bool
+
+    def average_previous_change: () -> Array[Integer?]?
+
+    def average_previously_was: () -> Integer?
+
+    def average_before_last_save: () -> Integer?
+
+    def average_change_to_be_saved: () -> Array[Integer?]?
+
+    def average_in_database: () -> Integer?
+
+    def saved_change_to_average: () -> Array[Integer?]?
+
+    def saved_change_to_average?: () -> bool
+
+    def will_save_change_to_average?: () -> bool
+
+    def restore_average!: () -> void
+
+    def clear_average_change: () -> void
+
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  def round_type: () -> RoundType
+  def round_type=: (RoundType?) -> RoundType?
+  def reload_round_type: () -> RoundType?
+  def build_round_type: (untyped) -> RoundType
+  def create_round_type: (untyped) -> RoundType
+  def create_round_type!: (untyped) -> RoundType
+  def event: () -> Event
+  def event=: (Event?) -> Event?
+  def reload_event: () -> Event?
+  def build_event: (untyped) -> Event
+  def create_event: (untyped) -> Event
+  def create_event!: (untyped) -> Event
+  def format: () -> Format
+  def format=: (Format?) -> Format?
+  def reload_format: () -> Format?
+  def build_format: (untyped) -> Format
+  def create_format: (untyped) -> Format
+  def create_format!: (untyped) -> Format
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[InboxResult, Integer]
+    include Enumerable[InboxResult]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[InboxResult, Integer]
+  end
+end

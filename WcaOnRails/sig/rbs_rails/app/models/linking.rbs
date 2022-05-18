@@ -1,0 +1,96 @@
+class Linking < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Linking, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def wca_id: () -> String
+
+    def wca_id=: (String) -> String
+
+    def wca_id?: () -> bool
+
+    def wca_id_changed?: () -> bool
+
+    def wca_id_change: () -> [ String?, String? ]
+
+    def wca_id_will_change!: () -> void
+
+    def wca_id_was: () -> String?
+
+    def wca_id_previously_changed?: () -> bool
+
+    def wca_id_previous_change: () -> Array[String?]?
+
+    def wca_id_previously_was: () -> String?
+
+    def wca_id_before_last_save: () -> String?
+
+    def wca_id_change_to_be_saved: () -> Array[String?]?
+
+    def wca_id_in_database: () -> String?
+
+    def saved_change_to_wca_id: () -> Array[String?]?
+
+    def saved_change_to_wca_id?: () -> bool
+
+    def will_save_change_to_wca_id?: () -> bool
+
+    def restore_wca_id!: () -> void
+
+    def clear_wca_id_change: () -> void
+
+    def wca_ids: () -> String
+
+    def wca_ids=: (String) -> String
+
+    def wca_ids?: () -> bool
+
+    def wca_ids_changed?: () -> bool
+
+    def wca_ids_change: () -> [ String?, String? ]
+
+    def wca_ids_will_change!: () -> void
+
+    def wca_ids_was: () -> String?
+
+    def wca_ids_previously_changed?: () -> bool
+
+    def wca_ids_previous_change: () -> Array[String?]?
+
+    def wca_ids_previously_was: () -> String?
+
+    def wca_ids_before_last_save: () -> String?
+
+    def wca_ids_change_to_be_saved: () -> Array[String?]?
+
+    def wca_ids_in_database: () -> String?
+
+    def saved_change_to_wca_ids: () -> Array[String?]?
+
+    def saved_change_to_wca_ids?: () -> bool
+
+    def will_save_change_to_wca_ids?: () -> bool
+
+    def restore_wca_ids!: () -> void
+
+    def clear_wca_ids_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Linking, String]
+    include Enumerable[Linking]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Linking, String]
+  end
+end

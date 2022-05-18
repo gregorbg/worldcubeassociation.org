@@ -1,0 +1,150 @@
+class RegistrationCompetitionEvent < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[RegistrationCompetitionEvent, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def registration_id: () -> Integer?
+
+    def registration_id=: (Integer?) -> Integer?
+
+    def registration_id?: () -> bool
+
+    def registration_id_changed?: () -> bool
+
+    def registration_id_change: () -> [ Integer?, Integer? ]
+
+    def registration_id_will_change!: () -> void
+
+    def registration_id_was: () -> Integer?
+
+    def registration_id_previously_changed?: () -> bool
+
+    def registration_id_previous_change: () -> Array[Integer?]?
+
+    def registration_id_previously_was: () -> Integer?
+
+    def registration_id_before_last_save: () -> Integer?
+
+    def registration_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def registration_id_in_database: () -> Integer?
+
+    def saved_change_to_registration_id: () -> Array[Integer?]?
+
+    def saved_change_to_registration_id?: () -> bool
+
+    def will_save_change_to_registration_id?: () -> bool
+
+    def restore_registration_id!: () -> void
+
+    def clear_registration_id_change: () -> void
+
+    def competition_event_id: () -> Integer?
+
+    def competition_event_id=: (Integer?) -> Integer?
+
+    def competition_event_id?: () -> bool
+
+    def competition_event_id_changed?: () -> bool
+
+    def competition_event_id_change: () -> [ Integer?, Integer? ]
+
+    def competition_event_id_will_change!: () -> void
+
+    def competition_event_id_was: () -> Integer?
+
+    def competition_event_id_previously_changed?: () -> bool
+
+    def competition_event_id_previous_change: () -> Array[Integer?]?
+
+    def competition_event_id_previously_was: () -> Integer?
+
+    def competition_event_id_before_last_save: () -> Integer?
+
+    def competition_event_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def competition_event_id_in_database: () -> Integer?
+
+    def saved_change_to_competition_event_id: () -> Array[Integer?]?
+
+    def saved_change_to_competition_event_id?: () -> bool
+
+    def will_save_change_to_competition_event_id?: () -> bool
+
+    def restore_competition_event_id!: () -> void
+
+    def clear_competition_event_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def event: () -> Event?
+  def event=: (Event?) -> Event?
+  def build_event: (untyped) -> Event
+  def create_event: (untyped) -> Event
+  def create_event!: (untyped) -> Event
+  def reload_event: () -> Event?
+  def registration: () -> Registration
+  def registration=: (Registration?) -> Registration?
+  def reload_registration: () -> Registration?
+  def build_registration: (untyped) -> Registration
+  def create_registration: (untyped) -> Registration
+  def create_registration!: (untyped) -> Registration
+  def competition_event: () -> CompetitionEvent
+  def competition_event=: (CompetitionEvent?) -> CompetitionEvent?
+  def reload_competition_event: () -> CompetitionEvent?
+  def build_competition_event: (untyped) -> CompetitionEvent
+  def create_competition_event: (untyped) -> CompetitionEvent
+  def create_competition_event!: (untyped) -> CompetitionEvent
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[RegistrationCompetitionEvent, Integer]
+    include Enumerable[RegistrationCompetitionEvent]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[RegistrationCompetitionEvent, Integer]
+  end
+end

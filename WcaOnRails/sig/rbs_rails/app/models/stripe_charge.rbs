@@ -1,0 +1,296 @@
+class StripeCharge < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[StripeCharge, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def metadata: () -> String
+
+    def metadata=: (String) -> String
+
+    def metadata?: () -> bool
+
+    def metadata_changed?: () -> bool
+
+    def metadata_change: () -> [ String?, String? ]
+
+    def metadata_will_change!: () -> void
+
+    def metadata_was: () -> String?
+
+    def metadata_previously_changed?: () -> bool
+
+    def metadata_previous_change: () -> Array[String?]?
+
+    def metadata_previously_was: () -> String?
+
+    def metadata_before_last_save: () -> String?
+
+    def metadata_change_to_be_saved: () -> Array[String?]?
+
+    def metadata_in_database: () -> String?
+
+    def saved_change_to_metadata: () -> Array[String?]?
+
+    def saved_change_to_metadata?: () -> bool
+
+    def will_save_change_to_metadata?: () -> bool
+
+    def restore_metadata!: () -> void
+
+    def clear_metadata_change: () -> void
+
+    def stripe_charge_id: () -> String?
+
+    def stripe_charge_id=: (String?) -> String?
+
+    def stripe_charge_id?: () -> bool
+
+    def stripe_charge_id_changed?: () -> bool
+
+    def stripe_charge_id_change: () -> [ String?, String? ]
+
+    def stripe_charge_id_will_change!: () -> void
+
+    def stripe_charge_id_was: () -> String?
+
+    def stripe_charge_id_previously_changed?: () -> bool
+
+    def stripe_charge_id_previous_change: () -> Array[String?]?
+
+    def stripe_charge_id_previously_was: () -> String?
+
+    def stripe_charge_id_before_last_save: () -> String?
+
+    def stripe_charge_id_change_to_be_saved: () -> Array[String?]?
+
+    def stripe_charge_id_in_database: () -> String?
+
+    def saved_change_to_stripe_charge_id: () -> Array[String?]?
+
+    def saved_change_to_stripe_charge_id?: () -> bool
+
+    def will_save_change_to_stripe_charge_id?: () -> bool
+
+    def restore_stripe_charge_id!: () -> void
+
+    def clear_stripe_charge_id_change: () -> void
+
+    def status: () -> String
+
+    def status=: (String) -> String
+
+    def status?: () -> bool
+
+    def status_changed?: () -> bool
+
+    def status_change: () -> [ String?, String? ]
+
+    def status_will_change!: () -> void
+
+    def status_was: () -> String?
+
+    def status_previously_changed?: () -> bool
+
+    def status_previous_change: () -> Array[String?]?
+
+    def status_previously_was: () -> String?
+
+    def status_before_last_save: () -> String?
+
+    def status_change_to_be_saved: () -> Array[String?]?
+
+    def status_in_database: () -> String?
+
+    def saved_change_to_status: () -> Array[String?]?
+
+    def saved_change_to_status?: () -> bool
+
+    def will_save_change_to_status?: () -> bool
+
+    def restore_status!: () -> void
+
+    def clear_status_change: () -> void
+
+    def error: () -> String?
+
+    def error=: (String?) -> String?
+
+    def error?: () -> bool
+
+    def error_changed?: () -> bool
+
+    def error_change: () -> [ String?, String? ]
+
+    def error_will_change!: () -> void
+
+    def error_was: () -> String?
+
+    def error_previously_changed?: () -> bool
+
+    def error_previous_change: () -> Array[String?]?
+
+    def error_previously_was: () -> String?
+
+    def error_before_last_save: () -> String?
+
+    def error_change_to_be_saved: () -> Array[String?]?
+
+    def error_in_database: () -> String?
+
+    def saved_change_to_error: () -> Array[String?]?
+
+    def saved_change_to_error?: () -> bool
+
+    def will_save_change_to_error?: () -> bool
+
+    def restore_error!: () -> void
+
+    def clear_error_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def unknown!: () -> bool
+  def unknown?: () -> bool
+  def payment_intent_registered!: () -> bool
+  def payment_intent_registered?: () -> bool
+  def success!: () -> bool
+  def success?: () -> bool
+  def failure!: () -> bool
+  def failure?: () -> bool
+  def self.unknown: () -> ActiveRecord_Relation
+  def self.payment_intent_registered: () -> ActiveRecord_Relation
+  def self.success: () -> ActiveRecord_Relation
+  def self.failure: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def unknown: () -> ActiveRecord_Relation
+
+    def payment_intent_registered: () -> ActiveRecord_Relation
+
+    def success: () -> ActiveRecord_Relation
+
+    def failure: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[StripeCharge, Integer]
+    include Enumerable[StripeCharge]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[StripeCharge, Integer]
+  end
+end

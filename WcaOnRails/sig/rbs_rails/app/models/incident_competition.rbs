@@ -1,0 +1,180 @@
+class IncidentCompetition < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[IncidentCompetition, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def incident_id: () -> Integer
+
+    def incident_id=: (Integer) -> Integer
+
+    def incident_id?: () -> bool
+
+    def incident_id_changed?: () -> bool
+
+    def incident_id_change: () -> [ Integer?, Integer? ]
+
+    def incident_id_will_change!: () -> void
+
+    def incident_id_was: () -> Integer?
+
+    def incident_id_previously_changed?: () -> bool
+
+    def incident_id_previous_change: () -> Array[Integer?]?
+
+    def incident_id_previously_was: () -> Integer?
+
+    def incident_id_before_last_save: () -> Integer?
+
+    def incident_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def incident_id_in_database: () -> Integer?
+
+    def saved_change_to_incident_id: () -> Array[Integer?]?
+
+    def saved_change_to_incident_id?: () -> bool
+
+    def will_save_change_to_incident_id?: () -> bool
+
+    def restore_incident_id!: () -> void
+
+    def clear_incident_id_change: () -> void
+
+    def competition_id: () -> String
+
+    def competition_id=: (String) -> String
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def comments: () -> String?
+
+    def comments=: (String?) -> String?
+
+    def comments?: () -> bool
+
+    def comments_changed?: () -> bool
+
+    def comments_change: () -> [ String?, String? ]
+
+    def comments_will_change!: () -> void
+
+    def comments_was: () -> String?
+
+    def comments_previously_changed?: () -> bool
+
+    def comments_previous_change: () -> Array[String?]?
+
+    def comments_previously_was: () -> String?
+
+    def comments_before_last_save: () -> String?
+
+    def comments_change_to_be_saved: () -> Array[String?]?
+
+    def comments_in_database: () -> String?
+
+    def saved_change_to_comments: () -> Array[String?]?
+
+    def saved_change_to_comments?: () -> bool
+
+    def will_save_change_to_comments?: () -> bool
+
+    def restore_comments!: () -> void
+
+    def clear_comments_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def incident: () -> Incident
+  def incident=: (Incident?) -> Incident?
+  def reload_incident: () -> Incident?
+  def build_incident: (untyped) -> Incident
+  def create_incident: (untyped) -> Incident
+  def create_incident!: (untyped) -> Incident
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[IncidentCompetition, Integer]
+    include Enumerable[IncidentCompetition]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[IncidentCompetition, Integer]
+  end
+end

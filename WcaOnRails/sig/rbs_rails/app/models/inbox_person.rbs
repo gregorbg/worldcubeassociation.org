@@ -1,0 +1,276 @@
+class InboxPerson < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[InboxPerson, ActiveRecord_Relation, top]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def wcaId: () -> String
+
+    def wcaId=: (String) -> String
+
+    def wcaId?: () -> bool
+
+    def wcaId_changed?: () -> bool
+
+    def wcaId_change: () -> [ String?, String? ]
+
+    def wcaId_will_change!: () -> void
+
+    def wcaId_was: () -> String?
+
+    def wcaId_previously_changed?: () -> bool
+
+    def wcaId_previous_change: () -> Array[String?]?
+
+    def wcaId_previously_was: () -> String?
+
+    def wcaId_before_last_save: () -> String?
+
+    def wcaId_change_to_be_saved: () -> Array[String?]?
+
+    def wcaId_in_database: () -> String?
+
+    def saved_change_to_wcaId: () -> Array[String?]?
+
+    def saved_change_to_wcaId?: () -> bool
+
+    def will_save_change_to_wcaId?: () -> bool
+
+    def restore_wcaId!: () -> void
+
+    def clear_wcaId_change: () -> void
+
+    def name: () -> String?
+
+    def name=: (String?) -> String?
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def countryId: () -> String
+
+    def countryId=: (String) -> String
+
+    def countryId?: () -> bool
+
+    def countryId_changed?: () -> bool
+
+    def countryId_change: () -> [ String?, String? ]
+
+    def countryId_will_change!: () -> void
+
+    def countryId_was: () -> String?
+
+    def countryId_previously_changed?: () -> bool
+
+    def countryId_previous_change: () -> Array[String?]?
+
+    def countryId_previously_was: () -> String?
+
+    def countryId_before_last_save: () -> String?
+
+    def countryId_change_to_be_saved: () -> Array[String?]?
+
+    def countryId_in_database: () -> String?
+
+    def saved_change_to_countryId: () -> Array[String?]?
+
+    def saved_change_to_countryId?: () -> bool
+
+    def will_save_change_to_countryId?: () -> bool
+
+    def restore_countryId!: () -> void
+
+    def clear_countryId_change: () -> void
+
+    def gender: () -> String?
+
+    def gender=: (String?) -> String?
+
+    def gender?: () -> bool
+
+    def gender_changed?: () -> bool
+
+    def gender_change: () -> [ String?, String? ]
+
+    def gender_will_change!: () -> void
+
+    def gender_was: () -> String?
+
+    def gender_previously_changed?: () -> bool
+
+    def gender_previous_change: () -> Array[String?]?
+
+    def gender_previously_was: () -> String?
+
+    def gender_before_last_save: () -> String?
+
+    def gender_change_to_be_saved: () -> Array[String?]?
+
+    def gender_in_database: () -> String?
+
+    def saved_change_to_gender: () -> Array[String?]?
+
+    def saved_change_to_gender?: () -> bool
+
+    def will_save_change_to_gender?: () -> bool
+
+    def restore_gender!: () -> void
+
+    def clear_gender_change: () -> void
+
+    def dob: () -> Date
+
+    def dob=: (Date) -> Date
+
+    def dob?: () -> bool
+
+    def dob_changed?: () -> bool
+
+    def dob_change: () -> [ Date?, Date? ]
+
+    def dob_will_change!: () -> void
+
+    def dob_was: () -> Date?
+
+    def dob_previously_changed?: () -> bool
+
+    def dob_previous_change: () -> Array[Date?]?
+
+    def dob_previously_was: () -> Date?
+
+    def dob_before_last_save: () -> Date?
+
+    def dob_change_to_be_saved: () -> Array[Date?]?
+
+    def dob_in_database: () -> Date?
+
+    def saved_change_to_dob: () -> Array[Date?]?
+
+    def saved_change_to_dob?: () -> bool
+
+    def will_save_change_to_dob?: () -> bool
+
+    def restore_dob!: () -> void
+
+    def clear_dob_change: () -> void
+
+    def competitionId: () -> String
+
+    def competitionId=: (String) -> String
+
+    def competitionId?: () -> bool
+
+    def competitionId_changed?: () -> bool
+
+    def competitionId_change: () -> [ String?, String? ]
+
+    def competitionId_will_change!: () -> void
+
+    def competitionId_was: () -> String?
+
+    def competitionId_previously_changed?: () -> bool
+
+    def competitionId_previous_change: () -> Array[String?]?
+
+    def competitionId_previously_was: () -> String?
+
+    def competitionId_before_last_save: () -> String?
+
+    def competitionId_change_to_be_saved: () -> Array[String?]?
+
+    def competitionId_in_database: () -> String?
+
+    def saved_change_to_competitionId: () -> Array[String?]?
+
+    def saved_change_to_competitionId?: () -> bool
+
+    def will_save_change_to_competitionId?: () -> bool
+
+    def restore_competitionId!: () -> void
+
+    def clear_competitionId_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[InboxPerson, top]
+    include Enumerable[InboxPerson]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[InboxPerson, top]
+  end
+end

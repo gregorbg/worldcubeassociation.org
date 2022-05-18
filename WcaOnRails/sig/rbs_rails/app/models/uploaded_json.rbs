@@ -1,0 +1,138 @@
+class UploadedJson < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[UploadedJson, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_id: () -> String?
+
+    def competition_id=: (String?) -> String?
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def json_str: () -> String?
+
+    def json_str=: (String?) -> String?
+
+    def json_str?: () -> bool
+
+    def json_str_changed?: () -> bool
+
+    def json_str_change: () -> [ String?, String? ]
+
+    def json_str_will_change!: () -> void
+
+    def json_str_was: () -> String?
+
+    def json_str_previously_changed?: () -> bool
+
+    def json_str_previous_change: () -> Array[String?]?
+
+    def json_str_previously_was: () -> String?
+
+    def json_str_before_last_save: () -> String?
+
+    def json_str_change_to_be_saved: () -> Array[String?]?
+
+    def json_str_in_database: () -> String?
+
+    def saved_change_to_json_str: () -> Array[String?]?
+
+    def saved_change_to_json_str?: () -> bool
+
+    def will_save_change_to_json_str?: () -> bool
+
+    def restore_json_str!: () -> void
+
+    def clear_json_str_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[UploadedJson, Integer]
+    include Enumerable[UploadedJson]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[UploadedJson, Integer]
+  end
+end

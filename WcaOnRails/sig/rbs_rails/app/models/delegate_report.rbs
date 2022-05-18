@@ -1,0 +1,768 @@
+class DelegateReport < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[DelegateReport, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_id: () -> String?
+
+    def competition_id=: (String?) -> String?
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def equipment: () -> String?
+
+    def equipment=: (String?) -> String?
+
+    def equipment?: () -> bool
+
+    def equipment_changed?: () -> bool
+
+    def equipment_change: () -> [ String?, String? ]
+
+    def equipment_will_change!: () -> void
+
+    def equipment_was: () -> String?
+
+    def equipment_previously_changed?: () -> bool
+
+    def equipment_previous_change: () -> Array[String?]?
+
+    def equipment_previously_was: () -> String?
+
+    def equipment_before_last_save: () -> String?
+
+    def equipment_change_to_be_saved: () -> Array[String?]?
+
+    def equipment_in_database: () -> String?
+
+    def saved_change_to_equipment: () -> Array[String?]?
+
+    def saved_change_to_equipment?: () -> bool
+
+    def will_save_change_to_equipment?: () -> bool
+
+    def restore_equipment!: () -> void
+
+    def clear_equipment_change: () -> void
+
+    def venue: () -> String?
+
+    def venue=: (String?) -> String?
+
+    def venue?: () -> bool
+
+    def venue_changed?: () -> bool
+
+    def venue_change: () -> [ String?, String? ]
+
+    def venue_will_change!: () -> void
+
+    def venue_was: () -> String?
+
+    def venue_previously_changed?: () -> bool
+
+    def venue_previous_change: () -> Array[String?]?
+
+    def venue_previously_was: () -> String?
+
+    def venue_before_last_save: () -> String?
+
+    def venue_change_to_be_saved: () -> Array[String?]?
+
+    def venue_in_database: () -> String?
+
+    def saved_change_to_venue: () -> Array[String?]?
+
+    def saved_change_to_venue?: () -> bool
+
+    def will_save_change_to_venue?: () -> bool
+
+    def restore_venue!: () -> void
+
+    def clear_venue_change: () -> void
+
+    def organization: () -> String?
+
+    def organization=: (String?) -> String?
+
+    def organization?: () -> bool
+
+    def organization_changed?: () -> bool
+
+    def organization_change: () -> [ String?, String? ]
+
+    def organization_will_change!: () -> void
+
+    def organization_was: () -> String?
+
+    def organization_previously_changed?: () -> bool
+
+    def organization_previous_change: () -> Array[String?]?
+
+    def organization_previously_was: () -> String?
+
+    def organization_before_last_save: () -> String?
+
+    def organization_change_to_be_saved: () -> Array[String?]?
+
+    def organization_in_database: () -> String?
+
+    def saved_change_to_organization: () -> Array[String?]?
+
+    def saved_change_to_organization?: () -> bool
+
+    def will_save_change_to_organization?: () -> bool
+
+    def restore_organization!: () -> void
+
+    def clear_organization_change: () -> void
+
+    def schedule_url: () -> String?
+
+    def schedule_url=: (String?) -> String?
+
+    def schedule_url?: () -> bool
+
+    def schedule_url_changed?: () -> bool
+
+    def schedule_url_change: () -> [ String?, String? ]
+
+    def schedule_url_will_change!: () -> void
+
+    def schedule_url_was: () -> String?
+
+    def schedule_url_previously_changed?: () -> bool
+
+    def schedule_url_previous_change: () -> Array[String?]?
+
+    def schedule_url_previously_was: () -> String?
+
+    def schedule_url_before_last_save: () -> String?
+
+    def schedule_url_change_to_be_saved: () -> Array[String?]?
+
+    def schedule_url_in_database: () -> String?
+
+    def saved_change_to_schedule_url: () -> Array[String?]?
+
+    def saved_change_to_schedule_url?: () -> bool
+
+    def will_save_change_to_schedule_url?: () -> bool
+
+    def restore_schedule_url!: () -> void
+
+    def clear_schedule_url_change: () -> void
+
+    def incidents: () -> String?
+
+    def incidents=: (String?) -> String?
+
+    def incidents?: () -> bool
+
+    def incidents_changed?: () -> bool
+
+    def incidents_change: () -> [ String?, String? ]
+
+    def incidents_will_change!: () -> void
+
+    def incidents_was: () -> String?
+
+    def incidents_previously_changed?: () -> bool
+
+    def incidents_previous_change: () -> Array[String?]?
+
+    def incidents_previously_was: () -> String?
+
+    def incidents_before_last_save: () -> String?
+
+    def incidents_change_to_be_saved: () -> Array[String?]?
+
+    def incidents_in_database: () -> String?
+
+    def saved_change_to_incidents: () -> Array[String?]?
+
+    def saved_change_to_incidents?: () -> bool
+
+    def will_save_change_to_incidents?: () -> bool
+
+    def restore_incidents!: () -> void
+
+    def clear_incidents_change: () -> void
+
+    def remarks: () -> String?
+
+    def remarks=: (String?) -> String?
+
+    def remarks?: () -> bool
+
+    def remarks_changed?: () -> bool
+
+    def remarks_change: () -> [ String?, String? ]
+
+    def remarks_will_change!: () -> void
+
+    def remarks_was: () -> String?
+
+    def remarks_previously_changed?: () -> bool
+
+    def remarks_previous_change: () -> Array[String?]?
+
+    def remarks_previously_was: () -> String?
+
+    def remarks_before_last_save: () -> String?
+
+    def remarks_change_to_be_saved: () -> Array[String?]?
+
+    def remarks_in_database: () -> String?
+
+    def saved_change_to_remarks: () -> Array[String?]?
+
+    def saved_change_to_remarks?: () -> bool
+
+    def will_save_change_to_remarks?: () -> bool
+
+    def restore_remarks!: () -> void
+
+    def clear_remarks_change: () -> void
+
+    def discussion_url: () -> String?
+
+    def discussion_url=: (String?) -> String?
+
+    def discussion_url?: () -> bool
+
+    def discussion_url_changed?: () -> bool
+
+    def discussion_url_change: () -> [ String?, String? ]
+
+    def discussion_url_will_change!: () -> void
+
+    def discussion_url_was: () -> String?
+
+    def discussion_url_previously_changed?: () -> bool
+
+    def discussion_url_previous_change: () -> Array[String?]?
+
+    def discussion_url_previously_was: () -> String?
+
+    def discussion_url_before_last_save: () -> String?
+
+    def discussion_url_change_to_be_saved: () -> Array[String?]?
+
+    def discussion_url_in_database: () -> String?
+
+    def saved_change_to_discussion_url: () -> Array[String?]?
+
+    def saved_change_to_discussion_url?: () -> bool
+
+    def will_save_change_to_discussion_url?: () -> bool
+
+    def restore_discussion_url!: () -> void
+
+    def clear_discussion_url_change: () -> void
+
+    def posted_by_user_id: () -> Integer?
+
+    def posted_by_user_id=: (Integer?) -> Integer?
+
+    def posted_by_user_id?: () -> bool
+
+    def posted_by_user_id_changed?: () -> bool
+
+    def posted_by_user_id_change: () -> [ Integer?, Integer? ]
+
+    def posted_by_user_id_will_change!: () -> void
+
+    def posted_by_user_id_was: () -> Integer?
+
+    def posted_by_user_id_previously_changed?: () -> bool
+
+    def posted_by_user_id_previous_change: () -> Array[Integer?]?
+
+    def posted_by_user_id_previously_was: () -> Integer?
+
+    def posted_by_user_id_before_last_save: () -> Integer?
+
+    def posted_by_user_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def posted_by_user_id_in_database: () -> Integer?
+
+    def saved_change_to_posted_by_user_id: () -> Array[Integer?]?
+
+    def saved_change_to_posted_by_user_id?: () -> bool
+
+    def will_save_change_to_posted_by_user_id?: () -> bool
+
+    def restore_posted_by_user_id!: () -> void
+
+    def clear_posted_by_user_id_change: () -> void
+
+    def posted_at: () -> ActiveSupport::TimeWithZone?
+
+    def posted_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def posted_at?: () -> bool
+
+    def posted_at_changed?: () -> bool
+
+    def posted_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def posted_at_will_change!: () -> void
+
+    def posted_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def posted_at_previously_changed?: () -> bool
+
+    def posted_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def posted_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def posted_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def posted_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def posted_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_posted_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_posted_at?: () -> bool
+
+    def will_save_change_to_posted_at?: () -> bool
+
+    def restore_posted_at!: () -> void
+
+    def clear_posted_at_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def nag_sent_at: () -> ActiveSupport::TimeWithZone?
+
+    def nag_sent_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def nag_sent_at?: () -> bool
+
+    def nag_sent_at_changed?: () -> bool
+
+    def nag_sent_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def nag_sent_at_will_change!: () -> void
+
+    def nag_sent_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def nag_sent_at_previously_changed?: () -> bool
+
+    def nag_sent_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def nag_sent_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def nag_sent_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def nag_sent_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def nag_sent_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_nag_sent_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_nag_sent_at?: () -> bool
+
+    def will_save_change_to_nag_sent_at?: () -> bool
+
+    def restore_nag_sent_at!: () -> void
+
+    def clear_nag_sent_at_change: () -> void
+
+    def wrc_feedback_requested: () -> bool
+
+    def wrc_feedback_requested=: (bool) -> bool
+
+    def wrc_feedback_requested?: () -> bool
+
+    def wrc_feedback_requested_changed?: () -> bool
+
+    def wrc_feedback_requested_change: () -> [ bool?, bool? ]
+
+    def wrc_feedback_requested_will_change!: () -> void
+
+    def wrc_feedback_requested_was: () -> bool?
+
+    def wrc_feedback_requested_previously_changed?: () -> bool
+
+    def wrc_feedback_requested_previous_change: () -> Array[bool?]?
+
+    def wrc_feedback_requested_previously_was: () -> bool?
+
+    def wrc_feedback_requested_before_last_save: () -> bool?
+
+    def wrc_feedback_requested_change_to_be_saved: () -> Array[bool?]?
+
+    def wrc_feedback_requested_in_database: () -> bool?
+
+    def saved_change_to_wrc_feedback_requested: () -> Array[bool?]?
+
+    def saved_change_to_wrc_feedback_requested?: () -> bool
+
+    def will_save_change_to_wrc_feedback_requested?: () -> bool
+
+    def restore_wrc_feedback_requested!: () -> void
+
+    def clear_wrc_feedback_requested_change: () -> void
+
+    def wrc_incidents: () -> String?
+
+    def wrc_incidents=: (String?) -> String?
+
+    def wrc_incidents?: () -> bool
+
+    def wrc_incidents_changed?: () -> bool
+
+    def wrc_incidents_change: () -> [ String?, String? ]
+
+    def wrc_incidents_will_change!: () -> void
+
+    def wrc_incidents_was: () -> String?
+
+    def wrc_incidents_previously_changed?: () -> bool
+
+    def wrc_incidents_previous_change: () -> Array[String?]?
+
+    def wrc_incidents_previously_was: () -> String?
+
+    def wrc_incidents_before_last_save: () -> String?
+
+    def wrc_incidents_change_to_be_saved: () -> Array[String?]?
+
+    def wrc_incidents_in_database: () -> String?
+
+    def saved_change_to_wrc_incidents: () -> Array[String?]?
+
+    def saved_change_to_wrc_incidents?: () -> bool
+
+    def will_save_change_to_wrc_incidents?: () -> bool
+
+    def restore_wrc_incidents!: () -> void
+
+    def clear_wrc_incidents_change: () -> void
+
+    def wdc_feedback_requested: () -> bool
+
+    def wdc_feedback_requested=: (bool) -> bool
+
+    def wdc_feedback_requested?: () -> bool
+
+    def wdc_feedback_requested_changed?: () -> bool
+
+    def wdc_feedback_requested_change: () -> [ bool?, bool? ]
+
+    def wdc_feedback_requested_will_change!: () -> void
+
+    def wdc_feedback_requested_was: () -> bool?
+
+    def wdc_feedback_requested_previously_changed?: () -> bool
+
+    def wdc_feedback_requested_previous_change: () -> Array[bool?]?
+
+    def wdc_feedback_requested_previously_was: () -> bool?
+
+    def wdc_feedback_requested_before_last_save: () -> bool?
+
+    def wdc_feedback_requested_change_to_be_saved: () -> Array[bool?]?
+
+    def wdc_feedback_requested_in_database: () -> bool?
+
+    def saved_change_to_wdc_feedback_requested: () -> Array[bool?]?
+
+    def saved_change_to_wdc_feedback_requested?: () -> bool
+
+    def will_save_change_to_wdc_feedback_requested?: () -> bool
+
+    def restore_wdc_feedback_requested!: () -> void
+
+    def clear_wdc_feedback_requested_change: () -> void
+
+    def wdc_incidents: () -> String?
+
+    def wdc_incidents=: (String?) -> String?
+
+    def wdc_incidents?: () -> bool
+
+    def wdc_incidents_changed?: () -> bool
+
+    def wdc_incidents_change: () -> [ String?, String? ]
+
+    def wdc_incidents_will_change!: () -> void
+
+    def wdc_incidents_was: () -> String?
+
+    def wdc_incidents_previously_changed?: () -> bool
+
+    def wdc_incidents_previous_change: () -> Array[String?]?
+
+    def wdc_incidents_previously_was: () -> String?
+
+    def wdc_incidents_before_last_save: () -> String?
+
+    def wdc_incidents_change_to_be_saved: () -> Array[String?]?
+
+    def wdc_incidents_in_database: () -> String?
+
+    def saved_change_to_wdc_incidents: () -> Array[String?]?
+
+    def saved_change_to_wdc_incidents?: () -> bool
+
+    def will_save_change_to_wdc_incidents?: () -> bool
+
+    def restore_wdc_incidents!: () -> void
+
+    def clear_wdc_incidents_change: () -> void
+
+    def wrc_primary_user_id: () -> Integer?
+
+    def wrc_primary_user_id=: (Integer?) -> Integer?
+
+    def wrc_primary_user_id?: () -> bool
+
+    def wrc_primary_user_id_changed?: () -> bool
+
+    def wrc_primary_user_id_change: () -> [ Integer?, Integer? ]
+
+    def wrc_primary_user_id_will_change!: () -> void
+
+    def wrc_primary_user_id_was: () -> Integer?
+
+    def wrc_primary_user_id_previously_changed?: () -> bool
+
+    def wrc_primary_user_id_previous_change: () -> Array[Integer?]?
+
+    def wrc_primary_user_id_previously_was: () -> Integer?
+
+    def wrc_primary_user_id_before_last_save: () -> Integer?
+
+    def wrc_primary_user_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def wrc_primary_user_id_in_database: () -> Integer?
+
+    def saved_change_to_wrc_primary_user_id: () -> Array[Integer?]?
+
+    def saved_change_to_wrc_primary_user_id?: () -> bool
+
+    def will_save_change_to_wrc_primary_user_id?: () -> bool
+
+    def restore_wrc_primary_user_id!: () -> void
+
+    def clear_wrc_primary_user_id_change: () -> void
+
+    def wrc_secondary_user_id: () -> Integer?
+
+    def wrc_secondary_user_id=: (Integer?) -> Integer?
+
+    def wrc_secondary_user_id?: () -> bool
+
+    def wrc_secondary_user_id_changed?: () -> bool
+
+    def wrc_secondary_user_id_change: () -> [ Integer?, Integer? ]
+
+    def wrc_secondary_user_id_will_change!: () -> void
+
+    def wrc_secondary_user_id_was: () -> Integer?
+
+    def wrc_secondary_user_id_previously_changed?: () -> bool
+
+    def wrc_secondary_user_id_previous_change: () -> Array[Integer?]?
+
+    def wrc_secondary_user_id_previously_was: () -> Integer?
+
+    def wrc_secondary_user_id_before_last_save: () -> Integer?
+
+    def wrc_secondary_user_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def wrc_secondary_user_id_in_database: () -> Integer?
+
+    def saved_change_to_wrc_secondary_user_id: () -> Array[Integer?]?
+
+    def saved_change_to_wrc_secondary_user_id?: () -> bool
+
+    def will_save_change_to_wrc_secondary_user_id?: () -> bool
+
+    def restore_wrc_secondary_user_id!: () -> void
+
+    def clear_wrc_secondary_user_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  def posted_by_user: () -> User
+  def posted_by_user=: (User?) -> User?
+  def reload_posted_by_user: () -> User?
+  def build_posted_by_user: (untyped) -> User
+  def create_posted_by_user: (untyped) -> User
+  def create_posted_by_user!: (untyped) -> User
+  def wrc_primary_user: () -> User
+  def wrc_primary_user=: (User?) -> User?
+  def reload_wrc_primary_user: () -> User?
+  def build_wrc_primary_user: (untyped) -> User
+  def create_wrc_primary_user: (untyped) -> User
+  def create_wrc_primary_user!: (untyped) -> User
+  def wrc_secondary_user: () -> User
+  def wrc_secondary_user=: (User?) -> User?
+  def reload_wrc_secondary_user: () -> User?
+  def build_wrc_secondary_user: (untyped) -> User
+  def create_wrc_secondary_user: (untyped) -> User
+  def create_wrc_secondary_user!: (untyped) -> User
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[DelegateReport, Integer]
+    include Enumerable[DelegateReport]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[DelegateReport, Integer]
+  end
+end

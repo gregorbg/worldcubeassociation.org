@@ -1,0 +1,551 @@
+class Registration < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Registration, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_id: () -> String
+
+    def competition_id=: (String) -> String
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def comments: () -> String?
+
+    def comments=: (String?) -> String?
+
+    def comments?: () -> bool
+
+    def comments_changed?: () -> bool
+
+    def comments_change: () -> [ String?, String? ]
+
+    def comments_will_change!: () -> void
+
+    def comments_was: () -> String?
+
+    def comments_previously_changed?: () -> bool
+
+    def comments_previous_change: () -> Array[String?]?
+
+    def comments_previously_was: () -> String?
+
+    def comments_before_last_save: () -> String?
+
+    def comments_change_to_be_saved: () -> Array[String?]?
+
+    def comments_in_database: () -> String?
+
+    def saved_change_to_comments: () -> Array[String?]?
+
+    def saved_change_to_comments?: () -> bool
+
+    def will_save_change_to_comments?: () -> bool
+
+    def restore_comments!: () -> void
+
+    def clear_comments_change: () -> void
+
+    def ip: () -> String
+
+    def ip=: (String) -> String
+
+    def ip?: () -> bool
+
+    def ip_changed?: () -> bool
+
+    def ip_change: () -> [ String?, String? ]
+
+    def ip_will_change!: () -> void
+
+    def ip_was: () -> String?
+
+    def ip_previously_changed?: () -> bool
+
+    def ip_previous_change: () -> Array[String?]?
+
+    def ip_previously_was: () -> String?
+
+    def ip_before_last_save: () -> String?
+
+    def ip_change_to_be_saved: () -> Array[String?]?
+
+    def ip_in_database: () -> String?
+
+    def saved_change_to_ip: () -> Array[String?]?
+
+    def saved_change_to_ip?: () -> bool
+
+    def will_save_change_to_ip?: () -> bool
+
+    def restore_ip!: () -> void
+
+    def clear_ip_change: () -> void
+
+    def user_id: () -> Integer?
+
+    def user_id=: (Integer?) -> Integer?
+
+    def user_id?: () -> bool
+
+    def user_id_changed?: () -> bool
+
+    def user_id_change: () -> [ Integer?, Integer? ]
+
+    def user_id_will_change!: () -> void
+
+    def user_id_was: () -> Integer?
+
+    def user_id_previously_changed?: () -> bool
+
+    def user_id_previous_change: () -> Array[Integer?]?
+
+    def user_id_previously_was: () -> Integer?
+
+    def user_id_before_last_save: () -> Integer?
+
+    def user_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def user_id_in_database: () -> Integer?
+
+    def saved_change_to_user_id: () -> Array[Integer?]?
+
+    def saved_change_to_user_id?: () -> bool
+
+    def will_save_change_to_user_id?: () -> bool
+
+    def restore_user_id!: () -> void
+
+    def clear_user_id_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def guests: () -> Integer
+
+    def guests=: (Integer) -> Integer
+
+    def guests?: () -> bool
+
+    def guests_changed?: () -> bool
+
+    def guests_change: () -> [ Integer?, Integer? ]
+
+    def guests_will_change!: () -> void
+
+    def guests_was: () -> Integer?
+
+    def guests_previously_changed?: () -> bool
+
+    def guests_previous_change: () -> Array[Integer?]?
+
+    def guests_previously_was: () -> Integer?
+
+    def guests_before_last_save: () -> Integer?
+
+    def guests_change_to_be_saved: () -> Array[Integer?]?
+
+    def guests_in_database: () -> Integer?
+
+    def saved_change_to_guests: () -> Array[Integer?]?
+
+    def saved_change_to_guests?: () -> bool
+
+    def will_save_change_to_guests?: () -> bool
+
+    def restore_guests!: () -> void
+
+    def clear_guests_change: () -> void
+
+    def accepted_at: () -> ActiveSupport::TimeWithZone?
+
+    def accepted_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def accepted_at?: () -> bool
+
+    def accepted_at_changed?: () -> bool
+
+    def accepted_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def accepted_at_will_change!: () -> void
+
+    def accepted_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def accepted_at_previously_changed?: () -> bool
+
+    def accepted_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def accepted_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def accepted_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def accepted_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def accepted_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_accepted_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_accepted_at?: () -> bool
+
+    def will_save_change_to_accepted_at?: () -> bool
+
+    def restore_accepted_at!: () -> void
+
+    def clear_accepted_at_change: () -> void
+
+    def accepted_by: () -> Integer?
+
+    def accepted_by=: (Integer?) -> Integer?
+
+    def accepted_by?: () -> bool
+
+    def accepted_by_changed?: () -> bool
+
+    def accepted_by_change: () -> [ Integer?, Integer? ]
+
+    def accepted_by_will_change!: () -> void
+
+    def accepted_by_was: () -> Integer?
+
+    def accepted_by_previously_changed?: () -> bool
+
+    def accepted_by_previous_change: () -> Array[Integer?]?
+
+    def accepted_by_previously_was: () -> Integer?
+
+    def accepted_by_before_last_save: () -> Integer?
+
+    def accepted_by_change_to_be_saved: () -> Array[Integer?]?
+
+    def accepted_by_in_database: () -> Integer?
+
+    def saved_change_to_accepted_by: () -> Array[Integer?]?
+
+    def saved_change_to_accepted_by?: () -> bool
+
+    def will_save_change_to_accepted_by?: () -> bool
+
+    def restore_accepted_by!: () -> void
+
+    def clear_accepted_by_change: () -> void
+
+    def deleted_at: () -> ActiveSupport::TimeWithZone?
+
+    def deleted_at=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def deleted_at?: () -> bool
+
+    def deleted_at_changed?: () -> bool
+
+    def deleted_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def deleted_at_will_change!: () -> void
+
+    def deleted_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def deleted_at_previously_changed?: () -> bool
+
+    def deleted_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def deleted_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def deleted_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def deleted_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def deleted_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_deleted_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_deleted_at?: () -> bool
+
+    def will_save_change_to_deleted_at?: () -> bool
+
+    def restore_deleted_at!: () -> void
+
+    def clear_deleted_at_change: () -> void
+
+    def deleted_by: () -> Integer?
+
+    def deleted_by=: (Integer?) -> Integer?
+
+    def deleted_by?: () -> bool
+
+    def deleted_by_changed?: () -> bool
+
+    def deleted_by_change: () -> [ Integer?, Integer? ]
+
+    def deleted_by_will_change!: () -> void
+
+    def deleted_by_was: () -> Integer?
+
+    def deleted_by_previously_changed?: () -> bool
+
+    def deleted_by_previous_change: () -> Array[Integer?]?
+
+    def deleted_by_previously_was: () -> Integer?
+
+    def deleted_by_before_last_save: () -> Integer?
+
+    def deleted_by_change_to_be_saved: () -> Array[Integer?]?
+
+    def deleted_by_in_database: () -> Integer?
+
+    def saved_change_to_deleted_by: () -> Array[Integer?]?
+
+    def saved_change_to_deleted_by?: () -> bool
+
+    def will_save_change_to_deleted_by?: () -> bool
+
+    def restore_deleted_by!: () -> void
+
+    def clear_deleted_by_change: () -> void
+
+    def roles: () -> String?
+
+    def roles=: (String?) -> String?
+
+    def roles?: () -> bool
+
+    def roles_changed?: () -> bool
+
+    def roles_change: () -> [ String?, String? ]
+
+    def roles_will_change!: () -> void
+
+    def roles_was: () -> String?
+
+    def roles_previously_changed?: () -> bool
+
+    def roles_previous_change: () -> Array[String?]?
+
+    def roles_previously_was: () -> String?
+
+    def roles_before_last_save: () -> String?
+
+    def roles_change_to_be_saved: () -> Array[String?]?
+
+    def roles_in_database: () -> String?
+
+    def saved_change_to_roles: () -> Array[String?]?
+
+    def saved_change_to_roles?: () -> bool
+
+    def will_save_change_to_roles?: () -> bool
+
+    def restore_roles!: () -> void
+
+    def clear_roles_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def registration_competition_events: () -> RegistrationCompetitionEvent::ActiveRecord_Associations_CollectionProxy
+  def registration_competition_events=: (RegistrationCompetitionEvent::ActiveRecord_Associations_CollectionProxy | Array[RegistrationCompetitionEvent]) -> (RegistrationCompetitionEvent::ActiveRecord_Associations_CollectionProxy | Array[RegistrationCompetitionEvent])
+  def registration_competition_event_ids: () -> Array[Integer]
+  def registration_competition_event_ids=: (Array[Integer]) -> Array[Integer]
+  def registration_payments: () -> RegistrationPayment::ActiveRecord_Associations_CollectionProxy
+  def registration_payments=: (RegistrationPayment::ActiveRecord_Associations_CollectionProxy | Array[RegistrationPayment]) -> (RegistrationPayment::ActiveRecord_Associations_CollectionProxy | Array[RegistrationPayment])
+  def registration_payment_ids: () -> Array[Integer]
+  def registration_payment_ids=: (Array[Integer]) -> Array[Integer]
+  def competition_events: () -> CompetitionEvent::ActiveRecord_Associations_CollectionProxy
+  def competition_events=: (CompetitionEvent::ActiveRecord_Associations_CollectionProxy | Array[CompetitionEvent]) -> (CompetitionEvent::ActiveRecord_Associations_CollectionProxy | Array[CompetitionEvent])
+  def competition_event_ids: () -> Array[Integer]
+  def competition_event_ids=: (Array[Integer]) -> Array[Integer]
+  def events: () -> Event::ActiveRecord_Associations_CollectionProxy
+  def events=: (Event::ActiveRecord_Associations_CollectionProxy | Array[Event]) -> (Event::ActiveRecord_Associations_CollectionProxy | Array[Event])
+  def event_ids: () -> Array[Integer]
+  def event_ids=: (Array[Integer]) -> Array[Integer]
+  def assignments: () -> Assignment::ActiveRecord_Associations_CollectionProxy
+  def assignments=: (Assignment::ActiveRecord_Associations_CollectionProxy | Array[Assignment]) -> (Assignment::ActiveRecord_Associations_CollectionProxy | Array[Assignment])
+  def assignment_ids: () -> Array[Integer]
+  def assignment_ids=: (Array[Integer]) -> Array[Integer]
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  def user: () -> User
+  def user=: (User?) -> User?
+  def reload_user: () -> User?
+  def build_user: (untyped) -> User
+  def create_user: (untyped) -> User
+  def create_user!: (untyped) -> User
+  def accepted_user: () -> User
+  def accepted_user=: (User?) -> User?
+  def reload_accepted_user: () -> User?
+  def build_accepted_user: (untyped) -> User
+  def create_accepted_user: (untyped) -> User
+  def create_accepted_user!: (untyped) -> User
+  def deleted_user: () -> User
+  def deleted_user=: (User?) -> User?
+  def reload_deleted_user: () -> User?
+  def build_deleted_user: (untyped) -> User
+  def create_deleted_user: (untyped) -> User
+  def create_deleted_user!: (untyped) -> User
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def self.pending: () -> ActiveRecord_Relation
+  def self.accepted: () -> ActiveRecord_Relation
+  def self.deleted: () -> ActiveRecord_Relation
+  def self.not_deleted: () -> ActiveRecord_Relation
+  def self.with_payments: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def pending: () -> ActiveRecord_Relation
+
+    def accepted: () -> ActiveRecord_Relation
+
+    def deleted: () -> ActiveRecord_Relation
+
+    def not_deleted: () -> ActiveRecord_Relation
+
+    def with_payments: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Registration, Integer]
+    include Enumerable[Registration]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Registration, Integer]
+  end
+end

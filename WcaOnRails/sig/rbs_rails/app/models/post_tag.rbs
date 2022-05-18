@@ -1,0 +1,138 @@
+class PostTag < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[PostTag, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def post_id: () -> Integer
+
+    def post_id=: (Integer) -> Integer
+
+    def post_id?: () -> bool
+
+    def post_id_changed?: () -> bool
+
+    def post_id_change: () -> [ Integer?, Integer? ]
+
+    def post_id_will_change!: () -> void
+
+    def post_id_was: () -> Integer?
+
+    def post_id_previously_changed?: () -> bool
+
+    def post_id_previous_change: () -> Array[Integer?]?
+
+    def post_id_previously_was: () -> Integer?
+
+    def post_id_before_last_save: () -> Integer?
+
+    def post_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def post_id_in_database: () -> Integer?
+
+    def saved_change_to_post_id: () -> Array[Integer?]?
+
+    def saved_change_to_post_id?: () -> bool
+
+    def will_save_change_to_post_id?: () -> bool
+
+    def restore_post_id!: () -> void
+
+    def clear_post_id_change: () -> void
+
+    def tag: () -> String
+
+    def tag=: (String) -> String
+
+    def tag?: () -> bool
+
+    def tag_changed?: () -> bool
+
+    def tag_change: () -> [ String?, String? ]
+
+    def tag_will_change!: () -> void
+
+    def tag_was: () -> String?
+
+    def tag_previously_changed?: () -> bool
+
+    def tag_previous_change: () -> Array[String?]?
+
+    def tag_previously_was: () -> String?
+
+    def tag_before_last_save: () -> String?
+
+    def tag_change_to_be_saved: () -> Array[String?]?
+
+    def tag_in_database: () -> String?
+
+    def saved_change_to_tag: () -> Array[String?]?
+
+    def saved_change_to_tag?: () -> bool
+
+    def will_save_change_to_tag?: () -> bool
+
+    def restore_tag!: () -> void
+
+    def clear_tag_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def post: () -> Post
+  def post=: (Post?) -> Post?
+  def reload_post: () -> Post?
+  def build_post: (untyped) -> Post
+  def create_post: (untyped) -> Post
+  def create_post!: (untyped) -> Post
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[PostTag, Integer]
+    include Enumerable[PostTag]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[PostTag, Integer]
+  end
+end

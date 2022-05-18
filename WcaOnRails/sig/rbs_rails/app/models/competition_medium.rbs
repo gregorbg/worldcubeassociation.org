@@ -1,0 +1,454 @@
+class CompetitionMedium < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[CompetitionMedium, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competitionId: () -> String
+
+    def competitionId=: (String) -> String
+
+    def competitionId?: () -> bool
+
+    def competitionId_changed?: () -> bool
+
+    def competitionId_change: () -> [ String?, String? ]
+
+    def competitionId_will_change!: () -> void
+
+    def competitionId_was: () -> String?
+
+    def competitionId_previously_changed?: () -> bool
+
+    def competitionId_previous_change: () -> Array[String?]?
+
+    def competitionId_previously_was: () -> String?
+
+    def competitionId_before_last_save: () -> String?
+
+    def competitionId_change_to_be_saved: () -> Array[String?]?
+
+    def competitionId_in_database: () -> String?
+
+    def saved_change_to_competitionId: () -> Array[String?]?
+
+    def saved_change_to_competitionId?: () -> bool
+
+    def will_save_change_to_competitionId?: () -> bool
+
+    def restore_competitionId!: () -> void
+
+    def clear_competitionId_change: () -> void
+
+    def type: () -> String
+
+    def type=: (String) -> String
+
+    def type?: () -> bool
+
+    def type_changed?: () -> bool
+
+    def type_change: () -> [ String?, String? ]
+
+    def type_will_change!: () -> void
+
+    def type_was: () -> String?
+
+    def type_previously_changed?: () -> bool
+
+    def type_previous_change: () -> Array[String?]?
+
+    def type_previously_was: () -> String?
+
+    def type_before_last_save: () -> String?
+
+    def type_change_to_be_saved: () -> Array[String?]?
+
+    def type_in_database: () -> String?
+
+    def saved_change_to_type: () -> Array[String?]?
+
+    def saved_change_to_type?: () -> bool
+
+    def will_save_change_to_type?: () -> bool
+
+    def restore_type!: () -> void
+
+    def clear_type_change: () -> void
+
+    def text: () -> String
+
+    def text=: (String) -> String
+
+    def text?: () -> bool
+
+    def text_changed?: () -> bool
+
+    def text_change: () -> [ String?, String? ]
+
+    def text_will_change!: () -> void
+
+    def text_was: () -> String?
+
+    def text_previously_changed?: () -> bool
+
+    def text_previous_change: () -> Array[String?]?
+
+    def text_previously_was: () -> String?
+
+    def text_before_last_save: () -> String?
+
+    def text_change_to_be_saved: () -> Array[String?]?
+
+    def text_in_database: () -> String?
+
+    def saved_change_to_text: () -> Array[String?]?
+
+    def saved_change_to_text?: () -> bool
+
+    def will_save_change_to_text?: () -> bool
+
+    def restore_text!: () -> void
+
+    def clear_text_change: () -> void
+
+    def uri: () -> String?
+
+    def uri=: (String?) -> String?
+
+    def uri?: () -> bool
+
+    def uri_changed?: () -> bool
+
+    def uri_change: () -> [ String?, String? ]
+
+    def uri_will_change!: () -> void
+
+    def uri_was: () -> String?
+
+    def uri_previously_changed?: () -> bool
+
+    def uri_previous_change: () -> Array[String?]?
+
+    def uri_previously_was: () -> String?
+
+    def uri_before_last_save: () -> String?
+
+    def uri_change_to_be_saved: () -> Array[String?]?
+
+    def uri_in_database: () -> String?
+
+    def saved_change_to_uri: () -> Array[String?]?
+
+    def saved_change_to_uri?: () -> bool
+
+    def will_save_change_to_uri?: () -> bool
+
+    def restore_uri!: () -> void
+
+    def clear_uri_change: () -> void
+
+    def submitterName: () -> String
+
+    def submitterName=: (String) -> String
+
+    def submitterName?: () -> bool
+
+    def submitterName_changed?: () -> bool
+
+    def submitterName_change: () -> [ String?, String? ]
+
+    def submitterName_will_change!: () -> void
+
+    def submitterName_was: () -> String?
+
+    def submitterName_previously_changed?: () -> bool
+
+    def submitterName_previous_change: () -> Array[String?]?
+
+    def submitterName_previously_was: () -> String?
+
+    def submitterName_before_last_save: () -> String?
+
+    def submitterName_change_to_be_saved: () -> Array[String?]?
+
+    def submitterName_in_database: () -> String?
+
+    def saved_change_to_submitterName: () -> Array[String?]?
+
+    def saved_change_to_submitterName?: () -> bool
+
+    def will_save_change_to_submitterName?: () -> bool
+
+    def restore_submitterName!: () -> void
+
+    def clear_submitterName_change: () -> void
+
+    def submitterComment: () -> String?
+
+    def submitterComment=: (String?) -> String?
+
+    def submitterComment?: () -> bool
+
+    def submitterComment_changed?: () -> bool
+
+    def submitterComment_change: () -> [ String?, String? ]
+
+    def submitterComment_will_change!: () -> void
+
+    def submitterComment_was: () -> String?
+
+    def submitterComment_previously_changed?: () -> bool
+
+    def submitterComment_previous_change: () -> Array[String?]?
+
+    def submitterComment_previously_was: () -> String?
+
+    def submitterComment_before_last_save: () -> String?
+
+    def submitterComment_change_to_be_saved: () -> Array[String?]?
+
+    def submitterComment_in_database: () -> String?
+
+    def saved_change_to_submitterComment: () -> Array[String?]?
+
+    def saved_change_to_submitterComment?: () -> bool
+
+    def will_save_change_to_submitterComment?: () -> bool
+
+    def restore_submitterComment!: () -> void
+
+    def clear_submitterComment_change: () -> void
+
+    def submitterEmail: () -> String
+
+    def submitterEmail=: (String) -> String
+
+    def submitterEmail?: () -> bool
+
+    def submitterEmail_changed?: () -> bool
+
+    def submitterEmail_change: () -> [ String?, String? ]
+
+    def submitterEmail_will_change!: () -> void
+
+    def submitterEmail_was: () -> String?
+
+    def submitterEmail_previously_changed?: () -> bool
+
+    def submitterEmail_previous_change: () -> Array[String?]?
+
+    def submitterEmail_previously_was: () -> String?
+
+    def submitterEmail_before_last_save: () -> String?
+
+    def submitterEmail_change_to_be_saved: () -> Array[String?]?
+
+    def submitterEmail_in_database: () -> String?
+
+    def saved_change_to_submitterEmail: () -> Array[String?]?
+
+    def saved_change_to_submitterEmail?: () -> bool
+
+    def will_save_change_to_submitterEmail?: () -> bool
+
+    def restore_submitterEmail!: () -> void
+
+    def clear_submitterEmail_change: () -> void
+
+    def timestampSubmitted: () -> ActiveSupport::TimeWithZone
+
+    def timestampSubmitted=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def timestampSubmitted?: () -> bool
+
+    def timestampSubmitted_changed?: () -> bool
+
+    def timestampSubmitted_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def timestampSubmitted_will_change!: () -> void
+
+    def timestampSubmitted_was: () -> ActiveSupport::TimeWithZone?
+
+    def timestampSubmitted_previously_changed?: () -> bool
+
+    def timestampSubmitted_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def timestampSubmitted_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def timestampSubmitted_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def timestampSubmitted_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def timestampSubmitted_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_timestampSubmitted: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_timestampSubmitted?: () -> bool
+
+    def will_save_change_to_timestampSubmitted?: () -> bool
+
+    def restore_timestampSubmitted!: () -> void
+
+    def clear_timestampSubmitted_change: () -> void
+
+    def timestampDecided: () -> ActiveSupport::TimeWithZone?
+
+    def timestampDecided=: (ActiveSupport::TimeWithZone?) -> ActiveSupport::TimeWithZone?
+
+    def timestampDecided?: () -> bool
+
+    def timestampDecided_changed?: () -> bool
+
+    def timestampDecided_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def timestampDecided_will_change!: () -> void
+
+    def timestampDecided_was: () -> ActiveSupport::TimeWithZone?
+
+    def timestampDecided_previously_changed?: () -> bool
+
+    def timestampDecided_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def timestampDecided_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def timestampDecided_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def timestampDecided_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def timestampDecided_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_timestampDecided: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_timestampDecided?: () -> bool
+
+    def will_save_change_to_timestampDecided?: () -> bool
+
+    def restore_timestampDecided!: () -> void
+
+    def clear_timestampDecided_change: () -> void
+
+    def status: () -> String
+
+    def status=: (String) -> String
+
+    def status?: () -> bool
+
+    def status_changed?: () -> bool
+
+    def status_change: () -> [ String?, String? ]
+
+    def status_will_change!: () -> void
+
+    def status_was: () -> String?
+
+    def status_previously_changed?: () -> bool
+
+    def status_previous_change: () -> Array[String?]?
+
+    def status_previously_was: () -> String?
+
+    def status_before_last_save: () -> String?
+
+    def status_change_to_be_saved: () -> Array[String?]?
+
+    def status_in_database: () -> String?
+
+    def saved_change_to_status: () -> Array[String?]?
+
+    def saved_change_to_status?: () -> bool
+
+    def will_save_change_to_status?: () -> bool
+
+    def restore_status!: () -> void
+
+    def clear_status_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def accepted!: () -> bool
+  def accepted?: () -> bool
+  def pending!: () -> bool
+  def pending?: () -> bool
+  def report!: () -> bool
+  def report?: () -> bool
+  def article!: () -> bool
+  def article?: () -> bool
+  def multimedia!: () -> bool
+  def multimedia?: () -> bool
+  def self.accepted: () -> ActiveRecord_Relation
+  def self.pending: () -> ActiveRecord_Relation
+  def self.report: () -> ActiveRecord_Relation
+  def self.article: () -> ActiveRecord_Relation
+  def self.multimedia: () -> ActiveRecord_Relation
+  def self.belongs_to_region: (untyped region_id) -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def accepted: () -> ActiveRecord_Relation
+
+    def pending: () -> ActiveRecord_Relation
+
+    def report: () -> ActiveRecord_Relation
+
+    def article: () -> ActiveRecord_Relation
+
+    def multimedia: () -> ActiveRecord_Relation
+
+    def belongs_to_region: (untyped region_id) -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CompetitionMedium, Integer]
+    include Enumerable[CompetitionMedium]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CompetitionMedium, Integer]
+  end
+end

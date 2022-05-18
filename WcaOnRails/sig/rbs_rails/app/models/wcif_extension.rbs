@@ -1,0 +1,240 @@
+class WcifExtension < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[WcifExtension, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def extendable_type: () -> String?
+
+    def extendable_type=: (String?) -> String?
+
+    def extendable_type?: () -> bool
+
+    def extendable_type_changed?: () -> bool
+
+    def extendable_type_change: () -> [ String?, String? ]
+
+    def extendable_type_will_change!: () -> void
+
+    def extendable_type_was: () -> String?
+
+    def extendable_type_previously_changed?: () -> bool
+
+    def extendable_type_previous_change: () -> Array[String?]?
+
+    def extendable_type_previously_was: () -> String?
+
+    def extendable_type_before_last_save: () -> String?
+
+    def extendable_type_change_to_be_saved: () -> Array[String?]?
+
+    def extendable_type_in_database: () -> String?
+
+    def saved_change_to_extendable_type: () -> Array[String?]?
+
+    def saved_change_to_extendable_type?: () -> bool
+
+    def will_save_change_to_extendable_type?: () -> bool
+
+    def restore_extendable_type!: () -> void
+
+    def clear_extendable_type_change: () -> void
+
+    def extendable_id: () -> String?
+
+    def extendable_id=: (String?) -> String?
+
+    def extendable_id?: () -> bool
+
+    def extendable_id_changed?: () -> bool
+
+    def extendable_id_change: () -> [ String?, String? ]
+
+    def extendable_id_will_change!: () -> void
+
+    def extendable_id_was: () -> String?
+
+    def extendable_id_previously_changed?: () -> bool
+
+    def extendable_id_previous_change: () -> Array[String?]?
+
+    def extendable_id_previously_was: () -> String?
+
+    def extendable_id_before_last_save: () -> String?
+
+    def extendable_id_change_to_be_saved: () -> Array[String?]?
+
+    def extendable_id_in_database: () -> String?
+
+    def saved_change_to_extendable_id: () -> Array[String?]?
+
+    def saved_change_to_extendable_id?: () -> bool
+
+    def will_save_change_to_extendable_id?: () -> bool
+
+    def restore_extendable_id!: () -> void
+
+    def clear_extendable_id_change: () -> void
+
+    def extension_id: () -> String
+
+    def extension_id=: (String) -> String
+
+    def extension_id?: () -> bool
+
+    def extension_id_changed?: () -> bool
+
+    def extension_id_change: () -> [ String?, String? ]
+
+    def extension_id_will_change!: () -> void
+
+    def extension_id_was: () -> String?
+
+    def extension_id_previously_changed?: () -> bool
+
+    def extension_id_previous_change: () -> Array[String?]?
+
+    def extension_id_previously_was: () -> String?
+
+    def extension_id_before_last_save: () -> String?
+
+    def extension_id_change_to_be_saved: () -> Array[String?]?
+
+    def extension_id_in_database: () -> String?
+
+    def saved_change_to_extension_id: () -> Array[String?]?
+
+    def saved_change_to_extension_id?: () -> bool
+
+    def will_save_change_to_extension_id?: () -> bool
+
+    def restore_extension_id!: () -> void
+
+    def clear_extension_id_change: () -> void
+
+    def spec_url: () -> String
+
+    def spec_url=: (String) -> String
+
+    def spec_url?: () -> bool
+
+    def spec_url_changed?: () -> bool
+
+    def spec_url_change: () -> [ String?, String? ]
+
+    def spec_url_will_change!: () -> void
+
+    def spec_url_was: () -> String?
+
+    def spec_url_previously_changed?: () -> bool
+
+    def spec_url_previous_change: () -> Array[String?]?
+
+    def spec_url_previously_was: () -> String?
+
+    def spec_url_before_last_save: () -> String?
+
+    def spec_url_change_to_be_saved: () -> Array[String?]?
+
+    def spec_url_in_database: () -> String?
+
+    def saved_change_to_spec_url: () -> Array[String?]?
+
+    def saved_change_to_spec_url?: () -> bool
+
+    def will_save_change_to_spec_url?: () -> bool
+
+    def restore_spec_url!: () -> void
+
+    def clear_spec_url_change: () -> void
+
+    def data: () -> String
+
+    def data=: (String) -> String
+
+    def data?: () -> bool
+
+    def data_changed?: () -> bool
+
+    def data_change: () -> [ String?, String? ]
+
+    def data_will_change!: () -> void
+
+    def data_was: () -> String?
+
+    def data_previously_changed?: () -> bool
+
+    def data_previous_change: () -> Array[String?]?
+
+    def data_previously_was: () -> String?
+
+    def data_before_last_save: () -> String?
+
+    def data_change_to_be_saved: () -> Array[String?]?
+
+    def data_in_database: () -> String?
+
+    def saved_change_to_data: () -> Array[String?]?
+
+    def saved_change_to_data?: () -> bool
+
+    def will_save_change_to_data?: () -> bool
+
+    def restore_data!: () -> void
+
+    def clear_data_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[WcifExtension, Integer]
+    include Enumerable[WcifExtension]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[WcifExtension, Integer]
+  end
+end

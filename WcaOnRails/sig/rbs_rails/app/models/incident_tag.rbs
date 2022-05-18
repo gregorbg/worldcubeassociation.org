@@ -1,0 +1,138 @@
+class IncidentTag < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[IncidentTag, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def incident_id: () -> Integer
+
+    def incident_id=: (Integer) -> Integer
+
+    def incident_id?: () -> bool
+
+    def incident_id_changed?: () -> bool
+
+    def incident_id_change: () -> [ Integer?, Integer? ]
+
+    def incident_id_will_change!: () -> void
+
+    def incident_id_was: () -> Integer?
+
+    def incident_id_previously_changed?: () -> bool
+
+    def incident_id_previous_change: () -> Array[Integer?]?
+
+    def incident_id_previously_was: () -> Integer?
+
+    def incident_id_before_last_save: () -> Integer?
+
+    def incident_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def incident_id_in_database: () -> Integer?
+
+    def saved_change_to_incident_id: () -> Array[Integer?]?
+
+    def saved_change_to_incident_id?: () -> bool
+
+    def will_save_change_to_incident_id?: () -> bool
+
+    def restore_incident_id!: () -> void
+
+    def clear_incident_id_change: () -> void
+
+    def tag: () -> String
+
+    def tag=: (String) -> String
+
+    def tag?: () -> bool
+
+    def tag_changed?: () -> bool
+
+    def tag_change: () -> [ String?, String? ]
+
+    def tag_will_change!: () -> void
+
+    def tag_was: () -> String?
+
+    def tag_previously_changed?: () -> bool
+
+    def tag_previous_change: () -> Array[String?]?
+
+    def tag_previously_was: () -> String?
+
+    def tag_before_last_save: () -> String?
+
+    def tag_change_to_be_saved: () -> Array[String?]?
+
+    def tag_in_database: () -> String?
+
+    def saved_change_to_tag: () -> Array[String?]?
+
+    def saved_change_to_tag?: () -> bool
+
+    def will_save_change_to_tag?: () -> bool
+
+    def restore_tag!: () -> void
+
+    def clear_tag_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def incident: () -> Incident
+  def incident=: (Incident?) -> Incident?
+  def reload_incident: () -> Incident?
+  def build_incident: (untyped) -> Incident
+  def create_incident: (untyped) -> Incident
+  def create_incident!: (untyped) -> Incident
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[IncidentTag, Integer]
+    include Enumerable[IncidentTag]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[IncidentTag, Integer]
+  end
+end

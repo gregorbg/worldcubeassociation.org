@@ -1,0 +1,398 @@
+class CompetitionVenue < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[CompetitionVenue, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_id: () -> String
+
+    def competition_id=: (String) -> String
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def wcif_id: () -> Integer
+
+    def wcif_id=: (Integer) -> Integer
+
+    def wcif_id?: () -> bool
+
+    def wcif_id_changed?: () -> bool
+
+    def wcif_id_change: () -> [ Integer?, Integer? ]
+
+    def wcif_id_will_change!: () -> void
+
+    def wcif_id_was: () -> Integer?
+
+    def wcif_id_previously_changed?: () -> bool
+
+    def wcif_id_previous_change: () -> Array[Integer?]?
+
+    def wcif_id_previously_was: () -> Integer?
+
+    def wcif_id_before_last_save: () -> Integer?
+
+    def wcif_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def wcif_id_in_database: () -> Integer?
+
+    def saved_change_to_wcif_id: () -> Array[Integer?]?
+
+    def saved_change_to_wcif_id?: () -> bool
+
+    def will_save_change_to_wcif_id?: () -> bool
+
+    def restore_wcif_id!: () -> void
+
+    def clear_wcif_id_change: () -> void
+
+    def name: () -> String
+
+    def name=: (String) -> String
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def latitude_microdegrees: () -> Integer
+
+    def latitude_microdegrees=: (Integer) -> Integer
+
+    def latitude_microdegrees?: () -> bool
+
+    def latitude_microdegrees_changed?: () -> bool
+
+    def latitude_microdegrees_change: () -> [ Integer?, Integer? ]
+
+    def latitude_microdegrees_will_change!: () -> void
+
+    def latitude_microdegrees_was: () -> Integer?
+
+    def latitude_microdegrees_previously_changed?: () -> bool
+
+    def latitude_microdegrees_previous_change: () -> Array[Integer?]?
+
+    def latitude_microdegrees_previously_was: () -> Integer?
+
+    def latitude_microdegrees_before_last_save: () -> Integer?
+
+    def latitude_microdegrees_change_to_be_saved: () -> Array[Integer?]?
+
+    def latitude_microdegrees_in_database: () -> Integer?
+
+    def saved_change_to_latitude_microdegrees: () -> Array[Integer?]?
+
+    def saved_change_to_latitude_microdegrees?: () -> bool
+
+    def will_save_change_to_latitude_microdegrees?: () -> bool
+
+    def restore_latitude_microdegrees!: () -> void
+
+    def clear_latitude_microdegrees_change: () -> void
+
+    def longitude_microdegrees: () -> Integer
+
+    def longitude_microdegrees=: (Integer) -> Integer
+
+    def longitude_microdegrees?: () -> bool
+
+    def longitude_microdegrees_changed?: () -> bool
+
+    def longitude_microdegrees_change: () -> [ Integer?, Integer? ]
+
+    def longitude_microdegrees_will_change!: () -> void
+
+    def longitude_microdegrees_was: () -> Integer?
+
+    def longitude_microdegrees_previously_changed?: () -> bool
+
+    def longitude_microdegrees_previous_change: () -> Array[Integer?]?
+
+    def longitude_microdegrees_previously_was: () -> Integer?
+
+    def longitude_microdegrees_before_last_save: () -> Integer?
+
+    def longitude_microdegrees_change_to_be_saved: () -> Array[Integer?]?
+
+    def longitude_microdegrees_in_database: () -> Integer?
+
+    def saved_change_to_longitude_microdegrees: () -> Array[Integer?]?
+
+    def saved_change_to_longitude_microdegrees?: () -> bool
+
+    def will_save_change_to_longitude_microdegrees?: () -> bool
+
+    def restore_longitude_microdegrees!: () -> void
+
+    def clear_longitude_microdegrees_change: () -> void
+
+    def timezone_id: () -> String
+
+    def timezone_id=: (String) -> String
+
+    def timezone_id?: () -> bool
+
+    def timezone_id_changed?: () -> bool
+
+    def timezone_id_change: () -> [ String?, String? ]
+
+    def timezone_id_will_change!: () -> void
+
+    def timezone_id_was: () -> String?
+
+    def timezone_id_previously_changed?: () -> bool
+
+    def timezone_id_previous_change: () -> Array[String?]?
+
+    def timezone_id_previously_was: () -> String?
+
+    def timezone_id_before_last_save: () -> String?
+
+    def timezone_id_change_to_be_saved: () -> Array[String?]?
+
+    def timezone_id_in_database: () -> String?
+
+    def saved_change_to_timezone_id: () -> Array[String?]?
+
+    def saved_change_to_timezone_id?: () -> bool
+
+    def will_save_change_to_timezone_id?: () -> bool
+
+    def restore_timezone_id!: () -> void
+
+    def clear_timezone_id_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def country_iso2: () -> String
+
+    def country_iso2=: (String) -> String
+
+    def country_iso2?: () -> bool
+
+    def country_iso2_changed?: () -> bool
+
+    def country_iso2_change: () -> [ String?, String? ]
+
+    def country_iso2_will_change!: () -> void
+
+    def country_iso2_was: () -> String?
+
+    def country_iso2_previously_changed?: () -> bool
+
+    def country_iso2_previous_change: () -> Array[String?]?
+
+    def country_iso2_previously_was: () -> String?
+
+    def country_iso2_before_last_save: () -> String?
+
+    def country_iso2_change_to_be_saved: () -> Array[String?]?
+
+    def country_iso2_in_database: () -> String?
+
+    def saved_change_to_country_iso2: () -> Array[String?]?
+
+    def saved_change_to_country_iso2?: () -> bool
+
+    def will_save_change_to_country_iso2?: () -> bool
+
+    def restore_country_iso2!: () -> void
+
+    def clear_country_iso2_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def venue_rooms: () -> VenueRoom::ActiveRecord_Associations_CollectionProxy
+  def venue_rooms=: (VenueRoom::ActiveRecord_Associations_CollectionProxy | Array[VenueRoom]) -> (VenueRoom::ActiveRecord_Associations_CollectionProxy | Array[VenueRoom])
+  def venue_room_ids: () -> Array[Integer]
+  def venue_room_ids=: (Array[Integer]) -> Array[Integer]
+  def wcif_extensions: () -> WcifExtension::ActiveRecord_Associations_CollectionProxy
+  def wcif_extensions=: (WcifExtension::ActiveRecord_Associations_CollectionProxy | Array[WcifExtension]) -> (WcifExtension::ActiveRecord_Associations_CollectionProxy | Array[WcifExtension])
+  def wcif_extension_ids: () -> Array[Integer]
+  def wcif_extension_ids=: (Array[Integer]) -> Array[Integer]
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CompetitionVenue, Integer]
+    include Enumerable[CompetitionVenue]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CompetitionVenue, Integer]
+  end
+end

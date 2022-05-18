@@ -1,0 +1,144 @@
+class PreferredFormat < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[PreferredFormat, ActiveRecord_Relation, top]
+
+  module GeneratedAttributeMethods
+    def event_id: () -> String
+
+    def event_id=: (String) -> String
+
+    def event_id?: () -> bool
+
+    def event_id_changed?: () -> bool
+
+    def event_id_change: () -> [ String?, String? ]
+
+    def event_id_will_change!: () -> void
+
+    def event_id_was: () -> String?
+
+    def event_id_previously_changed?: () -> bool
+
+    def event_id_previous_change: () -> Array[String?]?
+
+    def event_id_previously_was: () -> String?
+
+    def event_id_before_last_save: () -> String?
+
+    def event_id_change_to_be_saved: () -> Array[String?]?
+
+    def event_id_in_database: () -> String?
+
+    def saved_change_to_event_id: () -> Array[String?]?
+
+    def saved_change_to_event_id?: () -> bool
+
+    def will_save_change_to_event_id?: () -> bool
+
+    def restore_event_id!: () -> void
+
+    def clear_event_id_change: () -> void
+
+    def format_id: () -> String
+
+    def format_id=: (String) -> String
+
+    def format_id?: () -> bool
+
+    def format_id_changed?: () -> bool
+
+    def format_id_change: () -> [ String?, String? ]
+
+    def format_id_will_change!: () -> void
+
+    def format_id_was: () -> String?
+
+    def format_id_previously_changed?: () -> bool
+
+    def format_id_previous_change: () -> Array[String?]?
+
+    def format_id_previously_was: () -> String?
+
+    def format_id_before_last_save: () -> String?
+
+    def format_id_change_to_be_saved: () -> Array[String?]?
+
+    def format_id_in_database: () -> String?
+
+    def saved_change_to_format_id: () -> Array[String?]?
+
+    def saved_change_to_format_id?: () -> bool
+
+    def will_save_change_to_format_id?: () -> bool
+
+    def restore_format_id!: () -> void
+
+    def clear_format_id_change: () -> void
+
+    def ranking: () -> Integer
+
+    def ranking=: (Integer) -> Integer
+
+    def ranking?: () -> bool
+
+    def ranking_changed?: () -> bool
+
+    def ranking_change: () -> [ Integer?, Integer? ]
+
+    def ranking_will_change!: () -> void
+
+    def ranking_was: () -> Integer?
+
+    def ranking_previously_changed?: () -> bool
+
+    def ranking_previous_change: () -> Array[Integer?]?
+
+    def ranking_previously_was: () -> Integer?
+
+    def ranking_before_last_save: () -> Integer?
+
+    def ranking_change_to_be_saved: () -> Array[Integer?]?
+
+    def ranking_in_database: () -> Integer?
+
+    def saved_change_to_ranking: () -> Array[Integer?]?
+
+    def saved_change_to_ranking?: () -> bool
+
+    def will_save_change_to_ranking?: () -> bool
+
+    def restore_ranking!: () -> void
+
+    def clear_ranking_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def event: () -> Event
+  def event=: (Event?) -> Event?
+  def reload_event: () -> Event?
+  def build_event: (untyped) -> Event
+  def create_event: (untyped) -> Event
+  def create_event!: (untyped) -> Event
+  def format: () -> Format
+  def format=: (Format?) -> Format?
+  def reload_format: () -> Format?
+  def build_format: (untyped) -> Format
+  def create_format: (untyped) -> Format
+  def create_format!: (untyped) -> Format
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[PreferredFormat, top]
+    include Enumerable[PreferredFormat]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[PreferredFormat, top]
+  end
+end

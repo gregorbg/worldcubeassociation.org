@@ -1,0 +1,210 @@
+class CompetitionTab < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[CompetitionTab, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def competition_id: () -> String?
+
+    def competition_id=: (String?) -> String?
+
+    def competition_id?: () -> bool
+
+    def competition_id_changed?: () -> bool
+
+    def competition_id_change: () -> [ String?, String? ]
+
+    def competition_id_will_change!: () -> void
+
+    def competition_id_was: () -> String?
+
+    def competition_id_previously_changed?: () -> bool
+
+    def competition_id_previous_change: () -> Array[String?]?
+
+    def competition_id_previously_was: () -> String?
+
+    def competition_id_before_last_save: () -> String?
+
+    def competition_id_change_to_be_saved: () -> Array[String?]?
+
+    def competition_id_in_database: () -> String?
+
+    def saved_change_to_competition_id: () -> Array[String?]?
+
+    def saved_change_to_competition_id?: () -> bool
+
+    def will_save_change_to_competition_id?: () -> bool
+
+    def restore_competition_id!: () -> void
+
+    def clear_competition_id_change: () -> void
+
+    def name: () -> String?
+
+    def name=: (String?) -> String?
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def content: () -> String?
+
+    def content=: (String?) -> String?
+
+    def content?: () -> bool
+
+    def content_changed?: () -> bool
+
+    def content_change: () -> [ String?, String? ]
+
+    def content_will_change!: () -> void
+
+    def content_was: () -> String?
+
+    def content_previously_changed?: () -> bool
+
+    def content_previous_change: () -> Array[String?]?
+
+    def content_previously_was: () -> String?
+
+    def content_before_last_save: () -> String?
+
+    def content_change_to_be_saved: () -> Array[String?]?
+
+    def content_in_database: () -> String?
+
+    def saved_change_to_content: () -> Array[String?]?
+
+    def saved_change_to_content?: () -> bool
+
+    def will_save_change_to_content?: () -> bool
+
+    def restore_content!: () -> void
+
+    def clear_content_change: () -> void
+
+    def display_order: () -> Integer?
+
+    def display_order=: (Integer?) -> Integer?
+
+    def display_order?: () -> bool
+
+    def display_order_changed?: () -> bool
+
+    def display_order_change: () -> [ Integer?, Integer? ]
+
+    def display_order_will_change!: () -> void
+
+    def display_order_was: () -> Integer?
+
+    def display_order_previously_changed?: () -> bool
+
+    def display_order_previous_change: () -> Array[Integer?]?
+
+    def display_order_previously_was: () -> Integer?
+
+    def display_order_before_last_save: () -> Integer?
+
+    def display_order_change_to_be_saved: () -> Array[Integer?]?
+
+    def display_order_in_database: () -> Integer?
+
+    def saved_change_to_display_order: () -> Array[Integer?]?
+
+    def saved_change_to_display_order?: () -> bool
+
+    def will_save_change_to_display_order?: () -> bool
+
+    def restore_display_order!: () -> void
+
+    def clear_display_order_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def competition: () -> Competition
+  def competition=: (Competition?) -> Competition?
+  def reload_competition: () -> Competition?
+  def build_competition: (untyped) -> Competition
+  def create_competition: (untyped) -> Competition
+  def create_competition!: (untyped) -> Competition
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CompetitionTab, Integer]
+    include Enumerable[CompetitionTab]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[CompetitionTab, Integer]
+  end
+end
