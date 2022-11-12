@@ -614,7 +614,7 @@ GEM
       rdoc (>= 5.0)
     seedbank (0.4.0)
     semantic_range (3.0.0)
-    shakapacker (6.5.2)
+    shakapacker (6.5.4)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -705,7 +705,7 @@ GEM
       activesupport
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.3)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
@@ -794,7 +794,7 @@ DEPENDENCIES
   sdoc
   seedbank
   selectize-rails!
-  shakapacker (= 6.5.2)
+  shakapacker (= 6.5.4)
   simple_form
   simplecov
   simplecov-lcov
