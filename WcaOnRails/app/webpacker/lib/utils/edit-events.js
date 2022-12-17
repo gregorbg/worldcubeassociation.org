@@ -1,4 +1,4 @@
-import { events } from '../wca-data.js.erb';
+import events from '../wca-data/events.js.erb';
 
 export function pluralize(count, word, { fixed, abbreviate } = {}) {
   const countStr = (fixed && count % 1 > 0) ? count.toFixed(fixed) : count;

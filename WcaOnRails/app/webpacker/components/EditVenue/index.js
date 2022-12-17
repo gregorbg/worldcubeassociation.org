@@ -5,8 +5,10 @@ import {
 } from 'react-bootstrap';
 import { Icon } from 'semantic-ui-react';
 import rootRender from '../../lib/edit-schedule';
-import { timezoneData, countries, defaultRoomColor } from '../../lib/wca-data.js.erb';
+import { timezoneData } from '../../lib/wca-data/timezoneData.js.erb';
+import countries from '../../lib/wca-data/countries.js.erb';
 import EditRoom from './EditRoom';
+import { defaultRoomColor } from '../../lib/helpers/edit-venue.js.erb';
 import {
   convertVenueActivitiesToVenueTimezone,
   newRoomId,

@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { events, formats } from '../../lib/wca-data.js.erb';
+import events from '../../lib/wca-data/events.js.erb';
+import formats from '../../lib/wca-data/formats.js.erb';
 import AttemptResultInput from './AttemptResultInput';
 import DatePicker from 'react-datepicker';
 
