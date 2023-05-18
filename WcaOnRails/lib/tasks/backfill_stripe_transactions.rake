@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
-@stripe_obj_cache = {}
-
-def retrieve_stripe_obj(stripe_id, &block)
-  @stripe_obj_cache[stripe_id] ||= block.call
-end
-
 def process_parameters_old(transaction)
+  puts "Processing via OLD parameters array"
+
   # Older transactions stored different metadata.
   arguments, account_details = transaction.parameters
 
@@ -20,6 +16,8 @@ def process_parameters_old(transaction)
 end
 
 def process_parameters_recent(transaction)
+  puts "Processing via NEW parameters hash"
+
   metadata = transaction.parameters['metadata']
 
   # newer Stripe Charges don't store their account ID in our manual metadata anymore (somebody changed the format at some point)
@@ -35,8 +33,8 @@ def process_parameters_recent(transaction)
 end
 
 def try_match_reg_payments(transaction, metadata, stripe_account_id)
-  wca_id = metadata[:wca_id]
-  competition_name = metadata[:competition]
+  wca_id = metadata['wca_id']
+  competition_name = metadata['competition']
 
   person = Person.find_by(wca_id: wca_id)
   competition = Competition.find_by(name: competition_name)
@@ -44,12 +42,15 @@ def try_match_reg_payments(transaction, metadata, stripe_account_id)
   if person && competition
     registration = Registration.find_by(competition_id: competition.id, user_id: person.user.id)
 
+    unless registration.present?
+      puts "WARNING: Registration for user ##{person.user.id} at competition '#{competition.id}' not found. Skipping…"
+      return
+    end
+
     comp_stripe_account = competition.connected_stripe_account_id
 
-    if comp_stripe_account.nil?
-      puts "WARNING: There is no Stripe account associated with #{competition.id} anymore."
-    elsif comp_stripe_account != stripe_account_id
-      puts "WARNING: The competition's Stripe account (#{comp_stripe_account}) is different from the metadata's Stripe account (#{account_details[:stripe_account]})."
+    if comp_stripe_account != stripe_account_id
+      puts "WARNING: The competition's Stripe account (#{comp_stripe_account}) is different from the metadata's Stripe account (#{stripe_account_id})."
     end
 
     # We run into this loop if a StripeTransaction was NOT able to match the RegistrationPayment based on the stripe_id alone.
@@ -61,26 +62,23 @@ def try_match_reg_payments(transaction, metadata, stripe_account_id)
         is_charge_payment = payment_stripe_id.start_with?('ch_')
         is_refund_payment = payment_stripe_id.start_with?('re_')
 
-        if is_charge_payment
-          stripe_obj = retrieve_stripe_obj(payment_stripe_id) { Stripe::Charge.retrieve(payment_stripe_id, stripe_account_id) }
-        elsif is_refund_payment
-          stripe_obj = retrieve_stripe_obj(payment_stripe_id) { Stripe::Refund.retrieve(payment_stripe_id, stripe_account_id) }
-        else
+        unless is_charge_payment || is_refund_payment
           puts "The stripe_charge_id for registration payment ##{rev_eng_payment.id} has an unknown prefix type: #{payment_stripe_id}. Skipping…"
           next
         end
 
         # Historical records did not use the Ruby<->Stripe conversion routine (because that was only recently added)
-        # so we can compare the amounts directly without worrying about denominations. We only have to worry about negative amounts for refund
-        rev_eng_stripe_amount = rev_eng_payment.amount_lowest_denomination.abs * (is_refund_payment ? -1 : 1)
+        # so we can compare the amounts directly without worrying about denominations.
+        rev_eng_stripe_amount = rev_eng_payment.amount_lowest_denomination.abs
+        rev_eng_stripe_currency = rev_eng_payment.currency_code.downcase
 
-        if stripe_obj.amount == rev_eng_stripe_amount && stripe_obj.currency.lower == rev_eng_payment.currency_code.lower
+        if rev_eng_stripe_amount && rev_eng_stripe_currency
           # It's a match!
           transaction.stripe_id = payment_stripe_id
           transaction.account_id = stripe_account_id
 
-          transaction.amount_stripe_denomination = stripe_obj.amount
-          transaction.currency_code = stripe_obj.currency
+          transaction.amount_stripe_denomination = rev_eng_stripe_amount
+          transaction.currency_code = rev_eng_stripe_currency
 
           # Store the receipt
           rev_eng_payment.receipt = transaction
@@ -100,9 +98,12 @@ namespace :stripe_transactions do
   desc "Fill in the new columns for old charges that have already been recorded in the system"
   task backfill_registrations: [:environment] do
     StripeTransaction.find_each do |transaction|
-      if transaction.stripe_charge_id.present? && transaction.stripe_charge_id != 0
+      next if transaction.id > 100
+      puts "Processing transaction #{transaction.id}"
+
+      if transaction.stripe_id.present? && transaction.stripe_id != 0 && transaction.stripe_id != '0'
         unless transaction.registration_payment.present?
-          reg_payment = RegistrationPayment.find_by(stripe_charge_id: transaction.stripe_charge_id)
+          reg_payment = RegistrationPayment.find_by(stripe_charge_id: transaction.stripe_id)
 
           if reg_payment.present?
             reg_payment.receipt = transaction
@@ -111,7 +112,7 @@ namespace :stripe_transactions do
             # Rails freak out because nowadays, upon saving, user_id is required.
             reg_payment.save(validate: false)
           else
-            puts "Stripe transaction without matching RegistrationPayment: #{transaction.stripe_charge_id}"
+            puts "Stripe transaction without matching RegistrationPayment: #{transaction.stripe_id}"
           end
         end
       elsif transaction.parameters.is_a? Array
