@@ -941,6 +941,23 @@ CREATE TABLE `incidents` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `job_statistics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `job_statistics` (
+  `name` varchar(191) NOT NULL,
+  `run_start` DATETIME DEFAULT NULL,
+  `run_end` DATETIME DEFAULT NULL,
+  `last_run_successful` tinyint(1) NOT NULL DEFAULT FALSE,
+  `last_error_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scheduled_at` DATETIME DEFAULT NULL,
+  `recently_rejected` int(11) NOT NULL DEFAULT 0,
+  `recently_errored` int(11) NOT NULL DEFAULT 0,
+  `times_completed` int(11) NOT NULL DEFAULT 0,
+  `average_runtime` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `linkings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1830,4 +1847,5 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20230517135741'),
 ('20230520171858'),
 ('20230520173123'),
-('20230701100417');
+('20230701100417'),
+('20230707182015');
