@@ -2,10 +2,9 @@
 
 class ComputeLinkings < ApplicationJob
   def perform
+    Relations.compute_linkings
+
     last_computation = Timestamp.find_or_create_by(name: 'linkings_computation')
-    if last_computation.not_after?(3.days.ago)
-      Relations.compute_linkings
-      last_computation.touch :date
-    end
+    last_computation.touch :date
   end
 end
