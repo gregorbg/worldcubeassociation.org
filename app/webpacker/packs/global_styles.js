@@ -26,6 +26,7 @@ import 'semantic-css/modal';
 import 'semantic-css/placeholder';
 import 'semantic-css/popup';
 import 'semantic-css/rail';
+import 'semantic-css/progress';
 import 'semantic-css/reset';
 import 'semantic-css/segment';
 import 'semantic-css/sidebar';

@@ -87,23 +87,6 @@ function EditScrambles() {
   );
 }
 
-function normalizeWcifEvents(wcifEvents) {
-  // Since we want to support deprecated events and be able to edit their rounds,
-  // we want to show deprecated events if they exist in the WCIF, but not if they
-  // don't.
-  // Therefore we first build the list of events from the official one, updating
-  // it with WCIF data if any.
-  // And then we add all events that are still in the WCIF (which means they are
-  // not official anymore).
-  const ret = events.official.map(
-    (event) => _.remove(wcifEvents, { id: event.id })[0] || {
-      id: event.id,
-      rounds: null,
-    },
-  );
-  return ret.concat(wcifEvents);
-}
-
 export default function Wrapper({
   competitionId,
   canAddAndRemoveEvents,
@@ -111,8 +94,6 @@ export default function Wrapper({
   canUpdateQualifications,
   wcifEvents,
 }) {
-  const normalizedEvents = normalizeWcifEvents(wcifEvents);
-
   return (
     <Store
       reducer={wcifEventsReducer}
@@ -121,8 +102,8 @@ export default function Wrapper({
         canAddAndRemoveEvents,
         canUpdateEvents,
         canUpdateQualifications,
-        wcifEvents: normalizedEvents,
-        initialWcifEvents: normalizedEvents,
+        wcifEvents,
+        initialWcifEvents: wcifEvents,
         unsavedChanges: false,
       }}
     >
