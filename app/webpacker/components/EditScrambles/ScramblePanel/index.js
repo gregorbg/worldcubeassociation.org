@@ -4,22 +4,24 @@ import {
   Button,
   Card,
   Icon,
-  Label, Segment,
+  Label, Progress, Segment,
 } from 'semantic-ui-react';
-import cn from 'classnames';
 import { randomScrambleForEvent } from "cubing/scramble";
 import { eventInfo } from "cubing/puzzles";
 import { TwistyPlayer } from 'cubing/twisty';
+import cn from 'classnames';
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
-import { useStore } from '../../../lib/providers/StoreProvider';
+import { useStore, useDispatch } from '../../../lib/providers/StoreProvider';
 
 export default function ScramblePanel({
   wcifEvent,
 }) {
   const {
-    wcifEvents, canAddAndRemoveEvents, canUpdateEvents, canUpdateQualifications,
+    wcifEvents, canUpdateEvents,
   } = useStore();
+
+  const dispatch = useDispatch();
 
   const disabled = !canUpdateEvents;
   const event = events.byId[wcifEvent.id];
@@ -31,11 +33,46 @@ export default function ScramblePanel({
   useEffect(() => {
     if (!twistyRef.current) return;
 
-    const eventId = event.id.replace('333mbf', '333bf');
-    const scramblePromise = randomScrambleForEvent(eventId);
+    const scrEventId = event.id.replace('333mbf', '333bf');
+    const scramblePromise = randomScrambleForEvent(scrEventId);
 
     twistyRef.current.alg = scramblePromise;
   }, [twistyRef, event.id]);
+
+  const scrambleNow = () => {
+    wcifEvent.rounds.forEach((round) => {
+      Array(round.scrambleSetCount).fill(true).forEach((i) => {
+        const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
+        const expectedSrambleCount = Number(expectedScrambleStr);
+
+        Array(expectedSrambleCount).fill(round.format).forEach(() => {
+          const scrEventId = event.id.replace('333mbf', '333bf');
+
+          randomScrambleForEvent(scrEventId).then((scrString) => {
+            console.log(wcifEvent.id, i, scrString.toString());
+          });
+        });
+      });
+    });
+  };
+
+  const targetScrambles = wcifEvent.rounds.reduce((acc, round) => {
+    const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
+    const expectedSrambleCount = Number(expectedScrambleStr);
+
+    return (
+      acc + expectedSrambleCount * round.scrambleSetCount
+    );
+  }, 0);
+
+  const existingScrambles = wcifEvent.rounds.reduce((acc, round) => (
+    acc + (round.scrambleSets?.reduce((scrAcc, scrambleSet) => (
+      scrAcc + scrambleSet.scrambles.length
+    ), 0) ?? 0)
+  ), 0);
+
+  const progressRatio = targetScrambles > 0 ? (existingScrambles / targetScrambles) : 0;
+  const progressPercent = Math.round(progressRatio * 100);
 
   return (
     <Card
@@ -78,11 +115,14 @@ export default function ScramblePanel({
             />
           </Card.Content>
           <Card.Content>
+            <Progress percent={progressPercent} indicating autoSuccess />
+          </Card.Content>
+          <Card.Content>
             <Button icon secondary labelPosition="left" floated="left">
               <Icon name="repeat" />
               Reset
             </Button>
-            <Button icon positive labelPosition="left" floated="right">
+            <Button icon positive labelPosition="left" floated="right" onClick={scrambleNow}>
               <Icon name="shuffle" />
               Generate
             </Button>
