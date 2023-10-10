@@ -38,6 +38,7 @@ class CompetitionsController < ApplicationController
   before_action -> { redirect_to_root_unless_user(:can_manage_competition?, competition_from_params) }, only: [
     :edit,
     :edit_events,
+    :edit_scrambles,
     :edit_schedule,
     :payment_integration_setup,
   ]
@@ -251,6 +252,10 @@ class CompetitionsController < ApplicationController
       },
     )
     @competition = competition_from_params(includes: associations)
+  end
+
+  def edit_scrambles
+    @competition = competition_from_params
   end
 
   def edit_schedule
