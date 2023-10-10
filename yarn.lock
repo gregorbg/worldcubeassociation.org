@@ -2842,6 +2842,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tweenjs/tween.js@npm:~23.1.1":
+  version: 23.1.1
+  resolution: "@tweenjs/tween.js@npm:23.1.1"
+  checksum: 10c0/7c214cc82be3af3fed42d1405ee266a08441c106be7f3dd566f092d6162d8529633a54dfa28b90343c20f29c718ed1303bc132839badad5d498bcc6853658cbd
+  languageName: node
+  linkType: hard
+
 "@types/body-parser@npm:*":
   version: 1.19.2
   resolution: "@types/body-parser@npm:1.19.2"
@@ -3141,12 +3148,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/stats.js@npm:*":
+  version: 0.17.3
+  resolution: "@types/stats.js@npm:0.17.3"
+  checksum: 10c0/ccccc992c6dfe08fb85049aa3ce44ca7e428db8da4a3edd20298f1c8b72768021fa8bacdfbe8e9735a7552ee5d57f667c6f557050ad2d9a87b699b3566a6177a
+  languageName: node
+  linkType: hard
+
 "@types/tern@npm:*":
   version: 0.23.4
   resolution: "@types/tern@npm:0.23.4"
   dependencies:
     "@types/estree": "npm:*"
   checksum: 10c0/72fc9ba34351279b8cce9669e8db54fa70a909392e438ca18fd033b1e6d6f79c896d9ffc805cfc4212c340612d4777243a7e2521c7edc5bc627796b552f256c1
+  languageName: node
+  linkType: hard
+
+"@types/three@npm:^0.162.0":
+  version: 0.162.0
+  resolution: "@types/three@npm:0.162.0"
+  dependencies:
+    "@tweenjs/tween.js": "npm:~23.1.1"
+    "@types/stats.js": "npm:*"
+    "@types/webxr": "npm:*"
+    fflate: "npm:~0.6.10"
+    meshoptimizer: "npm:~0.18.1"
+  checksum: 10c0/d4817bcb30e83804c20f505fae5a40e3d307a570b25fec65a73366c09859f7e7860cf2bf0757aa7d90f908ae7ed7d710db66b6a7cd638d6869909b4e7dfb7198
+  languageName: node
+  linkType: hard
+
+"@types/web-bluetooth@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "@types/web-bluetooth@npm:0.0.20"
+  checksum: 10c0/3a49bd9396506af8f1b047db087aeeea9fe4301b7fad4fe06ae0f6e00d331138caae878fd09e6410658b70b4aaf10e4b191c41c1a5ff72211fe58da290c7d003
+  languageName: node
+  linkType: hard
+
+"@types/webxr@npm:*":
+  version: 0.5.15
+  resolution: "@types/webxr@npm:0.5.15"
+  checksum: 10c0/4d96d6c09e2cc748c8ca5a1c12831c0ee3c7794383055dd720d9257d9fa4f2c1ca12174eef66cb11246be6d6ca626b1b22f96e87ef98f185d291c645a765c9b7
   languageName: node
   linkType: hard
 
@@ -4378,6 +4419,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"comlink@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "comlink@npm:4.4.1"
+  checksum: 10c0/a7a2004030768d13ec9373f780aa0edae57616095cb453ec8950d9f97e5fa654c0e84030ac87173b818843a04a5fa9ce9749d48b6bd453cfbfb5e6a9ebb6b2ff
+  languageName: node
+  linkType: hard
+
 "commander@npm:^10.0.1":
   version: 10.0.1
   resolution: "commander@npm:10.0.1"
@@ -4866,6 +4914,21 @@ __metadata:
   dependencies:
     css-tree: "npm:~2.2.0"
   checksum: 10c0/ab4beb1e97dd7e207c10e9925405b45f15a6cd1b4880a8686ad573aa6d476aed28b4121a666cffd26c37a26179f7b54741f7c257543003bfb244d06a62ad569b
+  languageName: node
+  linkType: hard
+
+"cubing@npm:^0.48.4":
+  version: 0.48.4
+  resolution: "cubing@npm:0.48.4"
+  dependencies:
+    "@types/three": "npm:^0.162.0"
+    "@types/web-bluetooth": "npm:^0.0.20"
+    comlink: "npm:^4.4.1"
+    random-uint-below: "npm:^2.0.0"
+    three: "npm:^0.162.0"
+  bin:
+    scramble: dist/bin/scramble.js
+  checksum: 10c0/e206908db76f5403962c25f7128ee848f3dd39f85b84158ae6661b9ff755096764531991f20a208ac7139917046ccd62b4f2d7d9859218e2375a18ca9b437fe9
   languageName: node
   linkType: hard
 
@@ -5935,6 +5998,13 @@ __metadata:
   dependencies:
     websocket-driver: "npm:>=0.5.1"
   checksum: 10c0/c6052a0bb322778ce9f89af92890f6f4ce00d5ec92418a35e5f4c6864a4fe736fec0bcebd47eac7c0f0e979b01530746b1c85c83cb04bae789271abf19737420
+  languageName: node
+  linkType: hard
+
+"fflate@npm:~0.6.10":
+  version: 0.6.10
+  resolution: "fflate@npm:0.6.10"
+  checksum: 10c0/c452f720e4cb404b300fceb8ef0bdf345f18fbfd3f57f7d0974dce5f5e2ac0e8dd4b6ff4bb7061ae74fd919b9c707172f9dbd44d91149b1137199b8c705768f1
   languageName: node
   linkType: hard
 
@@ -7853,6 +7923,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"meshoptimizer@npm:~0.18.1":
+  version: 0.18.1
+  resolution: "meshoptimizer@npm:0.18.1"
+  checksum: 10c0/8a825c58b20b65585e8d00788843929b60c66ba4297e89afaa49f7c51ab9a0f7b9130f90cc9ad1b9b48b3d1bee3beb1bc93608acba0d73e78995c3e6e5ca436b
+  languageName: node
+  linkType: hard
+
 "methods@npm:~1.1.2":
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
@@ -9613,6 +9690,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"random-uint-below@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "random-uint-below@npm:2.0.0"
+  checksum: 10c0/067a7233fe01a0613d40320d69901978e3aa2e33d3eb067520e237abfc78373402d93a5e2c2385bbdc461f5c069c3b55618db2a76b5f61065f63ca51bdeed20b
+  languageName: node
+  linkType: hard
+
 "randombytes@npm:^2.1.0":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
@@ -10202,6 +10286,7 @@ __metadata:
     core-js: "npm:^3.37.0"
     css-loader: "npm:^7.1.1"
     css-minimizer-webpack-plugin: "npm:^6.0.0"
+    cubing: "npm:^0.48.4"
     date-fns: "npm:^3.6.0"
     dompurify: "npm:^3.1.2"
     easymde: "npm:^2.18.0"
@@ -11253,6 +11338,13 @@ __metadata:
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
   checksum: 10c0/02805740c12851ea5982686810702e2f14369a5f4c5c40a836821e3eefc65ffeec3131ba324692a37608294b0fd8c1e55a2dd571ffed4909822787668ddbee5c
+  languageName: node
+  linkType: hard
+
+"three@npm:^0.162.0":
+  version: 0.162.0
+  resolution: "three@npm:0.162.0"
+  checksum: 10c0/ca97c30ecca94defa932ae8cb9423af66cd9b31f2d3c93b902d8b1022caaf322a022e59eca9e4ae0fd09deb03b3614c5f5114163cf9d0efac501bdc27c10445d
   languageName: node
   linkType: hard
 

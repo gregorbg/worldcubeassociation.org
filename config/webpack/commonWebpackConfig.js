@@ -49,7 +49,17 @@ const customConfig = {
       },
     },
   },
-  ignoreWarnings: [/Module not found: Error: Can't resolve 'react-dom\/client'/],
+  ignoreWarnings: [
+    /Module not found: Error: Can't resolve 'react-dom\/client'/,
+    // TODO: The next two warnings ("Critical dependency" and "Circular dependency") are caused
+    //   by cubing.js and definitely need to be addressed before merging.
+    //   COMPLAIN WITH EXTREME PREJUDICE IF YOU SPOT THIS DURING REVIEW!!!
+    {
+      module: /cubing/,
+      message: /Critical dependency/,
+    },
+    /Circular dependency between chunks with runtime/,
+  ],
 };
 
 // Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
