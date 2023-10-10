@@ -6,22 +6,18 @@ import {
 import { events, formats } from '../../../lib/wca-data.js.erb';
 import { roundIdToString } from '../../../lib/utils/wcif';
 
-import {
-  EditAdvancementConditionModal, EditTimeLimitModal, EditCutoffModal,
-} from '../Modals';
 import { useDispatch } from '../../../lib/providers/StoreProvider';
 import { useConfirm } from '../../../lib/providers/ConfirmProvider';
 import { updateRoundFormat, setScrambleSetCount, updateCutoff } from '../store/actions';
 
 export default function RoundRow({
-  index, wcifRound, wcifEvent, disabled,
+  index, wcifRound, wcifEvent,
 }) {
   const dispatch = useDispatch();
   const confirm = useConfirm();
   const event = events.byId[wcifEvent.id];
 
   const roundNumber = index + 1;
-  const isLastRound = roundNumber === wcifEvent.rounds.length;
 
   const roundFormatChanged = (e, { value }) => {
     const newFormat = value;
@@ -50,6 +46,10 @@ export default function RoundRow({
     dispatch(setScrambleSetCount(wcifRound.id, parseInt(e.target.value, 10)));
   };
 
+  const extraScrambleCountChanged = (e) => {
+    dispatch(setScrambleSetCount(wcifRound.id, parseInt(e.target.value, 10)));
+  };
+
   return (
     <Table.Row
       verticalAlign="middle"
@@ -64,7 +64,7 @@ export default function RoundRow({
           name="format"
           value={wcifRound.format}
           onChange={roundFormatChanged}
-          disabled={disabled}
+          disabled
           options={event.formats().map((format) => ({
             key: format.id,
             value: format.id,
@@ -81,42 +81,20 @@ export default function RoundRow({
           min={1}
           value={wcifRound.scrambleSetCount}
           onChange={scrambleSetCountChanged}
-          disabled={disabled}
+          disabled
           style={{ width: '5em' }}
         />
       </Table.Cell>
 
-      {event.canChangeTimeLimit && (
-        <Table.Cell>
-          <EditTimeLimitModal
-            wcifEvent={wcifEvent}
-            wcifRound={wcifRound}
-            roundNumber={roundNumber}
-            disabled={disabled}
-          />
-        </Table.Cell>
-      )}
-
-      {event.canHaveCutoff && (
-        <Table.Cell>
-          <EditCutoffModal
-            wcifEvent={wcifEvent}
-            wcifRound={wcifRound}
-            roundNumber={roundNumber}
-            disabled={disabled}
-          />
-        </Table.Cell>
-      )}
-
       <Table.Cell>
-        {!isLastRound && (
-          <EditAdvancementConditionModal
-            wcifEvent={wcifEvent}
-            wcifRound={wcifRound}
-            roundNumber={roundNumber}
-            disabled={disabled}
-          />
-        )}
+        <Input
+          name="extraScramblesCount"
+          type="number"
+          min={2}
+          max={5}
+          value={2}
+          onChange={extraScrambleCountChanged}
+        />
       </Table.Cell>
     </Table.Row>
   );
