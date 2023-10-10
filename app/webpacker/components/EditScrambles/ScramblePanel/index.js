@@ -1,24 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import {
   Button,
   Card,
-  Header,
   Icon,
   Label, Segment,
 } from 'semantic-ui-react';
 import cn from 'classnames';
-import i18n from '../../../lib/i18n';
+import { randomScrambleForEvent } from "cubing/scramble";
+import { eventInfo } from "cubing/puzzles";
+import { TwistyPlayer } from 'cubing/twisty';
 import { events } from '../../../lib/wca-data.js.erb';
-import { pluralize } from '../../../lib/utils/edit-events';
 import RoundsTable from './RoundsTable';
-import RoundCountInput from './RoundCountInput';
-import { useStore, useDispatch } from '../../../lib/providers/StoreProvider';
-import { useConfirm } from '../../../lib/providers/ConfirmProvider';
-import {
-  addEvent, addRounds, removeEvent, removeRounds,
-} from '../store/actions';
-import { EditQualificationModal } from '../Modals';
+import { useStore } from '../../../lib/providers/StoreProvider';
 
 export default function ScramblePanel({
   wcifEvent,
@@ -26,92 +20,22 @@ export default function ScramblePanel({
   const {
     wcifEvents, canAddAndRemoveEvents, canUpdateEvents, canUpdateQualifications,
   } = useStore();
-  const dispatch = useDispatch();
-  const confirm = useConfirm();
 
   const disabled = !canUpdateEvents;
   const event = events.byId[wcifEvent.id];
 
-  const handleRemoveEvent = () => {
-    if (wcifEvent.rounds && wcifEvent.rounds.length > 0) {
-      confirm({
-        content: `Are you sure you want to remove all ${pluralize(
-          wcifEvent.rounds.length,
-          'round',
-        )} of ${event.name}?`,
-      })
-        .then(() => {
-          dispatch(removeEvent(wcifEvent.id));
-        });
-    } else {
-      dispatch(removeEvent(wcifEvent.id));
-    }
-  };
+  const puzzleId = eventInfo(wcifEvent.id)?.puzzleID;
 
-  const setRoundCount = (newRoundCount) => {
-    const roundsToRemoveCount = wcifEvent.rounds.length - newRoundCount;
+  const twistyRef = useRef();
 
-    if (roundsToRemoveCount > 0) {
-      // remove the rounds
-      confirm({
-        content: `Are you sure you want to remove ${pluralize(
-          roundsToRemoveCount,
-          'round',
-        )} of ${event.name}?`,
-      }).then(() => {
-        // We have too many rounds
-        dispatch(removeRounds(wcifEvent.id, roundsToRemoveCount));
-      });
-    } else {
-      // We do not have enough rounds any or we do not have enough rounds: create the missing ones.
-      dispatch(addRounds(wcifEvent.id, newRoundCount - wcifEvent.rounds.length));
-    }
-  };
+  useEffect(() => {
+    if (!twistyRef.current) return;
 
-  const renderRoundCountInputs = () => {
-    if (wcifEvent.rounds) {
-      return (
-        <>
-          <RoundCountInput
-            roundCount={wcifEvent.rounds.length}
-            onChange={setRoundCount}
-            disabled={disabled}
-          />
+    const eventId = event.id.replace('333mbf', '333bf');
+    const scramblePromise = randomScrambleForEvent(eventId);
 
-          <Button
-            disabled={!canAddAndRemoveEvents}
-            title={
-              !canAddAndRemoveEvents
-                ? `Cannot remove ${event.name} because the competition is confirmed.`
-                : ''
-            }
-            onClick={handleRemoveEvent}
-            negative
-            size="small"
-          >
-            Remove event
-          </Button>
-        </>
-      );
-    }
-
-    return (
-      <Button
-        className="add-event"
-        disabled={!canAddAndRemoveEvents}
-        title={
-          !canAddAndRemoveEvents
-            ? `Cannot add ${event.name} because the competition is confirmed.`
-            : ''
-        }
-        onClick={() => dispatch(addEvent(wcifEvent.id))}
-        positive
-        size="small"
-      >
-        Add event
-      </Button>
-    );
-  };
+    twistyRef.current.alg = scramblePromise;
+  }, [twistyRef, event.id]);
 
   return (
     <Card
@@ -124,16 +48,24 @@ export default function ScramblePanel({
         // replicate the way SemUI Cards handle images (borderless) without passing an actual image
         style={{ padding: 0 }}
       >
-        <Segment basic tertiary style={{ borderTop: 'none' }}>
-          <Header as="span">
+        <Segment tertiary style={{ borderTop: 'none', textAlign: '-webkit-center' }} textAlign="center">
+          <Label attached="top right" size="huge">
             <Icon className={cn('cubing-icon', `event-${event.id}`)} />
-            <Header.Content>
-              {event.name}
-            </Header.Content>
-          </Header>
-          <Button.Group floated="right">
-            {renderRoundCountInputs()}
-          </Button.Group>
+            {event.name}
+          </Label>
+          <twisty-player
+            class="attached"
+            background="none"
+            control-panel="none"
+            visualization="2D"
+            hint-facelets="none"
+            puzzle={puzzleId}
+            ref={twistyRef}
+          />
+          <Label as="a" basic attached="bottom right" onClick={(e, data) => console.log(data)}>
+            <Icon name="paint brush" />
+            Edit color scheme
+          </Label>
         </Segment>
       </Card.Content>
       {wcifEvent.rounds !== null && (
@@ -146,24 +78,14 @@ export default function ScramblePanel({
             />
           </Card.Content>
           <Card.Content>
-            <Label basic>
-              {i18n.t('competitions.events.qualification')}
-              :
-            </Label>
-            {/* Qualifications cannot be edited after the competition has been announced. */}
-            {/* Qualifications cannot be added if the box from the competition form is unchecked. */}
-            <EditQualificationModal
-              wcifEvent={wcifEvent}
-              disabled={
-                disabled || !canAddAndRemoveEvents || !canUpdateQualifications
-              }
-              disabledReason={
-                // todo: translations?
-                canUpdateQualifications
-                  ? undefined
-                  : 'Turn on Qualifications under Edit > Organizer View and add a reason.'
-              }
-            />
+            <Button icon secondary labelPosition="left" floated="left">
+              <Icon name="repeat" />
+              Reset
+            </Button>
+            <Button icon positive labelPosition="left" floated="right">
+              <Icon name="shuffle" />
+              Generate
+            </Button>
           </Card.Content>
         </>
       )}
