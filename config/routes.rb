@@ -138,6 +138,7 @@ Rails.application.routes.draw do
   get 'competitions/:id/payment_setup' => 'competitions#payment_setup', as: :competitions_payment_setup
   get 'stripe-connect' => 'competitions#stripe_connect', as: :competitions_stripe_connect
   get 'competitions/:id/events/edit' => 'competitions#edit_events', as: :edit_events
+  get 'competitions/:id/scrambles/edit' => 'competitions#edit_scrambles', as: :edit_scrambles
   get 'competitions/:id/schedule/edit' => 'competitions#edit_schedule', as: :edit_schedule
   get 'competitions/edit/nearby_competitions' => 'competitions#nearby_competitions', as: :nearby_competitions
   get 'competitions/edit/series_eligible_competitions' => 'competitions#series_eligible_competitions', as: :series_eligible_competitions
