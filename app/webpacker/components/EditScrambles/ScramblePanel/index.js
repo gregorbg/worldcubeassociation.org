@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 
 import {
   Button,
@@ -6,13 +6,12 @@ import {
   Icon,
   Label, Progress, Segment,
 } from 'semantic-ui-react';
-import { randomScrambleForEvent } from "cubing/scramble";
-import { eventInfo } from "cubing/puzzles";
-import { TwistyPlayer } from 'cubing/twisty';
 import cn from 'classnames';
+import { randomScrambleForEvent } from "cubing/scramble";
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
 import { useStore, useDispatch } from '../../../lib/providers/StoreProvider';
+import ScrambleView from './ScrambleView';
 
 export default function ScramblePanel({
   wcifEvent,
@@ -26,20 +25,13 @@ export default function ScramblePanel({
   const disabled = !canUpdateEvents;
   const event = events.byId[wcifEvent.id];
 
-  const puzzleId = eventInfo(wcifEvent.id)?.puzzleID;
-
-  const twistyRef = useRef();
-
-  useEffect(() => {
-    if (!twistyRef.current) return;
-
-    const scrEventId = event.id.replace('333mbf', '333bf');
-    const scramblePromise = randomScrambleForEvent(scrEventId);
-
-    twistyRef.current.alg = scramblePromise;
-  }, [twistyRef, event.id]);
+  const [isScrambling, setIsScrambling] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   const scrambleNow = () => {
+    setIsScrambling(true);
+    setIsResetting(false);
+
     wcifEvent.rounds.forEach((round) => {
       Array(round.scrambleSetCount).fill(true).forEach((i) => {
         const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
@@ -54,14 +46,21 @@ export default function ScramblePanel({
         });
       });
     });
+
+    setIsScrambling(false);
+  };
+
+  const resetScrambles = () => {
+    setIsResetting(true);
+    console.log('Resetting scrambles!');
   };
 
   const targetScrambles = wcifEvent.rounds.reduce((acc, round) => {
     const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
-    const expectedSrambleCount = Number(expectedScrambleStr);
+    const expectedScrambleCount = Number(expectedScrambleStr);
 
     return (
-      acc + expectedSrambleCount * round.scrambleSetCount
+      acc + expectedScrambleCount * round.scrambleSetCount
     );
   }, 0);
 
@@ -90,15 +89,7 @@ export default function ScramblePanel({
             <Icon className={cn('cubing-icon', `event-${event.id}`)} />
             {event.name}
           </Label>
-          <twisty-player
-            class="attached"
-            background="none"
-            control-panel="none"
-            visualization="3D"
-            hint-facelets="none"
-            puzzle={puzzleId}
-            ref={twistyRef}
-          />
+          <ScrambleView eventId={wcifEvent.id} isPlaying={isScrambling} isResetting={isResetting} />
           <Label as="a" basic attached="bottom right" onClick={(e, data) => console.log(data)}>
             <Icon name="paint brush" />
             Edit color scheme
@@ -117,7 +108,7 @@ export default function ScramblePanel({
             <Progress percent={progressPercent} indicating autoSuccess />
           </Card.Content>
           <Card.Content>
-            <Button icon secondary labelPosition="left" floated="left">
+            <Button icon secondary labelPosition="left" floated="left" onClick={resetScrambles}>
               <Icon name="repeat" />
               Reset
             </Button>
