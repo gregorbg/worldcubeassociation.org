@@ -1,14 +1,7 @@
 export const ChangesSaved = 'saving_started';
-export const AddEvent = 'ADD_EVENT';
-export const RemoveEvent = 'REMOVE_EVENT';
-export const AddRounds = 'ADD_ROUNDS';
-export const RemoveRounds = 'REMOVE_ROUNDS';
 export const SetScrambleSetCount = 'SET_SCRAMBLE_SET_COUNT';
-export const UpdateRoundFormat = 'UPDATE_ROUND_FORMAT';
-export const UpdateCutoff = 'UPDATE_CUTOFF';
-export const UpdateTimeLimit = 'UPDATE_TIMELIMIT';
-export const UpdateAdvancementCondition = 'UPDATE_ADVANCEMENT_CONDITION';
-export const UpdateQualification = 'UPDATE_QUALIFICATION';
+export const AddScrambleSet = 'ADD_SCRAMBLE_SET';
+export const ResetScrambles = 'RESET_SCRAMBLES';
 
 /**
  * Action creator for marking changes as saved
@@ -16,72 +9,6 @@ export const UpdateQualification = 'UPDATE_QUALIFICATION';
  */
 export const changesSaved = () => ({
   type: ChangesSaved,
-});
-
-/**
- * Action creator for adding event
- * @param {EventId} eventId
- * @returns {Action}
- */
-export const addEvent = (eventId) => ({
-  type: AddEvent,
-  payload: {
-    eventId,
-  },
-});
-
-/**
- * Action creator for removing event
- * @param {EventId} eventId
- * @returns {Action}
- */
-export const removeEvent = (eventId) => ({
-  type: RemoveEvent,
-  payload: {
-    eventId,
-  },
-});
-
-/**
- * create an action to add round
- * @param {EventId} eventId
- * @param {number} roundsToAddCount
- * @returns {Action}
- */
-export const addRounds = (eventId, roundsToAddCount) => ({
-  type: AddRounds,
-  payload: {
-    eventId,
-    roundsToAddCount,
-  },
-});
-
-/**
- * Action creator for removing rounds
- * @param {EventId} eventId
- * @param {number} roundsToRemoveCount
- * @returns {Action}
- */
-export const removeRounds = (eventId, roundsToRemoveCount) => ({
-  type: RemoveRounds,
-  payload: {
-    eventId,
-    roundsToRemoveCount,
-  },
-});
-
-/**
- * create an action to set the round format
- * @param {ActivityCode} roundId
- * @param {FormatId} format
- * @returns {Action}
- */
-export const updateRoundFormat = (roundId, format) => ({
-  type: UpdateRoundFormat,
-  payload: {
-    roundId,
-    format,
-  },
 });
 
 /**
@@ -98,46 +25,17 @@ export const setScrambleSetCount = (roundId, scrambleSetCount) => ({
   },
 });
 
-/**
- * create an action to set the cutoff for the round
- * @param {ActivityCode} roundId
- * @param {Cutoff} cutoff
- * @returns {Action}
- */
-export const updateCutoff = (roundId, cutoff) => ({
-  type: UpdateCutoff,
+export const addScrambleSet = (roundId, scrambleSet) => ({
+  type: AddScrambleSet,
   payload: {
     roundId,
-    cutoff,
+    scrambleSet,
   },
 });
 
-/**
- * create an action to set the time limit for the round
- * @param {ActivityCode} roundId
- * @param {TimeLimit} timeLimit
- * @returns {Action}
- */
-export const updateTimeLimit = (roundId, timeLimit) => ({
-  type: UpdateTimeLimit,
-  payload: {
-    roundId,
-    timeLimit,
-  },
-});
-
-export const updateAdvancementCondition = (roundId, advancementCondition) => ({
-  type: UpdateAdvancementCondition,
-  payload: {
-    roundId,
-    advancementCondition,
-  },
-});
-
-export const updateQualification = (eventId, qualification) => ({
-  type: UpdateQualification,
+export const resetScrambles = (eventId) => ({
+  type: ResetScrambles,
   payload: {
     eventId,
-    qualification,
   },
 });
