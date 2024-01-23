@@ -94,7 +94,7 @@ export default function ScramblePanel({
             class="attached"
             background="none"
             control-panel="none"
-            visualization="2D"
+            visualization="3D"
             hint-facelets="none"
             puzzle={puzzleId}
             ref={twistyRef}
@@ -109,7 +109,6 @@ export default function ScramblePanel({
         <>
           <Card.Content>
             <RoundsTable
-              wcifEvents={wcifEvents}
               wcifEvent={wcifEvent}
               disabled={disabled}
             />

@@ -16,9 +16,9 @@ export default function RoundsTable({ wcifEvent, disabled }) {
       >
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>#</Table.HeaderCell>
+            <Table.HeaderCell disabled collapsing>#</Table.HeaderCell>
             <Table.HeaderCell disabled collapsing>Format</Table.HeaderCell>
-            <Table.HeaderCell disabled collapsing style={{ width: '5em' }}>Scramble Sets</Table.HeaderCell>
+            <Table.HeaderCell>Scramble Sets</Table.HeaderCell>
             <Table.HeaderCell>Extra Scrambles</Table.HeaderCell>
           </Table.Row>
         </Table.Header>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Dropdown, Input, Table,
+  Dropdown, Table,
 } from 'semantic-ui-react';
 import { events, formats } from '../../../lib/wca-data.js.erb';
 import { roundIdToString } from '../../../lib/utils/wcif';
@@ -11,7 +11,7 @@ import {
 } from '../Modals';
 import { useDispatch } from '../../../lib/providers/StoreProvider';
 import { useConfirm } from '../../../lib/providers/ConfirmProvider';
-import { updateRoundFormat, setScrambleSetCount, updateCutoff } from '../store/actions';
+import { updateRoundFormat, updateCutoff } from '../store/actions';
 
 export default function RoundRow({
   index, wcifRound, wcifEvent, disabled,
@@ -46,10 +46,6 @@ export default function RoundRow({
     }
   };
 
-  const scrambleSetCountChanged = (e) => {
-    dispatch(setScrambleSetCount(wcifRound.id, parseInt(e.target.value, 10)));
-  };
-
   return (
     <Table.Row
       verticalAlign="middle"
@@ -71,22 +67,6 @@ export default function RoundRow({
             text: format.shortName,
           }))}
           compact
-          className="tiny"
-        />
-      </Table.Cell>
-
-      <Table.Cell>
-        <Input
-          name="scrambleSetCount"
-          type="number"
-          min={1}
-          // This is arbitrary, but HTML uses this property to compute the width of the input box.
-          // No max property means HTML thinks "this number could be 13247324871321,
-          // so better make the box very very wide!"
-          max={1000}
-          value={wcifRound.scrambleSetCount}
-          onChange={scrambleSetCountChanged}
-          disabled={disabled}
           className="tiny"
         />
       </Table.Cell>

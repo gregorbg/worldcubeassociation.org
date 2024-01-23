@@ -20,7 +20,6 @@ export default function RoundsTable({ wcifEvent, disabled }) {
         <Table.Row>
           <Table.HeaderCell>#</Table.HeaderCell>
           <Table.HeaderCell>Format</Table.HeaderCell>
-          <Table.HeaderCell>Scramble Sets</Table.HeaderCell>
           {event.canChangeTimeLimit && (
             <Table.HeaderCell>Time Limit</Table.HeaderCell>
           )}

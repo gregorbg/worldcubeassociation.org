@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import {
-  Dropdown, Input, Table,
-} from 'semantic-ui-react';
+import { Input, Table } from 'semantic-ui-react';
 import { events, formats } from '../../../lib/wca-data.js.erb';
 import { roundIdToString } from '../../../lib/utils/wcif';
 
@@ -50,28 +48,18 @@ export default function RoundRow({
     dispatch(setScrambleSetCount(wcifRound.id, parseInt(e.target.value, 10)));
   };
 
+  const wcaFormat = useMemo(() => formats.byId[wcifRound.format], [wcifRound.format]);
+
   return (
     <Table.Row
       verticalAlign="middle"
       name={`round-${roundNumber}`}
     >
-      <Table.Cell verticalAlign="middle">
+      <Table.Cell verticalAlign="middle" collapsing>
         {wcifRound.id.split('-')[1].replace('r', '')}
       </Table.Cell>
-      <Table.Cell>
-        <Dropdown
-          selection
-          name="format"
-          value={wcifRound.format}
-          onChange={roundFormatChanged}
-          disabled
-          options={event.formats().map((format) => ({
-            key: format.id,
-            value: format.id,
-            text: format.shortName,
-          }))}
-          compact
-        />
+      <Table.Cell verticalAlign="middle" collapsing>
+        {wcaFormat.shortName}
       </Table.Cell>
 
       <Table.Cell>
@@ -79,10 +67,9 @@ export default function RoundRow({
           name="scrambleSetCount"
           type="number"
           min={1}
+          max={100}
           value={wcifRound.scrambleSetCount}
           onChange={scrambleSetCountChanged}
-          disabled
-          style={{ width: '5em' }}
         />
       </Table.Cell>
 
