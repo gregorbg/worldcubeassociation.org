@@ -2,11 +2,10 @@ import React, { useMemo } from 'react';
 
 import { Input, Table } from 'semantic-ui-react';
 import { events, formats } from '../../../lib/wca-data.js.erb';
-import { roundIdToString } from '../../../lib/utils/wcif';
 
 import { useDispatch } from '../../../lib/providers/StoreProvider';
 import { useConfirm } from '../../../lib/providers/ConfirmProvider';
-import { updateRoundFormat, setScrambleSetCount, updateCutoff } from '../store/actions';
+import { setScrambleSetCount } from '../store/actions';
 
 export default function RoundRow({
   index, wcifRound, wcifEvent,
@@ -16,29 +15,6 @@ export default function RoundRow({
   const event = events.byId[wcifEvent.id];
 
   const roundNumber = index + 1;
-
-  const roundFormatChanged = (e, { value }) => {
-    const newFormat = value;
-
-    if (
-      wcifRound.cutoff
-      && !formats.byId[newFormat].allowedFirstPhaseFormats.includes(
-        wcifRound.cutoff.numberOfAttempts.toString(),
-      )
-    ) {
-      // if the format is changing to a format that doesn't have a cutoff
-      confirm({
-        content: `Are you sure you want to change the format of ${roundIdToString(wcifRound.id)}? This will clear the cutoff`,
-      })
-        .then(() => {
-          dispatch(updateRoundFormat(wcifRound.id, newFormat));
-          dispatch(updateCutoff(wcifRound.id, null));
-        });
-    } else {
-      // if the format is changing to a format that has a cutoff
-      dispatch(updateRoundFormat(wcifRound.id, newFormat));
-    }
-  };
 
   const scrambleSetCountChanged = (e) => {
     dispatch(setScrambleSetCount(wcifRound.id, parseInt(e.target.value, 10)));
