@@ -22,6 +22,14 @@ export const buildExtraScrambleExtension = (numScrambles) => ({
   },
 });
 
+export const isRoundScrambled = (wcifRound) => (
+  wcifRound.scrambleSets.length >= wcifRound.scrambleSetCount
+);
+
+export const isEventFullyScrambled = (wcifEvent) => (
+  wcifEvent.rounds.every((round) => isRoundScrambled(round))
+);
+
 const maxIdOrZero = (objects) => _.max(objects.map((wcifObj) => wcifObj.id)) || 0;
 
 export function nextScrambleSetId(wcifEvents) {

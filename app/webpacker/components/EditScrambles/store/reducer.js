@@ -12,18 +12,18 @@ import { buildExtraScrambleExtension, findExtensionById, nextScrambleSetId } fro
 /**
  * Updates 1 or more rounds
  * @param {Event[]} wcifEvents
- * @param {ActivityCode[]} roundIds
+ * @param {int} roundId
  * @param {function(Round): Partial<Round>} mapper
  * @returns {Event[]}
  */
-const updateForRounds = (wcifEvents, roundIds, mapper) => wcifEvents.map((event) => ({
-  ...event,
-  rounds: event?.rounds?.length
-    ? event.rounds.map((round) => (roundIds.includes(round.id) ? {
+const updateForRound = (wcifEvents, roundId, mapper) => wcifEvents.map((event) => (
+  (event.rounds.map((round) => round.id).includes(roundId)) ? ({
+    ...event,
+    rounds: event.rounds.map((round) => (roundId === round.id ? ({
       ...round,
       ...mapper(round),
-    } : round)) : event.rounds,
-}));
+    }) : round)),
+  }) : event));
 
 const updateExtensions = (extendable, newExtension) => ({
   ...extendable,
@@ -44,16 +44,16 @@ const reducers = {
 
   [SetScrambleSetCount]: (state, { payload }) => ({
     ...state,
-    wcifEvents: updateForRounds(state.wcifEvents, [payload.roundId], () => ({
+    wcifEvents: updateForRound(state.wcifEvents, payload.roundId, () => ({
       scrambleSetCount: payload.scrambleSetCount,
     })),
   }),
 
   [SetExtraScrambleCount]: (state, { payload }) => ({
     ...state,
-    wcifEvents: updateForRounds(
+    wcifEvents: updateForRound(
       state.wcifEvents,
-      [payload.roundId],
+      payload.roundId,
       (round) => updateExtensions(
         round,
         buildExtraScrambleExtension(payload.numScrambles),
@@ -63,15 +63,19 @@ const reducers = {
 
   [AddScrambleSet]: (state, { payload }) => ({
     ...state,
-    wcifEvents: updateForRounds(state.wcifEvents, [payload.roundId], (round) => ({
-      scrambleSets: [
-        ...(round.scrambleSets || []),
-        {
-          ...payload.scrambleSet,
-          id: nextScrambleSetId(state.wcifEvents),
-        },
-      ],
-    })),
+    wcifEvents: updateForRound(
+      state.wcifEvents,
+      payload.roundId,
+      (round) => ({
+        scrambleSets: [
+          ...(round.scrambleSets || []),
+          {
+            ...payload.scrambleSet,
+            id: nextScrambleSetId(state.wcifEvents),
+          },
+        ],
+      }),
+    ),
   }),
 
   [ResetScrambles]: (state, { payload }) => ({
@@ -95,7 +99,7 @@ const reducers = {
 
   [OverrideCurrentlyScrambling]: (state, { payload }) => ({
     ...state,
-    currentlyScrambling: payload.currentlyScrambling,
+    currentlyScrambling: { ...payload.currentlyScrambling },
   }),
 };
 

@@ -3,6 +3,7 @@ import { Container } from 'semantic-ui-react';
 import TwistyPlayer from './TwistyPlayer';
 import { events } from '../../../lib/wca-data.js.erb';
 import { useStore } from '../../../lib/providers/StoreProvider';
+import { isEventFullyScrambled } from '../utils';
 
 export default function ScrambleView({ wcifEvent }) {
   const {
@@ -11,10 +12,7 @@ export default function ScrambleView({ wcifEvent }) {
     },
   } = useStore();
 
-  const isReset = useMemo(
-    () => wcifEvent.rounds.every((round) => round.scrambleSets.length < round.scrambleSetCount),
-    [wcifEvent],
-  );
+  const isReset = useMemo(() => !isEventFullyScrambled(wcifEvent), [wcifEvent]);
 
   const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
   const puzzleCount = useMemo(() => (wcaEvent.id === '333mbf' ? 3 : 1), [wcaEvent.id]);
