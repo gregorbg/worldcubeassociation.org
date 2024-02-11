@@ -1,5 +1,6 @@
 export const ChangesSaved = 'saving_started';
 export const SetScrambleSetCount = 'SET_SCRAMBLE_SET_COUNT';
+export const SetExtraScrambleCount = 'SET_EXTRA_SCRAMBLE_COUNT';
 export const AddScrambleSet = 'ADD_SCRAMBLE_SET';
 export const ResetScrambles = 'RESET_SCRAMBLES';
 export const ToggleCurrentlyScrambling = 'TOGGLE_CURRENTLY_SCRAMBLING';
@@ -24,6 +25,14 @@ export const setScrambleSetCount = (roundId, scrambleSetCount) => ({
   payload: {
     roundId,
     scrambleSetCount,
+  },
+});
+
+export const setExtraScrambleCount = (roundId, numScrambles) => ({
+  type: SetExtraScrambleCount,
+  payload: {
+    roundId,
+    numScrambles,
   },
 });
 

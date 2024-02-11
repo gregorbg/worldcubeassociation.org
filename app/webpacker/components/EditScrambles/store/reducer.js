@@ -3,8 +3,9 @@ import {
   SetScrambleSetCount,
   AddScrambleSet,
   ResetScrambles,
-  ToggleCurrentlyScrambling, OverrideCurrentlyScrambling,
+  ToggleCurrentlyScrambling, OverrideCurrentlyScrambling, SetExtraScrambleCount,
 } from './actions';
+import { buildExtraScrambleExtension, findExtensionById, nextScrambleSetId } from '../utils';
 
 /**
  * Updates 1 or more rounds
@@ -22,6 +23,17 @@ const updateForRounds = (wcifEvents, roundIds, mapper) => wcifEvents.map((event)
     } : round)) : event.rounds,
 }));
 
+const updateExtensions = (extendable, newExtension) => ({
+  ...extendable,
+  extensions: [
+    {
+      ...(findExtensionById(extendable, newExtension.id) || {}),
+      ...newExtension,
+    },
+    ...extendable.extensions.filter((ext) => ext.id !== newExtension.id),
+  ],
+});
+
 const reducers = {
   [ChangesSaved]: (state) => ({
     ...state,
@@ -35,12 +47,27 @@ const reducers = {
     })),
   }),
 
+  [SetExtraScrambleCount]: (state, { payload }) => ({
+    ...state,
+    wcifEvents: updateForRounds(
+      state.wcifEvents,
+      [payload.roundId],
+      (round) => updateExtensions(
+        round,
+        buildExtraScrambleExtension(payload.numScrambles),
+      ),
+    ),
+  }),
+
   [AddScrambleSet]: (state, { payload }) => ({
     ...state,
     wcifEvents: updateForRounds(state.wcifEvents, [payload.roundId], (round) => ({
       scrambleSets: [
         ...(round.scrambleSets || []),
-        payload.scrambleSet,
+        {
+          ...payload.scrambleSet,
+          id: nextScrambleSetId(state.wcifEvents),
+        },
       ],
     })),
   }),

@@ -5,7 +5,11 @@ import { events, formats } from '../../../lib/wca-data.js.erb';
 
 import { useDispatch } from '../../../lib/providers/StoreProvider';
 import { useConfirm } from '../../../lib/providers/ConfirmProvider';
-import { setScrambleSetCount } from '../store/actions';
+import {
+  setExtraScrambleCount,
+  setScrambleSetCount,
+} from '../store/actions';
+import { DEFAULT_EXTRA_SCRAMBLE_COUNT, getExtraScrambleCount } from '../utils';
 
 export default function RoundRow({
   index, wcifRound, wcifEvent,
@@ -21,7 +25,7 @@ export default function RoundRow({
   };
 
   const extraScrambleCountChanged = (e) => {
-    dispatch(setScrambleSetCount(wcifRound.id, parseInt(e.target.value, 10)));
+    dispatch(setExtraScrambleCount(wcifRound.id, parseInt(e.target.value, 10)));
   };
 
   const wcaFormat = useMemo(() => formats.byId[wcifRound.format], [wcifRound.format]);
@@ -53,9 +57,9 @@ export default function RoundRow({
         <Input
           name="extraScramblesCount"
           type="number"
-          min={2}
+          min={DEFAULT_EXTRA_SCRAMBLE_COUNT}
           max={5}
-          value={2}
+          value={getExtraScrambleCount(wcifRound)}
           onChange={extraScrambleCountChanged}
         />
       </Table.Cell>
