@@ -209,6 +209,7 @@ class Round < ApplicationRecord
       "cutoff" => cutoff&.to_wcif,
       "advancementCondition" => advancement_condition&.to_wcif,
       "scrambleSetCount" => self.scramble_set_count,
+      "scrambleSets" => [], # TODO GB
       "results" => round_results.map(&:to_wcif),
       "extensions" => wcif_extensions.map(&:to_wcif),
     }
