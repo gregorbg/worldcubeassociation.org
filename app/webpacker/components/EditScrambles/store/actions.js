@@ -5,6 +5,7 @@ export const AddScrambleSet = 'ADD_SCRAMBLE_SET';
 export const ResetScrambles = 'RESET_SCRAMBLES';
 export const ToggleCurrentlyScrambling = 'TOGGLE_CURRENTLY_SCRAMBLING';
 export const OverrideCurrentlyScrambling = 'OVERRIDE_CURRENTLY_SCRAMBLING';
+export const SetMbldAttemptedCubes = 'SET_MBLD_ATTEMPTED_CUBES';
 
 /**
  * Action creator for marking changes as saved
@@ -63,5 +64,12 @@ export const overrideCurrentlyScrambling = (currentlyScrambling) => ({
   type: OverrideCurrentlyScrambling,
   payload: {
     currentlyScrambling,
+  },
+});
+
+export const setMbldAttemptedCubes = (numCubes) => ({
+  type: SetMbldAttemptedCubes,
+  payload: {
+    numCubes,
   },
 });
