@@ -3,15 +3,8 @@ import React from 'react';
 import { Segment, Table } from 'semantic-ui-react';
 
 import RoundRow from './RoundRow';
-import { useStore } from '../../../lib/providers/StoreProvider';
 
 export default function RoundsTable({ wcifEvent }) {
-  const {
-    canUpdateEvents,
-  } = useStore();
-
-  const disabled = !canUpdateEvents;
-
   return (
     <Segment basic>
       <Table
@@ -34,9 +27,7 @@ export default function RoundsTable({ wcifEvent }) {
             <RoundRow
               key={wcifRound.id}
               index={index}
-              wcifEvent={wcifEvent}
               wcifRound={wcifRound}
-              disabled={disabled}
             />
           ))}
         </Table.Body>

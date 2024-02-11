@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 
 import { Input, Table } from 'semantic-ui-react';
-import { events, formats } from '../../../lib/wca-data.js.erb';
+import { formats } from '../../../lib/wca-data.js.erb';
 
 import { useDispatch } from '../../../lib/providers/StoreProvider';
-import { useConfirm } from '../../../lib/providers/ConfirmProvider';
 import {
   setExtraScrambleCount,
   setScrambleSetCount,
@@ -12,11 +11,10 @@ import {
 import { DEFAULT_EXTRA_SCRAMBLE_COUNT, getExtraScrambleCount } from '../utils';
 
 export default function RoundRow({
-  index, wcifRound, wcifEvent,
+  index,
+  wcifRound,
 }) {
   const dispatch = useDispatch();
-  const confirm = useConfirm();
-  const event = events.byId[wcifEvent.id];
 
   const roundNumber = index + 1;
 
@@ -29,6 +27,8 @@ export default function RoundRow({
   };
 
   const wcaFormat = useMemo(() => formats.byId[wcifRound.format], [wcifRound.format]);
+
+  const scramblesExist = wcifRound.scrambleSets.length > 0;
 
   return (
     <Table.Row
@@ -46,7 +46,7 @@ export default function RoundRow({
         <Input
           name="scrambleSetCount"
           type="number"
-          min={1}
+          min={Math.max(wcifRound.scrambleSets.length, 1)}
           max={100}
           value={wcifRound.scrambleSetCount}
           onChange={scrambleSetCountChanged}
@@ -61,6 +61,7 @@ export default function RoundRow({
           max={5}
           value={getExtraScrambleCount(wcifRound)}
           onChange={extraScrambleCountChanged}
+          disabled={scramblesExist}
         />
       </Table.Cell>
     </Table.Row>

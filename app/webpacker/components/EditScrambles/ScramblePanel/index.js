@@ -10,7 +10,7 @@ import cn from 'classnames';
 import { randomScrambleForEvent } from 'cubing/scramble';
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
-import { useDispatch } from '../../../lib/providers/StoreProvider';
+import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
 import ScrambleView from './ScrambleView';
 import {
   addScrambleSet,
@@ -22,6 +22,12 @@ import { getExtraScrambleCount } from '../utils';
 export default function ScramblePanel({
   wcifEvent,
 }) {
+  const {
+    currentlyScrambling: {
+      [wcifEvent.id]: isScrambling,
+    },
+  } = useStore();
+
   const dispatch = useDispatch();
 
   const event = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
@@ -34,7 +40,9 @@ export default function ScramblePanel({
     setIsScrambling(true);
 
     const roundPromises = wcifEvent.rounds.map((round) => {
-      const scrambleSetPromises = Array(round.scrambleSetCount).fill(true).map((_) => {
+      const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
+
+      const scrambleSetPromises = Array(missingScrambleSets).fill(true).map((_) => {
         const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
         const expectedScrambleCount = Number(expectedScrambleStr);
 
@@ -115,14 +123,16 @@ export default function ScramblePanel({
             <RoundsTable wcifEvent={wcifEvent} />
           </Card.Content>
           <Card.Content>
-            <Progress percent={progressPercent} indicating autoSuccess style={{ marginBottom: 0 }} />
+            <Progress percent={progressPercent} indicating={isScrambling} autoSuccess style={{ marginBottom: 0 }} />
           </Card.Content>
           <Card.Content>
-            <Button icon secondary labelPosition="left" floated="left" onClick={resetScrambles}>
-              <Icon name="repeat" />
-              Reset
-            </Button>
-            <Button icon positive labelPosition="left" floated="right" onClick={scrambleNow}>
+            {existingScrambleSets > 0 && (
+              <Button icon secondary labelPosition="left" floated="left" onClick={resetScrambles}>
+                <Icon name="repeat" />
+                Reset
+              </Button>
+            )}
+            <Button icon positive labelPosition="left" floated="right" onClick={scrambleNow} disabled={existingScrambleSets === targetScrambleSets}>
               <Icon name="shuffle" />
               Generate
             </Button>
