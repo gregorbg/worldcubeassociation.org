@@ -8,7 +8,7 @@ import React, {
 import {
   Button,
   Card,
-  Icon,
+  Icon, Input,
   Label,
   Progress,
   Segment,
@@ -22,9 +22,10 @@ import ScrambleView from './ScrambleView';
 import {
   addScrambleSet,
   resetScrambles as resetWcifScrambles,
-  setCurrentlyScrambling,
+  setCurrentlyScrambling, setMbldAttemptedCubes,
 } from '../store/actions';
-import { getExtraScrambleCount, isEventFullyScrambled } from '../utils';
+import { getExtraScrambleCount, getMbldCubesCount, isEventFullyScrambled } from '../utils';
+import _ from 'lodash';
 
 export default function ScramblePanel({
   wcifEvent,
@@ -53,31 +54,49 @@ export default function ScramblePanel({
     setIsScramblingLocked(false);
   }, [dispatch, wcifEvent.id, setIsScrambling]);
 
+  const mbldCubesCountChanged = useCallback((evt, data) => {
+    dispatch(setMbldAttemptedCubes(data.value));
+  }, [dispatch]);
+
   const generateScrambles = useCallback(() => {
     setAreScramblesComputing(true);
 
     const roundPromises = wcifEvent.rounds.map((round) => {
       const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
 
-      const scrambleSetPromises = Array(missingScrambleSets).fill(true).map((_) => {
+      const scrambleSetPromises = Array(missingScrambleSets).fill(true).map((_foo) => {
         const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
-        const expectedScrambleCount = Number(expectedScrambleStr);
+        const baseScrambleCount = Number(expectedScrambleStr);
+
+        const expectedScrambleCount = wcaEvent.id === '333mbf'
+          ? getMbldCubesCount(wcifEvent) * baseScrambleCount
+          : baseScrambleCount;
 
         const extraScrambleCount = getExtraScrambleCount(round);
 
         const totalScrambleCount = expectedScrambleCount + extraScrambleCount;
 
-        const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_) => {
+        const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_bar) => {
           const scrEventId = wcaEvent.id.replace('333mbf', '333bf');
 
           return randomScrambleForEvent(scrEventId).then((cubingScr) => cubingScr.toString());
         });
 
         return Promise.all(scrambleStringPromises).then((scrambles) => {
-          dispatch(addScrambleSet(round.id, {
-            scrambles: scrambles.slice(0, expectedScrambleCount),
-            extraScrambles: scrambles.slice(-extraScrambleCount),
-          }));
+          if (wcaEvent.id === '333mbf') {
+            const baseScrambles = scrambles.slice(0, -extraScrambleCount);
+            const groupedScrambles = _.chunk(baseScrambles, getMbldCubesCount(wcifEvent));
+
+            dispatch(addScrambleSet(round.id, {
+              scrambles: groupedScrambles.map((scs) => scs.join('\n')),
+              extraScrambles: scrambles.slice(-extraScrambleCount),
+            }));
+          } else {
+            dispatch(addScrambleSet(round.id, {
+              scrambles: scrambles.slice(0, expectedScrambleCount),
+              extraScrambles: scrambles.slice(-extraScrambleCount),
+            }));
+          }
         });
       });
 
@@ -86,7 +105,7 @@ export default function ScramblePanel({
 
     return Promise.all(roundPromises)
       .finally(() => setAreScramblesComputing(false));
-  }, [dispatch, wcifEvent.rounds, wcaEvent.id]);
+  }, [dispatch, wcifEvent, wcaEvent.id]);
 
   useEffect(() => {
     if (isScrambling && !isScramblingLocked) {
@@ -146,6 +165,19 @@ export default function ScramblePanel({
           <Card.Content>
             <RoundsTable wcifEvent={wcifEvent} />
           </Card.Content>
+          {wcifEvent.id === '333mbf' && (
+            <Card.Content>
+              <Input
+                name="mbldCubes"
+                type="number"
+                label="Number of cubes per attempt"
+                min={2}
+                max={120}
+                value={getMbldCubesCount(wcifEvent)}
+                onChange={mbldCubesCountChanged}
+              />
+            </Card.Content>
+          )}
           <Card.Content>
             <Progress
               percent={progressPercent}

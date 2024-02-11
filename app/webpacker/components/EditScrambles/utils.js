@@ -2,6 +2,8 @@ import _ from 'lodash';
 
 export const EXTRA_SCRAMBLE_EXTENSION_ID = 'org.worldcubeassociation.scrambles.numExtra';
 export const DEFAULT_EXTRA_SCRAMBLE_COUNT = 2;
+export const MULTI_CUBES_EXTENSION_ID = 'org.worldcubeassociation.scrambles.numMbldCubes';
+export const DEFAULT_MBLD_CUBES_COUNT = 35;
 
 export const findExtensionById = (extendable, id) => extendable.extensions.find(
   (ext) => ext.id === id,
@@ -19,6 +21,21 @@ export const buildExtraScrambleExtension = (numScrambles) => ({
   specUrl: 'TBD',
   data: {
     numScrambles,
+  },
+});
+
+export const getMbldCubesCount = (wcifEvent) => findExtensionById(
+  wcifEvent,
+  MULTI_CUBES_EXTENSION_ID,
+)
+  ?.data
+  ?.numCubes ?? DEFAULT_MBLD_CUBES_COUNT;
+
+export const buildMultiCountExtension = (numCubes) => ({
+  id: MULTI_CUBES_EXTENSION_ID,
+  specUrl: 'TBD',
+  data: {
+    numCubes,
   },
 });
 

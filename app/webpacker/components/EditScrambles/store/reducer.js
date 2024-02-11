@@ -5,9 +5,14 @@ import {
   ResetScrambles,
   ToggleCurrentlyScrambling,
   OverrideCurrentlyScrambling,
-  SetExtraScrambleCount,
+  SetExtraScrambleCount, SetMbldAttemptedCubes,
 } from './actions';
-import { buildExtraScrambleExtension, findExtensionById, nextScrambleSetId } from '../utils';
+import {
+  buildExtraScrambleExtension,
+  buildMultiCountExtension,
+  findExtensionById,
+  nextScrambleSetId
+} from '../utils';
 
 /**
  * Updates 1 or more rounds
@@ -100,6 +105,15 @@ const reducers = {
   [OverrideCurrentlyScrambling]: (state, { payload }) => ({
     ...state,
     currentlyScrambling: { ...payload.currentlyScrambling },
+  }),
+
+  [SetMbldAttemptedCubes]: (state, { payload }) => ({
+    ...state,
+    wcifEvents: state.wcifEvents.map((wcifEvent) => (
+      wcifEvent.id === '333mbf'
+        ? updateExtensions(wcifEvent, buildMultiCountExtension(payload.numCubes))
+        : wcifEvent
+    )),
   }),
 };
 
