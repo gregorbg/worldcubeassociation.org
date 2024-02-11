@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import {
   Button,
@@ -10,99 +10,78 @@ import cn from 'classnames';
 import { randomScrambleForEvent } from 'cubing/scramble';
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
-import { useStore, useDispatch } from '../../../lib/providers/StoreProvider';
+import { useDispatch } from '../../../lib/providers/StoreProvider';
 import ScrambleView from './ScrambleView';
 import {
   addScrambleSet,
   resetScrambles as resetWcifScrambles,
   setCurrentlyScrambling,
 } from '../store/actions';
+import { getExtraScrambleCount } from '../utils';
 
 export default function ScramblePanel({
   wcifEvent,
 }) {
-  const {
-    canUpdateEvents,
-  } = useStore();
-
   const dispatch = useDispatch();
 
-  const disabled = !canUpdateEvents;
-  const event = events.byId[wcifEvent.id];
+  const event = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
 
   const setIsScrambling = useCallback((scrambling = true) => {
     dispatch(setCurrentlyScrambling(wcifEvent.id, scrambling));
   }, [dispatch, wcifEvent.id]);
 
-  const scrambleNow = async () => {
+  const scrambleNow = () => {
     setIsScrambling(true);
 
-    const scramblePromises = wcifEvent.rounds.map((round, roundNum) => {
-      const roundPromises = Array(round.scrambleSetCount).fill(true).map((_, scrSetNum) => {
+    const roundPromises = wcifEvent.rounds.map((round) => {
+      const scrambleSetPromises = Array(round.scrambleSetCount).fill(true).map((_) => {
         const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
-        const expectedSrambleCount = Number(expectedScrambleStr);
+        const expectedScrambleCount = Number(expectedScrambleStr);
 
-        const scrambleSetPromises = Array(expectedSrambleCount).fill(round.format).map((_, scrNum) => {
+        const extraScrambleCount = getExtraScrambleCount(round);
+
+        const totalScrambleCount = expectedScrambleCount + extraScrambleCount;
+
+        const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_) => {
           const scrEventId = event.id.replace('333mbf', '333bf');
 
-          return randomScrambleForEvent(scrEventId).then((cubingScr) => {
-            console.log('Generated single scramble!', wcifEvent.id, roundNum, scrSetNum, scrNum, cubingScr.toString());
-            return cubingScr.toString();
-          });
+          return randomScrambleForEvent(scrEventId).then((cubingScr) => cubingScr.toString());
         });
 
-        return Promise.all(scrambleSetPromises).then((scrSet) => {
-          console.log('Generated full scramble set!', wcifEvent.id, roundNum, scrSetNum, scrSet);
-
+        return Promise.all(scrambleStringPromises).then((scrambles) => {
           // TODO check if the work hasn't been cancelled in the meantime
           dispatch(addScrambleSet(round.id, {
-            id: scrSetNum, // TODO this can lead to duplicates
-            scrambles: scrSet,
-            extraScrambles: [], // TODO missing extra support
+            scrambles: scrambles.slice(0, expectedScrambleCount),
+            extraScrambles: scrambles.slice(-extraScrambleCount),
           }));
-
-          return scrSet;
         });
       });
 
-      return Promise.all(roundPromises).then((scrambledRound) => {
-        console.log('Scrambled full round!', wcifEvent.id, roundNum, scrambledRound);
-        return scrambledRound;
-      });
+      return Promise.all(scrambleSetPromises);
     });
 
-    const scramblePromise = Promise.all(scramblePromises);
-    const fullyScrambled = await scramblePromise;
-    console.log('Done scrambling!', wcifEvent.id, fullyScrambled);
-
-    setIsScrambling(false);
+    Promise.all(roundPromises).then(() => setIsScrambling(false));
   };
 
-  const resetScrambles = () => {
-    console.log('Resetting scrambles!');
+  const resetScrambles = useCallback(() => {
     dispatch(resetWcifScrambles(wcifEvent.id));
 
     // It is important that the scrambling flag is changed _after_ the scrambles themselves.
     //   We use this information to infer the animation of the cubing.js twisty player.
     setIsScrambling(false);
-  };
+  }, [dispatch, wcifEvent.id, setIsScrambling]);
 
-  const targetScrambles = wcifEvent.rounds.reduce((acc, round) => {
-    const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
-    const expectedScrambleCount = Number(expectedScrambleStr);
+  const targetScrambleSets = wcifEvent.rounds.reduce(
+    (acc, round) => (acc + round.scrambleSetCount),
+    0,
+  );
 
-    return (
-      acc + expectedScrambleCount * round.scrambleSetCount
-    );
-  }, 0);
+  const existingScrambleSets = wcifEvent.rounds.reduce(
+    (acc, round) => (acc + round.scrambleSets.length),
+    0,
+  );
 
-  const existingScrambles = wcifEvent.rounds.reduce((acc, round) => (
-    acc + (round.scrambleSets?.reduce((scrAcc, scrambleSet) => (
-      scrAcc + scrambleSet.scrambles.length
-    ), 0) ?? 0)
-  ), 0);
-
-  const progressRatio = targetScrambles > 0 ? (existingScrambles / targetScrambles) : 0;
+  const progressRatio = targetScrambleSets > 0 ? (existingScrambleSets / targetScrambleSets) : 0;
   const progressPercent = Math.round(progressRatio * 100);
 
   const [showDebug, setShowDebug] = useState(false);
@@ -133,10 +112,7 @@ export default function ScramblePanel({
       {wcifEvent.rounds !== null && (
         <>
           <Card.Content>
-            <RoundsTable
-              wcifEvent={wcifEvent}
-              disabled={disabled}
-            />
+            <RoundsTable wcifEvent={wcifEvent} />
           </Card.Content>
           <Card.Content>
             <Progress percent={progressPercent} indicating autoSuccess style={{ marginBottom: 0 }} />

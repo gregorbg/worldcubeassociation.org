@@ -1,11 +1,17 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo, useState,
+  useMemo,
 } from 'react';
 import _ from 'lodash';
 
-import { Button, Card, Divider, Icon, Message } from 'semantic-ui-react';
+import {
+  Button,
+  Card,
+  Divider,
+  Icon,
+  Message,
+} from 'semantic-ui-react';
 
 import { useSaveWcifAction } from '../../lib/utils/wcif';
 import ScramblePanel from './ScramblePanel';

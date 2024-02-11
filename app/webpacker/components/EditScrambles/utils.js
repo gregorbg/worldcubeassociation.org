@@ -1,73 +1,33 @@
-import { events, formats } from '../../lib/wca-data.js.erb';
-import { buildActivityCode, parseActivityCode } from '../../lib/utils/wcif';
-import { matchResult, pluralize } from '../../lib/utils/edit-events';
+import _ from 'lodash';
 
-const DEFAULT_TIME_LIMIT = {
-  centiseconds: 10 * 60 * 100,
-  cumulativeRoundIds: [],
-};
+export const EXTRA_SCRAMBLE_EXTENSION_ID = 'org.worldcubeassociation.scrambles.numExtra';
+export const DEFAULT_EXTRA_SCRAMBLE_COUNT = 2;
 
-export const generateWcifRound = (eventId, roundNumber) => {
-  const event = events.byId[eventId];
+export const findExtensionById = (extendable, id) => extendable.extensions.find(
+  (ext) => ext.id === id,
+);
 
-  return {
-    id: buildActivityCode({
-      eventId,
-      roundNumber,
-    }),
-    format: event.recommendedFormat().id,
-    timeLimit: event.canChangeTimeLimit ? DEFAULT_TIME_LIMIT : null,
-    cutoff: null,
-    advancementCondition: null,
-    results: [],
-    groups: [],
-    scrambleSetCount: 1,
-  };
-};
+export const getExtraScrambleCount = (wcifRound) => findExtensionById(
+  wcifRound,
+  EXTRA_SCRAMBLE_EXTENSION_ID,
+)
+  ?.data
+  ?.numScrambles ?? DEFAULT_EXTRA_SCRAMBLE_COUNT;
 
-/**
- * Removes the roundIds from the cumulativeRoundIds of the specified event.
- *
- * @param {collection} wcifEvents Will be modified in place.
- * @param {Array}      roundIdsToRemove Rounds to be removed from all cumulativeRoundIds.
- */
-export const removeSharedTimeLimits = (event, roundIdsToRemove) => {
-  if (event.rounds) {
-    return {
-      ...event,
-      rounds: event.rounds.map((round) => removeSharedTimeLimitsFromRound(round, roundIdsToRemove)),
-    };
-  };
-  return event;
-};
+export const buildExtraScrambleExtension = (numScrambles) => ({
+  id: EXTRA_SCRAMBLE_EXTENSION_ID,
+  specUrl: 'TBD',
+  data: {
+    numScrambles,
+  },
+});
 
-const removeSharedTimeLimitsFromRound = (round, roundIdsToRemove) => {
-  if (round.timeLimit) {
-    return {
-      ...round,
-      timeLimit: {
-        ...round.timeLimit,
-        cumulativeRoundIds: round.timeLimit.cumulativeRoundIds.filter((wcifRoundId) => (
-          !roundIdsToRemove.includes(wcifRoundId)
-        )),
-      },
-    };
-  };
-  return round;
-};
+const maxIdOrZero = (objects) => _.max(objects.map((wcifObj) => wcifObj.id)) || 0;
 
-export const roundCutoffToString = (wcifRound, { short } = {}) => {
-  const { cutoff } = wcifRound;
-  if (!cutoff) {
-    return '-';
-  }
+export function nextScrambleSetId(wcifEvents) {
+  // Explore the WCIF to get the highest ids.
+  const rounds = wcifEvents.flatMap((event) => event.rounds);
+  const scrambleSets = rounds.flatMap((round) => round.scrambleSets);
 
-  const { eventId } = parseActivityCode(wcifRound.id);
-  const matchStr = matchResult(cutoff.attemptResult, eventId, { short });
-  if (short) {
-    return `Best of ${cutoff.numberOfAttempts} ${matchStr}`;
-  }
-  let explanationText = `Competitors get ${pluralize(cutoff.numberOfAttempts, 'attempt')} to get ${matchStr}.`;
-  explanationText += ` If they succeed, they get to do all ${formats.byId[wcifRound.format].expectedSolveCount} solves.`;
-  return explanationText;
-};
+  return maxIdOrZero(scrambleSets) + 1;
+}
