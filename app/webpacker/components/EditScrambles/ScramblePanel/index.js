@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import {
   Button,
@@ -38,9 +43,16 @@ export default function ScramblePanel({
     dispatch(setCurrentlyScrambling(wcifEvent.id, scrambling));
   }, [dispatch, wcifEvent.id]);
 
-  const scrambleNow = useCallback(() => {
-    setIsScrambling(true);
+  const resetScrambles = useCallback(() => {
+    // It is important that we set these flags first, to prevent pending promises
+    //   from writing more scrambles into the round
+    setIsScramblingInternal(false);
+    setIsScrambling(false);
 
+    dispatch(resetWcifScrambles(wcifEvent.id));
+  }, [dispatch, wcifEvent.id, setIsScrambling]);
+
+  const generateScrambles = useCallback(() => {
     const roundPromises = wcifEvent.rounds.map((round) => {
       const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
 
@@ -59,36 +71,26 @@ export default function ScramblePanel({
         });
 
         return Promise.all(scrambleStringPromises).then((scrambles) => {
-          if (isScrambling) { // We need to check whether somebody aborted/reset in the meantime
-            dispatch(addScrambleSet(round.id, {
-              scrambles: scrambles.slice(0, expectedScrambleCount),
-              extraScrambles: scrambles.slice(-extraScrambleCount),
-            }));
-          }
+          dispatch(addScrambleSet(round.id, {
+            scrambles: scrambles.slice(0, expectedScrambleCount),
+            extraScrambles: scrambles.slice(-extraScrambleCount),
+          }));
         });
       });
 
       return Promise.all(scrambleSetPromises);
     });
 
-    Promise.all(roundPromises).then(() => setIsScrambling(false));
-  }, [dispatch, isScrambling, setIsScrambling, wcaEvent, wcifEvent]);
+    return Promise.all(roundPromises);
+  }, [dispatch, wcifEvent.rounds, wcaEvent.id]);
 
   useEffect(() => {
     if (isScrambling && !isScramblingInternal) {
-      scrambleNow();
+      generateScrambles().finally(() => setIsScrambling(false));
     }
 
     setIsScramblingInternal(isScrambling);
-  }, [isScrambling, isScramblingInternal, scrambleNow]);
-
-  const resetScrambles = useCallback(() => {
-    dispatch(resetWcifScrambles(wcifEvent.id));
-
-    // It is important that the scrambling flag is changed _after_ the scrambles themselves.
-    //   We use this information to infer the animation of the cubing.js twisty player.
-    setIsScrambling(false);
-  }, [dispatch, wcifEvent.id, setIsScrambling]);
+  }, [isScrambling, isScramblingInternal, setIsScrambling, generateScrambles]);
 
   const targetScrambleSets = wcifEvent.rounds.reduce(
     (acc, round) => (acc + round.scrambleSetCount),
@@ -109,7 +111,6 @@ export default function ScramblePanel({
     <Card
       style={{ minWidth: 'min-content' }}
       size="tiny"
-      compact
       className={`scramble-panel event-${wcifEvent.id}`}
     >
       <Card.Content
@@ -134,16 +135,35 @@ export default function ScramblePanel({
             <RoundsTable wcifEvent={wcifEvent} />
           </Card.Content>
           <Card.Content>
-            <Progress percent={progressPercent} indicating={isScrambling} autoSuccess style={{ marginBottom: 0 }} />
+            <Progress
+              percent={progressPercent}
+              indicating={isScrambling}
+              autoSuccess
+              style={{ marginBottom: 0 }}
+            />
           </Card.Content>
           <Card.Content>
             {existingScrambleSets > 0 && (
-              <Button icon secondary labelPosition="left" floated="left" onClick={resetScrambles}>
+              <Button
+                icon
+                secondary
+                labelPosition="left"
+                floated="left"
+                onClick={resetScrambles}
+                disabled={isScrambling}
+              >
                 <Icon name="repeat" />
                 Reset
               </Button>
             )}
-            <Button icon positive labelPosition="left" floated="right" onClick={setIsScrambling} disabled={existingScrambleSets === targetScrambleSets}>
+            <Button
+              icon
+              positive
+              labelPosition="left"
+              floated="right"
+              onClick={() => setIsScrambling(true)}
+              disabled={existingScrambleSets === targetScrambleSets}
+            >
               <Icon name="shuffle" />
               Generate
             </Button>

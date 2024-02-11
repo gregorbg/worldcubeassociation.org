@@ -32,24 +32,15 @@ export default function TwistyPlayer({
   useEffect(() => {
     if (!twistyRef.current) return;
 
-    loadScramble(twistyRef.current);
-  }, [twistyRef, loadScramble]);
-
-  useEffect(() => {
-    if (!twistyRef.current) return;
-
     if (isPlaying) {
       if (!isPlayingInternal) {
         twistyRef.current.play();
       }
     } else if (isPlayingInternal) {
-      if (isReset) {
-        twistyRef.current.jumpToStart();
-        loadScramble(twistyRef.current);
-      } else {
-        twistyRef.current.jumpToEnd();
-      }
+      twistyRef.current.jumpToEnd();
     } else if (isReset) {
+      // Note: This part of the hook also triggers on initial page load,
+      // making an additional "load scramble upon load" hook unnecessary.
       twistyRef.current.jumpToStart();
       loadScramble(twistyRef.current);
     }

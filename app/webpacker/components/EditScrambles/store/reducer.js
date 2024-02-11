@@ -3,7 +3,9 @@ import {
   SetScrambleSetCount,
   AddScrambleSet,
   ResetScrambles,
-  ToggleCurrentlyScrambling, OverrideCurrentlyScrambling, SetExtraScrambleCount,
+  ToggleCurrentlyScrambling,
+  OverrideCurrentlyScrambling,
+  SetExtraScrambleCount,
 } from './actions';
 import { buildExtraScrambleExtension, findExtensionById, nextScrambleSetId } from '../utils';
 
