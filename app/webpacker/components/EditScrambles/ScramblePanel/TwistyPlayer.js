@@ -6,21 +6,20 @@ import { eventInfo } from 'cubing/puzzles';
 import { randomScrambleForEvent } from 'cubing/scramble';
 // eslint-disable-next-line no-unused-vars
 import { TwistyPlayer as ImportTwistyPlayer } from 'cubing/twisty';
-import { events } from '../../../lib/wca-data.js.erb';
 
 export default function TwistyPlayer({
-  eventId,
+  wcaEventId,
   scramble = null,
   isPlaying = false,
+  isReset = true,
   styleOverride,
 }) {
-  const wcaEvent = useMemo(() => events.byId[eventId], [eventId]);
-  const puzzleId = useMemo(() => eventInfo(eventId)?.puzzleID, [eventId]);
+  const puzzleId = useMemo(() => eventInfo(wcaEventId)?.puzzleID, [wcaEventId]);
 
   const getRandomScramble = useCallback(() => {
-    const scrEventId = wcaEvent.id.replace('333mbf', '333bf');
+    const scrEventId = wcaEventId.replace('333mbf', '333bf');
     return randomScrambleForEvent(scrEventId);
-  }, [wcaEvent.id]);
+  }, [wcaEventId]);
 
   const twistyRef = useRef();
 
@@ -44,15 +43,22 @@ export default function TwistyPlayer({
         twistyRef.current.play();
       }
     } else if (isPlayingInternal) {
+      if (isReset) {
+        twistyRef.current.jumpToStart();
+        loadScramble(twistyRef.current);
+      } else {
+        twistyRef.current.jumpToEnd();
+      }
+    } else if (isReset) {
       twistyRef.current.jumpToStart();
       loadScramble(twistyRef.current);
     }
 
     setIsPlayingInternal(isPlaying);
-  }, [twistyRef, isPlaying, isPlayingInternal, loadScramble]);
+  }, [twistyRef, isPlaying, isPlayingInternal, isReset, loadScramble]);
 
   const animationTempo = useMemo(() => {
-    switch (eventId) {
+    switch (wcaEventId) {
       case '222':
         return 1;
       case '333':
@@ -84,7 +90,7 @@ export default function TwistyPlayer({
       default:
         return 1;
     }
-  }, [eventId]);
+  }, [wcaEventId]);
 
   return (
     <twisty-player

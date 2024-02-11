@@ -4,25 +4,31 @@ import TwistyPlayer from './TwistyPlayer';
 import { events } from '../../../lib/wca-data.js.erb';
 import { useStore } from '../../../lib/providers/StoreProvider';
 
-export default function ScrambleView({ eventId }) {
+export default function ScrambleView({ wcifEvent }) {
   const {
     currentlyScrambling: {
-      [eventId]: isScrambling,
+      [wcifEvent.id]: isScrambling,
     },
   } = useStore();
 
-  const wcaEvent = useMemo(() => events.byId[eventId], [eventId]);
-  const scrambleCount = useMemo(() => (wcaEvent.id === '333mbf' ? 3 : 1), [wcaEvent.id]);
+  const isReset = useMemo(
+    () => wcifEvent.rounds.every((round) => round.scrambleSets.length === 0),
+    [wcifEvent],
+  );
 
-  const widthPercent = 100 / scrambleCount;
+  const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
+  const puzzleCount = useMemo(() => (wcaEvent.id === '333mbf' ? 3 : 1), [wcaEvent.id]);
+
+  const widthPercent = 100 / puzzleCount;
 
   return (
     <Container fluid className="attached">
-      {[...Array(scrambleCount)].map((_, i) => (
+      {[...Array(puzzleCount)].map((_, i) => (
         <TwistyPlayer
           key={`player-${i}`}
-          eventId={eventId}
+          wcaEventId={wcaEvent.id}
           isPlaying={!!isScrambling}
+          isReset={isReset}
           styleOverride={{ display: 'inline-grid', width: `${widthPercent}%` }}
         />
       ))}
