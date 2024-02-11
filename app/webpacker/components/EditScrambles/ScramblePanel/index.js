@@ -79,10 +79,12 @@ export default function ScramblePanel({
   };
 
   const resetScrambles = () => {
-    setIsScrambling(false);
-
     console.log('Resetting scrambles!');
     dispatch(resetWcifScrambles(wcifEvent.id));
+
+    // It is important that the scrambling flag is changed _after_ the scrambles themselves.
+    //   We use this information to infer the animation of the cubing.js twisty player.
+    setIsScrambling(false);
   };
 
   const targetScrambles = wcifEvent.rounds.reduce((acc, round) => {
@@ -119,7 +121,7 @@ export default function ScramblePanel({
             <Icon className={cn('cubing-icon', `event-${event.id}`)} />
             {event.name}
           </Label>
-          <ScrambleView eventId={wcifEvent.id} />
+          <ScrambleView wcifEvent={wcifEvent} />
           <Label as="a" basic attached="bottom right" onClick={(e, data) => console.log(data)}>
             <Icon name="paint brush" />
             Edit color scheme
