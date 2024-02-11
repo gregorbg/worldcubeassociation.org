@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   Button,
@@ -30,13 +30,15 @@ export default function ScramblePanel({
 
   const dispatch = useDispatch();
 
-  const event = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
+  const [isScramblingInternal, setIsScramblingInternal] = useState(false);
+
+  const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
 
   const setIsScrambling = useCallback((scrambling = true) => {
     dispatch(setCurrentlyScrambling(wcifEvent.id, scrambling));
   }, [dispatch, wcifEvent.id]);
 
-  const scrambleNow = () => {
+  const scrambleNow = useCallback(() => {
     setIsScrambling(true);
 
     const roundPromises = wcifEvent.rounds.map((round) => {
@@ -51,17 +53,18 @@ export default function ScramblePanel({
         const totalScrambleCount = expectedScrambleCount + extraScrambleCount;
 
         const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_) => {
-          const scrEventId = event.id.replace('333mbf', '333bf');
+          const scrEventId = wcaEvent.id.replace('333mbf', '333bf');
 
           return randomScrambleForEvent(scrEventId).then((cubingScr) => cubingScr.toString());
         });
 
         return Promise.all(scrambleStringPromises).then((scrambles) => {
-          // TODO check if the work hasn't been cancelled in the meantime
-          dispatch(addScrambleSet(round.id, {
-            scrambles: scrambles.slice(0, expectedScrambleCount),
-            extraScrambles: scrambles.slice(-extraScrambleCount),
-          }));
+          if (isScrambling) { // We need to check whether somebody aborted/reset in the meantime
+            dispatch(addScrambleSet(round.id, {
+              scrambles: scrambles.slice(0, expectedScrambleCount),
+              extraScrambles: scrambles.slice(-extraScrambleCount),
+            }));
+          }
         });
       });
 
@@ -69,7 +72,15 @@ export default function ScramblePanel({
     });
 
     Promise.all(roundPromises).then(() => setIsScrambling(false));
-  };
+  }, [dispatch, isScrambling, setIsScrambling, wcaEvent, wcifEvent]);
+
+  useEffect(() => {
+    if (isScrambling && !isScramblingInternal) {
+      scrambleNow();
+    }
+
+    setIsScramblingInternal(isScrambling);
+  }, [isScrambling, isScramblingInternal, scrambleNow]);
 
   const resetScrambles = useCallback(() => {
     dispatch(resetWcifScrambles(wcifEvent.id));
@@ -107,8 +118,8 @@ export default function ScramblePanel({
       >
         <Segment tertiary style={{ borderTop: 'none', textAlign: '-webkit-center' }} textAlign="center">
           <Label attached="top right" size="huge">
-            <Icon className={cn('cubing-icon', `event-${event.id}`)} />
-            {event.name}
+            <Icon className={cn('cubing-icon', `event-${wcaEvent.id}`)} />
+            {wcaEvent.name}
           </Label>
           <ScrambleView wcifEvent={wcifEvent} />
           <Label as="a" basic attached="bottom right">
@@ -132,7 +143,7 @@ export default function ScramblePanel({
                 Reset
               </Button>
             )}
-            <Button icon positive labelPosition="left" floated="right" onClick={scrambleNow} disabled={existingScrambleSets === targetScrambleSets}>
+            <Button icon positive labelPosition="left" floated="right" onClick={setIsScrambling} disabled={existingScrambleSets === targetScrambleSets}>
               <Icon name="shuffle" />
               Generate
             </Button>

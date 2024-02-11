@@ -12,7 +12,7 @@ export default function ScrambleView({ wcifEvent }) {
   } = useStore();
 
   const isReset = useMemo(
-    () => wcifEvent.rounds.every((round) => round.scrambleSets.length === 0),
+    () => wcifEvent.rounds.every((round) => round.scrambleSets.length < round.scrambleSetCount),
     [wcifEvent],
   );
 
