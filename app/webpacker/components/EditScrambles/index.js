@@ -1,7 +1,7 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo,
+  useMemo, useState,
 } from 'react';
 import _ from 'lodash';
 
@@ -74,10 +74,19 @@ function EditScrambles() {
     dispatch(overrideCurrentlyScrambling(allScrambling));
   }, [dispatch, wcifEvents]);
 
+  const canScramble = useMemo(
+    () => wcifEvents.some(
+      (wcifEvent) => wcifEvent.rounds.some(
+        (round) => round.scrambleSets.length === 0,
+      ),
+    ),
+    [wcifEvents],
+  );
+
   return (
     <>
       {unsavedChanges && renderUnsavedChangesAlert()}
-      <Button fluid positive icon size="huge" onClick={scrambleAll}>
+      <Button fluid positive icon size="huge" onClick={scrambleAll} disabled={!canScramble}>
         <Icon name="shuffle" />
         Scramble all
       </Button>
