@@ -22,7 +22,10 @@ import ConfirmProvider from '../../lib/providers/ConfirmProvider';
 
 function EditScrambles() {
   const {
-    competitionId, wcifEvents, initialWcifEvents,
+    competitionId,
+    wcifEvents,
+    initialWcifEvents,
+    currentlyScrambling,
   } = useStore();
 
   const dispatch = useDispatch();
@@ -80,14 +83,21 @@ function EditScrambles() {
     dispatch(overrideCurrentlyScrambling(allScrambling));
   }, [dispatch, wcifEvents]);
 
-  const canScramble = useMemo(
+  const hasWorkToScramble = useMemo(
     () => wcifEvents.some(
       (wcifEvent) => wcifEvent.rounds.some(
-        (round) => round.scrambleSets.length === 0,
+        (round) => round.scrambleSets.length < round.scrambleSetCount,
       ),
     ),
     [wcifEvents],
   );
+
+  const isAnyScrambling = useMemo(
+    () => wcifEvents.some((wcifEvent) => currentlyScrambling[wcifEvent.id]),
+    [wcifEvents, currentlyScrambling],
+  );
+
+  const canScramble = hasWorkToScramble && !isAnyScrambling;
 
   return (
     <>
