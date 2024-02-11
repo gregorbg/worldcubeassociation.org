@@ -10,7 +10,7 @@ Sidekiq.configure_server do |config|
   config.concurrency = 3
 
   # Our cronjobs generally react allergic to concurrency because we never designed them with idempotency in mind.
-  # Instead of redesigning our whole zoo of cronjobs, pipe them through a linear execution worker.
+  # Instead of redesigning our whole zoo of cronjobs, pipe them through a linear execution workers.
   config.capsule("cronjobs") do |cap|
     cap.concurrency = 1
     cap.queues = %w[wca_jobs]

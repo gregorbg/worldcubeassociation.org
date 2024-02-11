@@ -37,7 +37,7 @@ export default function ScramblePanel({
   const scrambleNow = async () => {
     setIsScrambling(true);
 
-    /*const scramblePromises = wcifEvent.rounds.map((round, roundNum) => {
+    const scramblePromises = wcifEvent.rounds.map((round, roundNum) => {
       const roundPromises = Array(round.scrambleSetCount).fill(true).map((_, scrSetNum) => {
         const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
         const expectedSrambleCount = Number(expectedScrambleStr);
@@ -75,7 +75,7 @@ export default function ScramblePanel({
     const fullyScrambled = await scramblePromise;
     console.log('Done scrambling!', wcifEvent.id, fullyScrambled);
 
-    setIsScrambling(false);*/
+    setIsScrambling(false);
   };
 
   const resetScrambles = () => {
@@ -105,6 +105,8 @@ export default function ScramblePanel({
   const progressRatio = targetScrambles > 0 ? (existingScrambles / targetScrambles) : 0;
   const progressPercent = Math.round(progressRatio * 100);
 
+  const [showDebug, setShowDebug] = useState(false);
+
   return (
     <Card
       style={{ minWidth: 'min-content' }}
@@ -122,7 +124,7 @@ export default function ScramblePanel({
             {event.name}
           </Label>
           <ScrambleView wcifEvent={wcifEvent} />
-          <Label as="a" basic attached="bottom right" onClick={(e, data) => console.log(data)}>
+          <Label as="a" basic attached="bottom right">
             <Icon name="paint brush" />
             Edit color scheme
           </Label>
@@ -148,8 +150,25 @@ export default function ScramblePanel({
               <Icon name="shuffle" />
               Generate
             </Button>
+            <Button
+              icon
+              basic
+              labelPosition="left"
+              floated="left"
+              onClick={() => setShowDebug((debug) => !debug)}
+            >
+              <Icon name="bug" />
+              Debug
+            </Button>
           </Card.Content>
         </>
+      )}
+      {showDebug && (
+        <Card.Content>
+          <pre>
+            {JSON.stringify(wcifEvent, null, 2)}
+          </pre>
+        </Card.Content>
       )}
     </Card>
   );
