@@ -3,6 +3,7 @@ import {
   SetScrambleSetCount,
   AddScrambleSet,
   ResetScrambles,
+  ToggleCurrentlyScrambling, OverrideCurrentlyScrambling,
 } from './actions';
 
 /**
@@ -53,6 +54,19 @@ const reducers = {
         scrambleSets: event.id === payload.eventId ? [] : round.scrambleSets,
       })),
     })),
+  }),
+
+  [ToggleCurrentlyScrambling]: (state, { payload }) => ({
+    ...state,
+    currentlyScrambling: {
+      ...state.currentlyScrambling,
+      [payload.eventId]: payload.isScrambling,
+    },
+  }),
+
+  [OverrideCurrentlyScrambling]: (state, { payload }) => ({
+    ...state,
+    currentlyScrambling: payload.currentlyScrambling,
   }),
 };
 

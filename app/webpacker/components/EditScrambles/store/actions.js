@@ -2,6 +2,8 @@ export const ChangesSaved = 'saving_started';
 export const SetScrambleSetCount = 'SET_SCRAMBLE_SET_COUNT';
 export const AddScrambleSet = 'ADD_SCRAMBLE_SET';
 export const ResetScrambles = 'RESET_SCRAMBLES';
+export const ToggleCurrentlyScrambling = 'TOGGLE_CURRENTLY_SCRAMBLING';
+export const OverrideCurrentlyScrambling = 'OVERRIDE_CURRENTLY_SCRAMBLING';
 
 /**
  * Action creator for marking changes as saved
@@ -37,5 +39,20 @@ export const resetScrambles = (eventId) => ({
   type: ResetScrambles,
   payload: {
     eventId,
+  },
+});
+
+export const setCurrentlyScrambling = (eventId, isScrambling = true) => ({
+  type: ToggleCurrentlyScrambling,
+  payload: {
+    eventId,
+    isScrambling,
+  },
+});
+
+export const overrideCurrentlyScrambling = (currentlyScrambling) => ({
+  type: OverrideCurrentlyScrambling,
+  payload: {
+    currentlyScrambling,
   },
 });

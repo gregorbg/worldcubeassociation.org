@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import {
   Button,
@@ -7,12 +7,16 @@ import {
   Label, Progress, Segment,
 } from 'semantic-ui-react';
 import cn from 'classnames';
-import { randomScrambleForEvent } from "cubing/scramble";
+import { randomScrambleForEvent } from 'cubing/scramble';
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
 import { useStore, useDispatch } from '../../../lib/providers/StoreProvider';
 import ScrambleView from './ScrambleView';
-import { addScrambleSet, resetScrambles as resetWcifScrambles } from '../store/actions';
+import {
+  addScrambleSet,
+  resetScrambles as resetWcifScrambles,
+  setCurrentlyScrambling,
+} from '../store/actions';
 
 export default function ScramblePanel({
   wcifEvent,
@@ -26,14 +30,14 @@ export default function ScramblePanel({
   const disabled = !canUpdateEvents;
   const event = events.byId[wcifEvent.id];
 
-  const [isScrambling, setIsScrambling] = useState(false);
-  const [isResetting, setIsResetting] = useState(false);
+  const setIsScrambling = useCallback((scrambling = true) => {
+    dispatch(setCurrentlyScrambling(wcifEvent.id, scrambling));
+  }, [dispatch, wcifEvent.id]);
 
   const scrambleNow = async () => {
     setIsScrambling(true);
-    setIsResetting(false);
 
-    const scramblePromises = wcifEvent.rounds.map((round, roundNum) => {
+    /*const scramblePromises = wcifEvent.rounds.map((round, roundNum) => {
       const roundPromises = Array(round.scrambleSetCount).fill(true).map((_, scrSetNum) => {
         const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
         const expectedSrambleCount = Number(expectedScrambleStr);
@@ -50,14 +54,12 @@ export default function ScramblePanel({
         return Promise.all(scrambleSetPromises).then((scrSet) => {
           console.log('Generated full scramble set!', wcifEvent.id, roundNum, scrSetNum, scrSet);
 
-          // check if somebody cancelled the scrambling in the meantime
-          if (!isResetting) {
-            dispatch(addScrambleSet(round.id, {
-              id: scrSetNum, // TODO this can lead to duplicates
-              scrambles: scrSet,
-              extraScrambles: [], // TODO missing extra support
-            }));
-          }
+          // TODO check if the work hasn't been cancelled in the meantime
+          dispatch(addScrambleSet(round.id, {
+            id: scrSetNum, // TODO this can lead to duplicates
+            scrambles: scrSet,
+            extraScrambles: [], // TODO missing extra support
+          }));
 
           return scrSet;
         });
@@ -73,11 +75,10 @@ export default function ScramblePanel({
     const fullyScrambled = await scramblePromise;
     console.log('Done scrambling!', wcifEvent.id, fullyScrambled);
 
-    setIsScrambling(false);
+    setIsScrambling(false);*/
   };
 
   const resetScrambles = () => {
-    setIsResetting(true);
     setIsScrambling(false);
 
     console.log('Resetting scrambles!');
@@ -118,7 +119,7 @@ export default function ScramblePanel({
             <Icon className={cn('cubing-icon', `event-${event.id}`)} />
             {event.name}
           </Label>
-          <ScrambleView eventId={wcifEvent.id} isPlaying={isScrambling} isResetting={isResetting} />
+          <ScrambleView eventId={wcifEvent.id} />
           <Label as="a" basic attached="bottom right" onClick={(e, data) => console.log(data)}>
             <Icon name="paint brush" />
             Edit color scheme

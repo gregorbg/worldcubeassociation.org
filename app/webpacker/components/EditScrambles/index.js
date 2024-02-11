@@ -5,11 +5,11 @@ import React, {
 } from 'react';
 import _ from 'lodash';
 
-import { Button, Card, Message } from 'semantic-ui-react';
+import { Button, Card, Divider, Icon, Message } from 'semantic-ui-react';
 
 import { useSaveWcifAction } from '../../lib/utils/wcif';
 import ScramblePanel from './ScramblePanel';
-import { changesSaved } from './store/actions';
+import { changesSaved, overrideCurrentlyScrambling } from './store/actions';
 import wcifEventsReducer from './store/reducer';
 import Store, { useDispatch, useStore } from '../../lib/providers/StoreProvider';
 import ConfirmProvider from '../../lib/providers/ConfirmProvider';
@@ -69,9 +69,19 @@ function EditScrambles() {
     </Message>
   );
 
+  const scrambleAll = useCallback(() => {
+    const allScrambling = Object.fromEntries(wcifEvents.map((wcifEvent) => [wcifEvent.id, true]));
+    dispatch(overrideCurrentlyScrambling(allScrambling));
+  }, [dispatch, wcifEvents]);
+
   return (
     <>
       {unsavedChanges && renderUnsavedChangesAlert()}
+      <Button fluid positive icon size="huge" onClick={scrambleAll}>
+        <Icon name="shuffle" />
+        Scramble all
+      </Button>
+      <Divider />
       <Card.Group
         itemsPerRow={3}
         className="stackable"
@@ -89,9 +99,7 @@ function EditScrambles() {
 
 export default function Wrapper({
   competitionId,
-  canAddAndRemoveEvents,
   canUpdateEvents,
-  canUpdateQualifications,
   wcifEvents,
 }) {
   return (
@@ -99,12 +107,11 @@ export default function Wrapper({
       reducer={wcifEventsReducer}
       initialState={{
         competitionId,
-        canAddAndRemoveEvents,
         canUpdateEvents,
-        canUpdateQualifications,
         wcifEvents,
         initialWcifEvents: wcifEvents,
         unsavedChanges: false,
+        currentlyScrambling: {},
       }}
     >
       <ConfirmProvider>

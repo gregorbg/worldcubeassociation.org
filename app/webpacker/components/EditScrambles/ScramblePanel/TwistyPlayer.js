@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useEffect, useMemo, useRef,
+  useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 /* eslint-disable import/no-unresolved */
 import { eventInfo } from 'cubing/puzzles';
@@ -12,7 +12,6 @@ export default function TwistyPlayer({
   eventId,
   scramble = null,
   isPlaying = false,
-  isResetting = false,
   styleOverride,
 }) {
   const wcaEvent = useMemo(() => events.byId[eventId], [eventId]);
@@ -29,6 +28,8 @@ export default function TwistyPlayer({
     twisty.alg = scramble || getRandomScramble();
   }, [scramble, getRandomScramble]);
 
+  const [isPlayingInternal, setIsPlayingInternal] = useState(false);
+
   useEffect(() => {
     if (!twistyRef.current) return;
 
@@ -38,17 +39,17 @@ export default function TwistyPlayer({
   useEffect(() => {
     if (!twistyRef.current) return;
 
-    if (isPlaying) twistyRef.current.play();
-  }, [twistyRef, isPlaying]);
-
-  useEffect(() => {
-    if (!twistyRef.current) return;
-
-    if (isResetting) {
+    if (isPlaying) {
+      if (!isPlayingInternal) {
+        twistyRef.current.play();
+      }
+    } else if (isPlayingInternal) {
       twistyRef.current.jumpToStart();
       loadScramble(twistyRef.current);
     }
-  }, [twistyRef, isResetting, loadScramble]);
+
+    setIsPlayingInternal(isPlaying);
+  }, [twistyRef, isPlaying, isPlayingInternal, loadScramble]);
 
   const animationTempo = useMemo(() => {
     switch (eventId) {
