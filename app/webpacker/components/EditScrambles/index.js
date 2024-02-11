@@ -19,6 +19,7 @@ import { changesSaved, overrideCurrentlyScrambling } from './store/actions';
 import wcifEventsReducer from './store/reducer';
 import Store, { useDispatch, useStore } from '../../lib/providers/StoreProvider';
 import ConfirmProvider from '../../lib/providers/ConfirmProvider';
+import { isEventFullyScrambled } from './utils';
 
 function EditScrambles() {
   const {
@@ -79,16 +80,15 @@ function EditScrambles() {
   );
 
   const scrambleAll = useCallback(() => {
-    const allScrambling = Object.fromEntries(wcifEvents.map((wcifEvent) => [wcifEvent.id, true]));
+    const allScrambling = Object.fromEntries(
+      wcifEvents.map((wcifEvent) => [wcifEvent.id, !isEventFullyScrambled(wcifEvent)]),
+    );
+
     dispatch(overrideCurrentlyScrambling(allScrambling));
   }, [dispatch, wcifEvents]);
 
   const hasWorkToScramble = useMemo(
-    () => wcifEvents.some(
-      (wcifEvent) => wcifEvent.rounds.some(
-        (round) => round.scrambleSets.length < round.scrambleSetCount,
-      ),
-    ),
+    () => !wcifEvents.every((wcifEvent) => isEventFullyScrambled(wcifEvent)),
     [wcifEvents],
   );
 

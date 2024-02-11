@@ -9,7 +9,9 @@ import {
   Button,
   Card,
   Icon,
-  Label, Progress, Segment,
+  Label,
+  Progress,
+  Segment,
 } from 'semantic-ui-react';
 import cn from 'classnames';
 import { randomScrambleForEvent } from 'cubing/scramble';
@@ -22,7 +24,7 @@ import {
   resetScrambles as resetWcifScrambles,
   setCurrentlyScrambling,
 } from '../store/actions';
-import { getExtraScrambleCount } from '../utils';
+import { getExtraScrambleCount, isEventFullyScrambled } from '../utils';
 
 export default function ScramblePanel({
   wcifEvent,
@@ -35,7 +37,8 @@ export default function ScramblePanel({
 
   const dispatch = useDispatch();
 
-  const [isScramblingInternal, setIsScramblingInternal] = useState(false);
+  const [isScramblingLocked, setIsScramblingLocked] = useState(false);
+  const [areScramblesComputing, setAreScramblesComputing] = useState(false);
 
   const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
 
@@ -44,15 +47,15 @@ export default function ScramblePanel({
   }, [dispatch, wcifEvent.id]);
 
   const resetScrambles = useCallback(() => {
-    // It is important that we set these flags first, to prevent pending promises
-    //   from writing more scrambles into the round
-    setIsScramblingInternal(false);
     setIsScrambling(false);
 
     dispatch(resetWcifScrambles(wcifEvent.id));
+    setIsScramblingLocked(false);
   }, [dispatch, wcifEvent.id, setIsScrambling]);
 
   const generateScrambles = useCallback(() => {
+    setAreScramblesComputing(true);
+
     const roundPromises = wcifEvent.rounds.map((round) => {
       const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
 
@@ -81,16 +84,25 @@ export default function ScramblePanel({
       return Promise.all(scrambleSetPromises);
     });
 
-    return Promise.all(roundPromises);
+    return Promise.all(roundPromises)
+      .finally(() => setAreScramblesComputing(false));
   }, [dispatch, wcifEvent.rounds, wcaEvent.id]);
 
   useEffect(() => {
-    if (isScrambling && !isScramblingInternal) {
-      generateScrambles().finally(() => setIsScrambling(false));
+    if (isScrambling && !isScramblingLocked) {
+      setIsScramblingLocked(true);
     }
+  }, [isScrambling, isScramblingLocked]);
 
-    setIsScramblingInternal(isScrambling);
-  }, [isScrambling, isScramblingInternal, setIsScrambling, generateScrambles]);
+  useEffect(() => {
+    if (isScramblingLocked && !areScramblesComputing) {
+      generateScrambles()
+        .finally(() => {
+          setIsScramblingLocked(false);
+          setIsScrambling(false);
+        });
+    }
+  }, [isScrambling, generateScrambles, isScramblingLocked, areScramblesComputing, setIsScrambling]);
 
   const targetScrambleSets = wcifEvent.rounds.reduce(
     (acc, round) => (acc + round.scrambleSetCount),
@@ -162,7 +174,7 @@ export default function ScramblePanel({
               labelPosition="left"
               floated="right"
               onClick={() => setIsScrambling(true)}
-              disabled={existingScrambleSets === targetScrambleSets}
+              disabled={isEventFullyScrambled(wcifEvent) || isScrambling}
             >
               <Icon name="shuffle" />
               Generate
