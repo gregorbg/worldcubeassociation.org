@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Form } from 'semantic-ui-react';
 import useInputState from '../../lib/hooks/useInputState';
-import WcaSearch from './WcaSearch';
+import WcaSearch, { IdWcaSearch } from './WcaSearch';
 
 function FormAdapter({
   railsId,
@@ -13,15 +13,15 @@ function FormAdapter({
   multiple = false,
   removeNoResultsMessage = false,
 }) {
-  const [selectedValue, setSelectedValue] = useInputState(multiple ? [] : undefined);
+  const [selectedValue, setSelectedValue] = useInputState(multiple ? (railsValue?.split(',') || []) : railsValue);
 
-  const hiddenValue = useMemo(() => (multiple ? selectedValue.map((val) => val?.id).join(',') : selectedValue?.id), [selectedValue, multiple]);
+  const hiddenValue = useMemo(() => (multiple ? selectedValue.join(',') : selectedValue), [selectedValue, multiple]);
 
   return (
     <Form.Field>
-      <input hidden value={hiddenValue} id={railsId} name={railsName} />
+      <input hidden readOnly value={hiddenValue || ''} id={railsId} name={railsName} />
 
-      <WcaSearch
+      <IdWcaSearch
         model={model}
         params={params}
         value={selectedValue}

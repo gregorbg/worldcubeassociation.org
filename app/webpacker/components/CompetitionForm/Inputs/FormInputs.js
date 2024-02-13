@@ -284,18 +284,22 @@ export const InputMarkdown = wrapInput((props) => (
   />
 ), [], '');
 
-export const InputUsers = wrapInput((props) => (
-  <IdWcaSearch
-    id={props.htmlId}
-    value={props.value || []}
-    onChange={props.onChange}
-    model="user"
-    params={{
-      only_staff_delegates: props.delegateOnly,
-      only_trainee_delegates: props.traineeOnly,
-    }}
-  />
-), ['delegateOnly', 'traineeOnly']);
+export const InputUsers = wrapInput((props) => {
+  const searchParams = {};
+
+  if (props.delegateOnly) searchParams.only_staff_delegates = true;
+  if (props.traineeOnly) searchParams.only_trainee_delegates = true;
+
+  return (
+    <IdWcaSearch
+      id={props.htmlId}
+      value={props.value || []}
+      onChange={props.onChange}
+      model="user"
+      params={searchParams}
+    />
+  );
+}, ['delegateOnly', 'traineeOnly']);
 
 export const InputCompetitions = wrapInput((props) => (
   <IdWcaSearch

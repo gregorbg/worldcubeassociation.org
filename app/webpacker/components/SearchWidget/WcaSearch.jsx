@@ -60,7 +60,7 @@ export function IdWcaSearch({
     }
   }, [model]);
 
-  const { data: valueOptions, isPending: anyLoading } = useQueries({
+  const { data: fetchedOptions, isPending: anyLoading } = useQueries({
     queries: idsToFetch.map((id) => (
       {
         queryKey: [model, id],
@@ -74,14 +74,16 @@ export function IdWcaSearch({
     }),
   }, WCA_SEARCH_QUERY_CLIENT);
 
+  const valueOptions = multiple ? fetchedOptions : fetchedOptions[0];
+
   const onChangeIdOnly = useCallback((evt, data) => {
     const { value: apiValues } = data;
 
-    const extractedIds = apiValues.map((apiValue) => apiValue.id);
+    const extractedIds = multiple ? apiValues.map((apiValue) => apiValue.id) : apiValues.id;
     const changePayload = { ...data, value: extractedIds };
 
     onChange(evt, changePayload);
-  }, [onChange]);
+  }, [onChange, multiple]);
 
   if (anyLoading) return <Loading />;
 
