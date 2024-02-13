@@ -11,7 +11,6 @@ import { Circle } from 'react-leaflet';
 import _ from 'lodash';
 import I18n from '../../../lib/i18n';
 import MarkdownEditor from './MarkdownEditor';
-import { CompetitionSearch, UserSearch } from './FormSearch';
 import AutonumericField from './AutonumericField';
 import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
 import {
@@ -23,6 +22,7 @@ import {
 import { CompetitionsMap, DraggableMarker, StaticMarker } from './InputMap';
 import { AddChampionshipButton, ChampionshipSelect } from './InputChampionship';
 import UtcDatePicker from '../../wca/UtcDatePicker';
+import { IdWcaSearch } from '../../SearchWidget/WcaSearch';
 
 function snakifyId(id, section = []) {
   const idParts = [...section, id];
@@ -285,19 +285,22 @@ export const InputMarkdown = wrapInput((props) => (
 ), [], '');
 
 export const InputUsers = wrapInput((props) => (
-  <UserSearch
+  <IdWcaSearch
     id={props.htmlId}
-    value={props.value}
+    value={props.value || []}
     onChange={props.onChange}
-    delegateOnly={props.delegateOnly}
-    traineeOnly={props.traineeOnly}
+    model="user"
+    params={{
+      only_staff_delegates: props.delegateOnly,
+      only_trainee_delegates: props.traineeOnly,
+    }}
   />
 ), ['delegateOnly', 'traineeOnly']);
 
 export const InputCompetitions = wrapInput((props) => (
-  <CompetitionSearch
+  <IdWcaSearch
     id={props.htmlId}
-    value={props.value}
+    value={props.value || []}
     onChange={props.onChange}
     disabled={props.disabled}
   />
