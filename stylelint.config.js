@@ -6,5 +6,4 @@ module.exports = {
     "font-family-no-missing-generic-family-keyword": null,
     "scss/at-extend-no-missing-placeholder": null
   },
-  ignoreFiles: ["app/assets/stylesheets/selectize.default.css"]
 };

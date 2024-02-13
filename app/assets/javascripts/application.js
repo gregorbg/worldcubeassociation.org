@@ -14,11 +14,7 @@
 //= require bootstrap-sprockets
 //= require bootstrap-hover-dropdown
 //= require jquery.are-you-sure
-//= require selectize
-//= require selectize.do_not_clear_on_blur
-//= require selectize.tags_options
 //= require jquery.jcrop
-//= require jquery.wca-autocomplete
 //= require jquery.floatThead.js
 //= require cocoon
 //= require moment

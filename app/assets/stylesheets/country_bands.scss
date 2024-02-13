@@ -35,17 +35,6 @@
   }
 }
 
-.selectize-control {
-  .selectize-input.items {
-    display: flex;
-    flex-wrap: wrap;
-    & > .country {
-      @extend .common-country-styles;
-      border: 2px solid #aaa;
-    }
-  }
-}
-
 .filter-form {
   text-align: center;
   margin-bottom: 15px;

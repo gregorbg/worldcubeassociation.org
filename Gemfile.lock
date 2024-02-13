@@ -21,12 +21,6 @@ GIT
       terminal-table (>= 1.5.1)
 
 GIT
-  remote: https://github.com/jfly/selectize-rails.git
-  revision: fe39d6e08934c0ebc602a166d88de3b22c3aaf49
-  specs:
-    selectize-rails (0.12.1)
-
-GIT
   remote: https://github.com/thewca/carrierwave-crop.git
   revision: 0ada1914e8f3d3c875004a7063b7b822323e2295
   specs:
@@ -908,7 +902,6 @@ DEPENDENCIES
   sass-rails
   sdoc
   seedbank
-  selectize-rails!
   shakapacker (= 7.2.3)
   sidekiq
   sidekiq-cron
