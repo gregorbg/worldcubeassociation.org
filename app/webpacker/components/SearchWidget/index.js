@@ -6,7 +6,7 @@ import useInputState from '../../lib/hooks/useInputState';
 
 function SearchWidget() {
   // purely a dummy for now...
-  const [selectedValue, setSelectedValue] = useInputState([]);
+  const [selectedValue, setSelectedValue] = useInputState();
 
   return (
     <MultiSearchInput

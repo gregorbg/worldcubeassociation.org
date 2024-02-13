@@ -28,7 +28,7 @@ export function IdWcaSearch({
   label,
   removeNoResultsMessage,
 }) {
-  const idsToFetch = multiple ? value : [value];
+  const idsToFetch = multiple ? value : [value].filter(Boolean);
 
   const fetchUrlFn = useCallback((id) => {
     switch (model) {
