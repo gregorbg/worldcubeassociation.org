@@ -18,6 +18,7 @@ export default function WcaSearch({
   model,
   params,
   label,
+  removeNoResultsMessage,
 }) {
   const urlFn = useCallback((query) => {
     switch (model) {
@@ -46,6 +47,7 @@ export default function WcaSearch({
       multiple={multiple}
       disabled={disabled}
       placeholder={label}
+      removeNoResultsMessage={removeNoResultsMessage}
     />
   );
 }
