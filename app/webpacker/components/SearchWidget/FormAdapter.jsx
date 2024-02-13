@@ -11,7 +11,8 @@ function FormAdapter({
   model,
   params,
   multiple = false,
-  removeNoResultsMessage = false,
+  removeNoResultsMessage = true,
+  goToItemUrlOnClick = false,
 }) {
   const [selectedValue, setSelectedValue] = useInputState(multiple ? (railsValue?.split(',') || []) : railsValue);
 
@@ -29,6 +30,7 @@ function FormAdapter({
         name={railsName}
         multiple={multiple}
         removeNoResultsMessage={removeNoResultsMessage}
+        goToItemUrlOnClick={goToItemUrlOnClick}
       />
     </Form.Field>
   );

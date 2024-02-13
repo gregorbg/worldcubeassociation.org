@@ -26,7 +26,8 @@ export function IdWcaSearch({
   model,
   params,
   label,
-  removeNoResultsMessage,
+  removeNoResultsMessage = true,
+  goToItemUrlOnClick = false,
 }) {
   const idsToFetch = multiple ? value : [value].filter(Boolean);
 
@@ -98,6 +99,7 @@ export function IdWcaSearch({
       params={params}
       label={label}
       removeNoResultsMessage={removeNoResultsMessage}
+      goToItemUrlOnClick={goToItemUrlOnClick}
     />
   );
 }
@@ -111,7 +113,8 @@ export default function WcaSearch({
   model,
   params,
   label,
-  removeNoResultsMessage,
+  removeNoResultsMessage = true,
+  goToItemUrlOnClick = false,
 }) {
   const urlFn = useCallback((query) => {
     switch (model) {
@@ -141,6 +144,7 @@ export default function WcaSearch({
       disabled={disabled}
       placeholder={label}
       removeNoResultsMessage={removeNoResultsMessage}
+      goToItemUrlOnClick={goToItemUrlOnClick}
     />
   );
 }
