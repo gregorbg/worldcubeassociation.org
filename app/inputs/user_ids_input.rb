@@ -3,24 +3,22 @@
 class UserIdsInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
-    merged_input_options[:class] << "wca-autocomplete wca-autocomplete-users_search"
-    if @options[:only_staff_delegates]
-      merged_input_options[:class] << "wca-autocomplete-only_staff_delegates"
-    end
-    if @options[:only_trainee_delegates]
-      merged_input_options[:class] << "wca-autocomplete-only_trainee_delegates"
-    end
-    if @options[:persons_table]
-      merged_input_options[:class] << "wca-autocomplete-persons_table"
-      persons = (@builder.object.send(attribute_name) || "").split(",").map { |wca_id| Person.find_by_wca_id(wca_id) }
-      merged_input_options[:data] = { data: persons.to_json }
-    else
-      users = (@builder.object.send(attribute_name).to_s || "").split(",").map { |id| User.find_by_id(id) }
-      merged_input_options[:data] = { data: users.to_json }
-    end
-    if @options[:only_one]
-      merged_input_options[:class] << "wca-autocomplete-only_one"
-    end
-    @builder.text_field(attribute_name, merged_input_options)
+    hack_options = @builder.send(:objectify_options, merged_input_options)
+
+    dummy = ActionView::Helpers::Tags::TextField.new(object_name, attribute_name, @builder.template, hack_options)
+    dummy.send(:add_default_name_and_id, hack_options)
+
+    model = @options[:persons_table] ? 'person' : 'user'
+    param_options = @options.to_hash.symbolize_keys.slice(:only_staff_delegates, :only_trainee_delegates)
+
+    @builder.template.react_component('SearchWidget/FormAdapter', {
+      model: model,
+      multiple: !@options[:only_one],
+      railsId: hack_options['id'],
+      railsName: hack_options['name'],
+      railsValue: @builder.object.send(attribute_name),
+      params: param_options,
+    })
+
   end
 end

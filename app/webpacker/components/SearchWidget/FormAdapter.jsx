@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Form } from 'semantic-ui-react';
 import useInputState from '../../lib/hooks/useInputState';
-import WcaSearch, { IdWcaSearch } from './WcaSearch';
+import { IdWcaSearch } from './WcaSearch';
 
 function FormAdapter({
   railsId,
