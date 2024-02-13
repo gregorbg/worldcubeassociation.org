@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { Form } from 'semantic-ui-react';
 import useInputState from '../../lib/hooks/useInputState';
@@ -11,12 +11,20 @@ function FormAdapter({
   model,
   params,
   multiple = false,
+  notifyOnChange = false,
   removeNoResultsMessage = true,
   goToItemUrlOnClick = false,
 }) {
   const [selectedValue, setSelectedValue] = useInputState(multiple ? (railsValue?.split(',') || []) : railsValue);
 
   const hiddenValue = useMemo(() => (multiple ? selectedValue.join(',') : selectedValue), [selectedValue, multiple]);
+
+  useEffect(() => {
+    if (notifyOnChange) {
+      console.log('sending notification', railsId);
+      $(`#${railsId}`).change();
+    }
+  }, [notifyOnChange, railsId, selectedValue]);
 
   return (
     <Form.Field>

@@ -14,6 +14,7 @@ class UserIdsInput < SimpleForm::Inputs::Base
     @builder.template.react_component('SearchWidget/FormAdapter', {
       model: model,
       multiple: !@options[:only_one],
+      notifyOnChange: @options[:notify_on_change].present?,
       railsId: hack_options['id'],
       railsName: hack_options['name'],
       railsValue: @builder.object.send(attribute_name),

@@ -55,18 +55,19 @@
                value="<%= chose_extra_delegate ? @user.delegate_to_handle_wca_id_claim.id : '' %>"
                name="user[delegate_id_to_handle_wca_id_claim]" <%= chose_extra_delegate ? 'checked' : '' %> />
 
-        <% input_data = {} %>
-        <% value = "" %>
+        <% value = nil %>
         <% if chose_extra_delegate %>
-          <% delegate = @user.delegate_to_handle_wca_id_claim %>
-          <% input_data[:data] = [delegate].to_json %>
           <% value = @user.delegate_to_handle_wca_id_claim.id %>
         <% end %>
-        <%= text_field_tag "", value,
-                           id: "nearby-delegate-search",
-                           class: "optional form-control wca-autocomplete wca-autocomplete-users_search wca-autocomplete-only_staff_delegates wca-autocomplete-only_one",
-                           data: input_data %>
-
+        <%= react_component('SearchWidget/FormAdapter', {
+          model: 'user',
+          multiple: false,
+          railsId: 'nearby-delegate-search',
+          railsValue: value,
+          goToItemUrlOnClick: true,
+          notifyOnChange: true,
+          params: { only_staff_delegates: true },
+        }) %>
       </label>
     </span>
   </div>

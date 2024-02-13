@@ -1,4 +1,4 @@
-<%= f.input :unconfirmed_wca_id, label: t('common.user.wca_id'), as: :user_ids, persons_table: true, only_one: true %>
+<%= f.input :unconfirmed_wca_id, label: t('common.user.wca_id'), as: :user_ids, persons_table: true, only_one: true, notify_on_change: true %>
 
 <%= f.input :dob_verification, as: :date_picker %>
 
@@ -7,63 +7,87 @@
 </div>
 
 <script>
-  $(function() {
-    var $dobArea = $("div.user_dob_verification");
-    var $unconfirmed_wca_id = $("#user_unconfirmed_wca_id");
-    var $submitButton = $("#claim-wca-id-button");
-    $unconfirmed_wca_id.wcaAutocomplete();
-    var unconfirmed_wca_id_selectize = $unconfirmed_wca_id[0].selectize;
+  // via https://stackoverflow.com/a/61511955
+  // Injecting via react_component makes it so that the <input> shown by React
+  // is not present even when jQuery thinks the document is ready. So we cheat.
+  function waitForElem(selector) {
+    return new Promise(resolve => {
+      if (document.querySelector(selector)) {
+        return resolve(document.querySelector(selector));
+      }
 
-    function clearExtraInfo() {
-      $submitButton.prop("disabled", true);
-      $dobArea.toggle(false);
-    }
-    clearExtraInfo();
-
-    var addListenerToDelegateSearch = function() {
-      var $delegateSearch = $('#nearby-delegate-search');
-      var selectize = $delegateSearch[0].selectize;
-      var $radioInput = $delegateSearch.siblings('input');
-      selectize.on("focus", function(e) {
-        $radioInput.prop('checked', true);
-      });
-      selectize.on("change", function(value) {
-        $radioInput.val(value);
-        $submitButton.prop("disabled", false);
-      });
-    };
-
-    var onUnconfirmedWcaId = function(unconfirmed_wca_id) {
-      clearExtraInfo();
-
-      window.wca.cancelPendingAjaxAndAjax('render_select_nearby_delegate', {
-        url: '<%= profile_claim_wca_id_select_nearby_delegate_path %>',
-        data: {
-          'user[unconfirmed_wca_id]': unconfirmed_wca_id,
-        },
-        success: function(data) {
-          $('#select-nearby-delegate-area').html(data);
-
-          var $delegateSearch = $('#nearby-delegate-search');
-          if($delegateSearch.length > 0) {
-            $delegateSearch.wcaAutocomplete();
-            addListenerToDelegateSearch();
-          }
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(selector)) {
+          observer.disconnect();
+          resolve(document.querySelector(selector));
         }
       });
-    };
-    unconfirmed_wca_id_selectize.on("change", onUnconfirmedWcaId);
-    if($('[name="user[delegate_id_to_handle_wca_id_claim]"]:checked').val()) {
-      $submitButton.prop("disabled", false);
-    }
-    if(unconfirmed_wca_id_selectize.items.length > 0) {
-      addListenerToDelegateSearch();
-      $dobArea.toggle(true);
-    }
 
-    $("form.edit_user").on("change", 'input[type="radio"]', function(e) {
-      var selectedDelgateId = e.currentTarget.value;
-      $submitButton.prop("disabled", !selectedDelgateId);
+      observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    });
+  }
+
+  $(function() {
+    waitForElem("#user_unconfirmed_wca_id").then(() => {
+      var $dobArea = $("div.user_dob_verification");
+      var $unconfirmed_wca_id = $("#user_unconfirmed_wca_id");
+      console.log(document.querySelector("#user_unconfirmed_wca_id"));
+      var $submitButton = $("#claim-wca-id-button");
+
+      function clearExtraInfo() {
+        $submitButton.prop("disabled", true);
+        $dobArea.toggle(false);
+      }
+      clearExtraInfo();
+
+      var addListenerToDelegateSearch = function() {
+        var $delegateSearch = $('#nearby-delegate-search');
+        var $radioInput = $delegateSearch.siblings('input');
+        var combobox = $delegateSearch.siblings('div.combobox');
+        combobox.on("focus", function(e) {
+          $radioInput.prop('checked', true);
+        });
+        $delegateSearch.on("change", function(e) {
+          $radioInput.val(this.val());
+          $submitButton.prop("disabled", false);
+        });
+      };
+
+      var onUnconfirmedWcaId = function(e) {
+        clearExtraInfo();
+        var unconfirmedWcaId = $(e.target).val();
+
+        window.wca.cancelPendingAjaxAndAjax('render_select_nearby_delegate', {
+          url: '<%= profile_claim_wca_id_select_nearby_delegate_path %>',
+          data: {
+            'user[unconfirmed_wca_id]': unconfirmedWcaId,
+          },
+          success: function(data) {
+            $('#select-nearby-delegate-area').html(data);
+
+            var $delegateSearch = $('#nearby-delegate-search');
+            if($delegateSearch.length > 0) {
+              addListenerToDelegateSearch();
+            }
+          }
+        });
+      };
+      $unconfirmed_wca_id.on('change', onUnconfirmedWcaId);
+      if($('[name="user[delegate_id_to_handle_wca_id_claim]"]:checked').val()) {
+        $submitButton.prop("disabled", false);
+      }
+      if($unconfirmed_wca_id.val()?.split(',')?.filter(Boolean)?.length > 0) {
+        addListenerToDelegateSearch();
+        $dobArea.toggle(true);
+      }
+
+      $("form.edit_user").on("change", 'input[type="radio"]', function(e) {
+        var selectedDelegateId = e.currentTarget.value;
+        $submitButton.prop("disabled", !selectedDelegateId);
+      });
     });
   });
 </script>

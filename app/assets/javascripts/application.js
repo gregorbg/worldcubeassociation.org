@@ -139,7 +139,6 @@ $(function() {
 
   $('[data-toggle="tooltip"]').tooltip();
   window.wca.reloadPopover();
-  $('input.wca-autocomplete').wcaAutocomplete();
 
   var $tablesToFloatHeaders = $('table.floatThead');
   $tablesToFloatHeaders.floatThead({
