@@ -9,7 +9,8 @@
   <%= react_component("EditScrambles", {
     competitionId: @competition.id,
     canUpdateEvents: current_user.can_update_events?(@competition),
-    wcifEvents: @competition.events_wcif
+    wcifEvents: @competition.events_wcif,
+    wcifSchedule: @competition.schedule_wcif,
   }, {
     id: "events-edit-area",
   }) %>

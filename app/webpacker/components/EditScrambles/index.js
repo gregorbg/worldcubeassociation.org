@@ -126,6 +126,7 @@ export default function Wrapper({
   competitionId,
   canUpdateEvents,
   wcifEvents,
+  wcifSchedule,
 }) {
   return (
     <Store
@@ -134,6 +135,7 @@ export default function Wrapper({
         competitionId,
         canUpdateEvents,
         wcifEvents,
+        wcifSchedule,
         initialWcifEvents: wcifEvents,
         unsavedChanges: false,
         currentlyScrambling: {},

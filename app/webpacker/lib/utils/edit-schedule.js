@@ -20,6 +20,10 @@ export function toDegrees(coord) {
   return result;
 }
 
+export function activityMatchesEvent(activity, eventId) {
+  return activity.activityCode.split('-')[0] === eventId;
+}
+
 function withNestedActivities(activities) {
   if (activities.length === 0) return [];
 
