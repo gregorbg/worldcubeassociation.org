@@ -2,6 +2,7 @@ export const ChangesSaved = 'saving_started';
 export const SetScrambleSetCount = 'SET_SCRAMBLE_SET_COUNT';
 export const SetExtraScrambleCount = 'SET_EXTRA_SCRAMBLE_COUNT';
 export const AddScrambleSet = 'ADD_SCRAMBLE_SET';
+export const AddExtraScramble = 'ADD_EXTRA_SCRAMBLE';
 export const ResetScrambles = 'RESET_SCRAMBLES';
 export const ToggleCurrentlyScrambling = 'TOGGLE_CURRENTLY_SCRAMBLING';
 export const OverrideCurrentlyScrambling = 'OVERRIDE_CURRENTLY_SCRAMBLING';
@@ -71,5 +72,13 @@ export const setMbldAttemptedCubes = (numCubes) => ({
   type: SetMbldAttemptedCubes,
   payload: {
     numCubes,
+  },
+});
+
+export const addExtraScramble = (scrambleSetId, extraScramble) => ({
+  type: AddExtraScramble,
+  payload: {
+    scrambleSetId,
+    extraScramble,
   },
 });

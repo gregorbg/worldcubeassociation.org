@@ -213,6 +213,7 @@ export default function ScramblePanel({
                 max={120}
                 value={getMbldCubesCount(wcifEvent)}
                 onChange={mbldCubesCountChanged}
+                disabled={existingScrambleSets > 0}
               />
             </Card.Content>
           )}
