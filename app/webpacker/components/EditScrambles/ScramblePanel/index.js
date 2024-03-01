@@ -8,13 +8,16 @@ import React, {
 import {
   Button,
   Card,
-  Icon, Input,
+  Icon,
+  Input,
   Label,
+  List,
   Progress,
-  Segment,
+  Segment, Transition,
 } from 'semantic-ui-react';
 import cn from 'classnames';
 import { randomScrambleForEvent } from 'cubing/scramble';
+import _ from 'lodash';
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
 import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
@@ -25,7 +28,22 @@ import {
   setCurrentlyScrambling, setMbldAttemptedCubes,
 } from '../store/actions';
 import { getExtraScrambleCount, getMbldCubesCount, isEventFullyScrambled } from '../utils';
-import _ from 'lodash';
+import { activityMatchesEvent } from '../../../lib/utils/edit-schedule';
+
+function NestedActivityLabels({ activities }) {
+  return (
+    activities.map((act) => (
+      <List.Item key={act.id}>
+        <Label as={act.childActivities.length === 0 && 'a'}>{act.name}</Label>
+        {act.childActivities.length > 0 && (
+          <List.List>
+            <NestedActivityLabels activities={act.childActivities} />
+          </List.List>
+        )}
+      </List.Item>
+    ))
+  );
+}
 
 export default function ScramblePanel({
   wcifEvent,
@@ -34,6 +52,7 @@ export default function ScramblePanel({
     currentlyScrambling: {
       [wcifEvent.id]: isScrambling,
     },
+    wcifSchedule,
   } = useStore();
 
   const dispatch = useDispatch();
@@ -136,6 +155,12 @@ export default function ScramblePanel({
   const progressRatio = targetScrambleSets > 0 ? (existingScrambleSets / targetScrambleSets) : 0;
   const progressPercent = Math.round(progressRatio * 100);
 
+  const rooms = wcifSchedule.venues.flatMap((venue) => venue.rooms);
+  const topLevelActivities = rooms.flatMap((room) => room.activities);
+
+  const eventActivities = topLevelActivities.filter((act) => activityMatchesEvent(act, wcifEvent.id));
+
+  const [showActivityPicker, setShowActivityPicker] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
 
   return (
@@ -154,14 +179,27 @@ export default function ScramblePanel({
             {wcaEvent.name}
           </Label>
           <ScrambleView wcifEvent={wcifEvent} />
-          <Label as="a" basic attached="bottom right">
-            <Icon name="paint brush" />
-            Edit color scheme
+          <Label as="a" basic attached="bottom right" onClick={() => setShowActivityPicker((show) => !show)}>
+            <Icon name="calendar" />
+            Show activity picker
           </Label>
         </Segment>
       </Card.Content>
       {wcifEvent.rounds !== null && (
         <>
+          <Transition visible={showActivityPicker} animation="scale">
+            <Card.Content>
+              <Segment basic>
+                <List>
+                  <NestedActivityLabels activities={eventActivities} />
+                </List>
+              </Segment>
+              <Button fluid icon primary labelPosition="left">
+                <Icon name="lightbulb outline" />
+                Auto-assign
+              </Button>
+            </Card.Content>
+          </Transition>
           <Card.Content>
             <RoundsTable wcifEvent={wcifEvent} />
           </Card.Content>
