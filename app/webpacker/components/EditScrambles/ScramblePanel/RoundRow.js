@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import {
   Button,
@@ -11,7 +11,7 @@ import { formats } from '../../../lib/wca-data.js.erb';
 
 import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
 import {
-  addExtraScramble,
+  addExtraScramble, setCurrentlyScrambling,
   setExtraScrambleCount,
   setScrambleSetCount,
 } from '../store/actions';
@@ -49,10 +49,8 @@ export default function RoundRow({
   const scramblesExist = wcifRound.scrambleSets.length > 0;
   const fullyScrambled = isRoundScrambled(wcifRound);
 
-  const [generatingExtraScramble, setGeneratingExtraScramble] = useState(false);
-
-  const addExtraScrambles = () => {
-    setGeneratingExtraScramble(true);
+  const addExtraScrambles = useCallback(() => {
+    dispatch(setCurrentlyScrambling(eventId, true));
 
     const scrambleSetPromises = wcifRound.scrambleSets.map((scrSet) => {
       const scrEventId = eventId.replace('333mbf', '333bf');
@@ -65,9 +63,9 @@ export default function RoundRow({
     Promise.all(scrambleSetPromises)
       .finally(() => {
         dispatch(setExtraScrambleCount(wcifRound.id, getExtraScrambleCount(wcifRound) + 1));
-        setGeneratingExtraScramble(false);
+        dispatch(setCurrentlyScrambling(eventId, false));
       });
-  };
+  }, [dispatch, eventId, wcifRound]);
 
   return (
     <Table.Row
@@ -102,13 +100,13 @@ export default function RoundRow({
           onChange={extraScrambleCountChanged}
           disabled={scramblesExist}
         />
-        {fullyScrambled && !isScrambling && (
+        {fullyScrambled && (
           <Button
             positive
             icon
             compact
             size="tiny"
-            disabled={generatingExtraScramble}
+            disabled={isScrambling}
             onClick={addExtraScrambles}
           >
             <Icon name="plus" />
