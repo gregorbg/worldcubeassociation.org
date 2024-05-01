@@ -15,7 +15,7 @@ import {
 
 import { useSaveWcifAction } from '../../lib/utils/wcif';
 import ScramblePanel from './ScramblePanel';
-import { changesSaved, overrideCurrentlyScrambling } from './store/actions';
+import { changesSaved, enqueueScramblingTask } from './store/actions';
 import wcifEventsReducer from './store/reducer';
 import Store, { useDispatch, useStore } from '../../lib/providers/StoreProvider';
 import ConfirmProvider from '../../lib/providers/ConfirmProvider';
@@ -80,11 +80,9 @@ function EditScrambles() {
   );
 
   const scrambleAll = useCallback(() => {
-    const allScrambling = Object.fromEntries(
-      wcifEvents.map((wcifEvent) => [wcifEvent.id, !isEventFullyScrambled(wcifEvent)]),
-    );
-
-    dispatch(overrideCurrentlyScrambling(allScrambling));
+    wcifEvents
+      .filter((wcifEvent) => !isEventFullyScrambled(wcifEvent))
+      .forEach((wcifEvent) => dispatch(enqueueScramblingTask(wcifEvent.id)));
   }, [dispatch, wcifEvents]);
 
   const hasWorkToScramble = useMemo(
@@ -139,6 +137,7 @@ export default function Wrapper({
         initialWcifEvents: wcifEvents,
         unsavedChanges: false,
         currentlyScrambling: {},
+        scramblingQueue: [],
       }}
     >
       <ConfirmProvider>
