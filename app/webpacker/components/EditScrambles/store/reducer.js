@@ -7,8 +7,6 @@ import {
   SetExtraScrambleCount,
   SetMbldAttemptedCubes,
   AddExtraScramble,
-  EnqueueScramblingTask,
-  DequeueScramblingTask,
 } from './actions';
 import {
   buildExtraScrambleExtension,
@@ -128,22 +126,6 @@ const reducers = {
         )),
       })),
     })),
-  }),
-
-  [EnqueueScramblingTask]: (state, { payload }) => ({
-    ...state,
-    scramblingQueue: [
-      payload.eventId,
-      ...state.scramblingQueue,
-    ],
-  }),
-
-  [DequeueScramblingTask]: (state, { payload }) => ({
-    ...state,
-    scramblingQueue: state.scramblingQueue.toSpliced(
-      state.scramblingQueue.lastIndexOf(payload.eventId),
-      1,
-    ),
   }),
 };
 

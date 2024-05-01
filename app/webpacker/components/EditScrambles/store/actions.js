@@ -5,8 +5,6 @@ export const AddScrambleSet = 'ADD_SCRAMBLE_SET';
 export const AddExtraScramble = 'ADD_EXTRA_SCRAMBLE';
 export const ResetScrambles = 'RESET_SCRAMBLES';
 export const ToggleCurrentlyScrambling = 'TOGGLE_CURRENTLY_SCRAMBLING';
-export const EnqueueScramblingTask = 'ENQUEUE_SCRAMBLING_TASK';
-export const DequeueScramblingTask = 'DEQUEUE_SCRAMBLING_TASK';
 export const SetMbldAttemptedCubes = 'SET_MBLD_ATTEMPTED_CUBES';
 
 /**
@@ -74,19 +72,5 @@ export const addExtraScramble = (scrambleSetId, extraScramble) => ({
   payload: {
     scrambleSetId,
     extraScramble,
-  },
-});
-
-export const enqueueScramblingTask = (eventId) => ({
-  type: EnqueueScramblingTask,
-  payload: {
-    eventId,
-  },
-});
-
-export const dequeueScramblingTask = (eventId) => ({
-  type: DequeueScramblingTask,
-  payload: {
-    eventId,
   },
 });

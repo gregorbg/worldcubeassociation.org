@@ -1,6 +1,5 @@
 import React, {
   useCallback,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -15,24 +14,19 @@ import {
   Segment, Transition,
 } from 'semantic-ui-react';
 import cn from 'classnames';
-import { randomScrambleForEvent } from 'cubing/scramble';
-import _ from 'lodash';
 import { events } from '../../../lib/wca-data.js.erb';
 import RoundsTable from './RoundsTable';
 import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
 import ScrambleView from './ScrambleView';
 import {
-  addScrambleSet,
-  dequeueScramblingTask,
-  enqueueScramblingTask,
   resetScrambles as resetWcifScrambles,
-  setCurrentlyScrambling, setMbldAttemptedCubes,
+  setMbldAttemptedCubes,
 } from '../store/actions';
 import {
   getExtraScrambleCount, getGeneratedScramblesCount,
   getMbldCubesCount,
   getStandardScrambleCount,
-  isEventFullyScrambled,
+  isEventFullyScrambled, useScramblingAction,
 } from '../utils';
 import { activityMatchesEvent } from '../../../lib/utils/edit-schedule';
 import ActivityMatcher from '../ActivityMatcher';
@@ -44,7 +38,6 @@ export default function ScramblePanel({
     currentlyScrambling: {
       [wcifEvent.id]: isScrambling,
     },
-    scramblingQueue,
     wcifSchedule,
   } = useStore();
 
@@ -52,17 +45,11 @@ export default function ScramblePanel({
 
   const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
 
-  const setIsScrambling = useCallback((scrambling = true) => {
-    dispatch(setCurrentlyScrambling(wcifEvent.id, scrambling));
-  }, [dispatch, wcifEvent.id]);
+  const generateScramblesAction = useScramblingAction();
 
-  const enqueueEvent = useCallback(() => {
-    dispatch(enqueueScramblingTask(wcifEvent.id));
-  }, [dispatch, wcifEvent.id]);
-
-  const dequeueEvent = useCallback(() => {
-    dispatch(dequeueScramblingTask(wcifEvent.id));
-  }, [dispatch, wcifEvent.id]);
+  const generateScrambles = useCallback(() => {
+    generateScramblesAction(wcifEvent);
+  }, [generateScramblesAction, wcifEvent]);
 
   const resetScrambles = useCallback(() => {
     dispatch(resetWcifScrambles(wcifEvent.id));
@@ -71,68 +58,6 @@ export default function ScramblePanel({
   const mbldCubesCountChanged = useCallback((evt, data) => {
     dispatch(setMbldAttemptedCubes(data.value));
   }, [dispatch]);
-
-  const generateScrambles = useCallback(() => {
-    const roundPromises = wcifEvent.rounds.map((round) => {
-      const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
-
-      const scrambleSetPromises = Array(missingScrambleSets).fill(true).map((_foo) => {
-        const standardScrambleCount = getStandardScrambleCount(round, wcifEvent);
-        const extraScrambleCount = getExtraScrambleCount(round);
-
-        const totalScrambleCount = standardScrambleCount + extraScrambleCount;
-
-        const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_bar) => {
-          const scrEventId = wcifEvent.id.replace('333mbf', '333bf');
-
-          return randomScrambleForEvent(scrEventId).then((cubingScr) => cubingScr.toString());
-        });
-
-        return Promise.all(scrambleStringPromises).then((scrambles) => {
-          if (wcifEvent.id === '333mbf') {
-            const baseScrambles = scrambles.slice(0, -extraScrambleCount);
-            const groupedScrambles = _.chunk(baseScrambles, getMbldCubesCount(wcifEvent));
-
-            dispatch(addScrambleSet(round.id, {
-              scrambles: groupedScrambles.map((scs) => scs.join('\n')),
-              extraScrambles: scrambles.slice(-extraScrambleCount),
-            }));
-          } else {
-            dispatch(addScrambleSet(round.id, {
-              scrambles: scrambles.slice(0, standardScrambleCount),
-              extraScrambles: scrambles.slice(-extraScrambleCount),
-            }));
-          }
-        });
-      });
-
-      return Promise.all(scrambleSetPromises);
-    });
-
-    return Promise.all(roundPromises);
-  }, [dispatch, wcifEvent]);
-
-  useEffect(() => {
-    const hasTask = scramblingQueue.length > 0
-      && scramblingQueue[scramblingQueue.length - 1] === wcifEvent.id;
-
-    if (!isScrambling && hasTask) {
-      setIsScrambling(true);
-
-      generateScrambles()
-        .finally(() => {
-          dequeueEvent();
-          setIsScrambling(false);
-        });
-    }
-  }, [
-    scramblingQueue,
-    isScrambling,
-    setIsScrambling,
-    generateScrambles,
-    dequeueEvent,
-    wcifEvent.id,
-  ]);
 
   const targetScrambleCount = wcifEvent.rounds.reduce(
     (acc, round) => (
@@ -242,7 +167,7 @@ export default function ScramblePanel({
               positive
               labelPosition="left"
               floated="right"
-              onClick={enqueueEvent}
+              onClick={generateScrambles}
               disabled={isEventFullyScrambled(wcifEvent) || isScrambling}
             >
               <Icon name="shuffle" />
