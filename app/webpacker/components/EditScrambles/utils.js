@@ -54,17 +54,31 @@ const countScrambles = (scrambleArr, eventId) => (
     : scrambleArr.length
 );
 
-export const getGeneratedScramblesCount = (wcifScrambleSet, wcifEvent) => (
-  countScrambles(wcifScrambleSet.scrambles, wcifEvent.id)
-    + countScrambles(wcifScrambleSet.extraScrambles, wcifEvent.id)
+export const getGeneratedScramblesCount = (wcifScrambleSet, eventId) => (
+  countScrambles(wcifScrambleSet.scrambles, eventId)
+    + countScrambles(wcifScrambleSet.extraScrambles, eventId)
 );
 
-export const isRoundScrambled = (wcifRound) => (
+export const isScrambleSetFullyScrambled = (wcifScrambleSet, wcifRound, wcifEvent) => (
+  getGeneratedScramblesCount(wcifScrambleSet, wcifEvent.id) >= (
+    getStandardScrambleCount(wcifRound, wcifEvent)
+      + getExtraScrambleCount(wcifRound)
+  )
+);
+
+export const areRoundScrambleSetsComplete = (wcifRound, wcifEvent) => (
+  wcifRound.scrambleSets.every(
+    (scrSet) => isScrambleSetFullyScrambled(scrSet, wcifRound, wcifEvent),
+  )
+);
+
+export const isRoundFullyScrambled = (wcifRound, wcifEvent) => (
   wcifRound.scrambleSets.length >= wcifRound.scrambleSetCount
+    && areRoundScrambleSetsComplete(wcifRound, wcifEvent)
 );
 
 export const isEventFullyScrambled = (wcifEvent) => (
-  wcifEvent.rounds.every((round) => isRoundScrambled(round))
+  wcifEvent.rounds.every((round) => isRoundFullyScrambled(round, wcifEvent))
 );
 
 const maxIdOrZero = (objects) => _.max(objects.map((wcifObj) => wcifObj.id)) || 0;

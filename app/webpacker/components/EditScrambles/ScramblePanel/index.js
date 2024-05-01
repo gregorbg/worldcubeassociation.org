@@ -145,7 +145,7 @@ export default function ScramblePanel({
   const existingScrambleCount = wcifEvent.rounds.reduce(
     (acc, round) => (
       acc + round.scrambleSets.reduce(
-        (scrAcc, scrSet) => (scrAcc + getGeneratedScramblesCount(scrSet, wcifEvent)),
+        (scrAcc, scrSet) => (scrAcc + getGeneratedScramblesCount(scrSet, wcifEvent.id)),
         0,
       )
     ),
