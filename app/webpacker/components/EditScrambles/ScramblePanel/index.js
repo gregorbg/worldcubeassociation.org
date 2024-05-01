@@ -92,13 +92,13 @@ export default function ScramblePanel({
         const totalScrambleCount = standardScrambleCount + extraScrambleCount;
 
         const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_bar) => {
-          const scrEventId = wcaEvent.id.replace('333mbf', '333bf');
+          const scrEventId = wcifEvent.id.replace('333mbf', '333bf');
 
           return randomScrambleForEvent(scrEventId).then((cubingScr) => cubingScr.toString());
         });
 
         return Promise.all(scrambleStringPromises).then((scrambles) => {
-          if (wcaEvent.id === '333mbf') {
+          if (wcifEvent.id === '333mbf') {
             const baseScrambles = scrambles.slice(0, -extraScrambleCount);
             const groupedScrambles = _.chunk(baseScrambles, getMbldCubesCount(wcifEvent));
 
@@ -119,7 +119,7 @@ export default function ScramblePanel({
     });
 
     return Promise.all(roundPromises);
-  }, [dispatch, wcifEvent, wcaEvent.id]);
+  }, [dispatch, wcifEvent]);
 
   useEffect(() => {
     if (isScrambling && !isScramblingLocked) {
@@ -175,7 +175,7 @@ export default function ScramblePanel({
       >
         <Segment tertiary style={{ borderTop: 'none', textAlign: '-webkit-center' }} textAlign="center">
           <Label attached="top right" size="huge">
-            <Icon className={cn('cubing-icon', `event-${wcaEvent.id}`)} />
+            <Icon className={cn('cubing-icon', `event-${wcifEvent.id}`)} />
             {wcaEvent.name}
           </Label>
           <ScrambleView wcifEvent={wcifEvent} scramblingProgress={progressRatio} />
