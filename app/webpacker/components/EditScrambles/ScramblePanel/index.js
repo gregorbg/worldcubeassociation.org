@@ -178,7 +178,7 @@ export default function ScramblePanel({
             <Icon className={cn('cubing-icon', `event-${wcaEvent.id}`)} />
             {wcaEvent.name}
           </Label>
-          <ScrambleView wcifEvent={wcifEvent} />
+          <ScrambleView wcifEvent={wcifEvent} scramblingProgress={progressRatio} />
           <Label as="a" basic attached="bottom right" onClick={() => setShowActivityPicker((show) => !show)}>
             <Icon name="calendar" />
             Show activity picker
