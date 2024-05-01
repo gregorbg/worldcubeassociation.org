@@ -28,7 +28,7 @@ export default function RoundsTable({ wcifEvent }) {
               key={wcifRound.id}
               index={index}
               wcifRound={wcifRound}
-              eventId={wcifEvent.id}
+              wcifEvent={wcifEvent}
             />
           ))}
         </Table.Body>

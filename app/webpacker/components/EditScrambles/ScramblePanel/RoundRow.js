@@ -16,19 +16,19 @@ import {
   setScrambleSetCount,
 } from '../store/actions';
 import {
+  areRoundScrambleSetsComplete,
   DEFAULT_EXTRA_SCRAMBLE_COUNT,
   getExtraScrambleCount,
-  isRoundScrambled,
 } from '../utils';
 
 export default function RoundRow({
   index,
   wcifRound,
-  eventId,
+  wcifEvent,
 }) {
   const {
     currentlyScrambling: {
-      [eventId]: isScrambling,
+      [wcifEvent.id]: isScrambling,
     },
   } = useStore();
 
@@ -47,13 +47,13 @@ export default function RoundRow({
   const wcaFormat = useMemo(() => formats.byId[wcifRound.format], [wcifRound.format]);
 
   const scramblesExist = wcifRound.scrambleSets.length > 0;
-  const fullyScrambled = isRoundScrambled(wcifRound);
+  const fullyScrambledSoFar = areRoundScrambleSetsComplete(wcifRound, wcifEvent);
 
   const addExtraScrambles = useCallback(() => {
-    dispatch(setCurrentlyScrambling(eventId, true));
+    dispatch(setCurrentlyScrambling(wcifEvent.id, true));
 
     const scrambleSetPromises = wcifRound.scrambleSets.map((scrSet) => {
-      const scrEventId = eventId.replace('333mbf', '333bf');
+      const scrEventId = wcifEvent.id.replace('333mbf', '333bf');
 
       return randomScrambleForEvent(scrEventId).then((cubingScr) => {
         dispatch(addExtraScramble(scrSet.id, cubingScr.toString()));
@@ -63,9 +63,9 @@ export default function RoundRow({
     Promise.all(scrambleSetPromises)
       .finally(() => {
         dispatch(setExtraScrambleCount(wcifRound.id, getExtraScrambleCount(wcifRound) + 1));
-        dispatch(setCurrentlyScrambling(eventId, false));
+        dispatch(setCurrentlyScrambling(wcifEvent.id, false));
       });
-  }, [dispatch, eventId, wcifRound]);
+  }, [dispatch, wcifEvent.id, wcifRound]);
 
   return (
     <Table.Row
@@ -100,7 +100,7 @@ export default function RoundRow({
           onChange={extraScrambleCountChanged}
           disabled={scramblesExist}
         />
-        {fullyScrambled && (
+        {scramblesExist && fullyScrambledSoFar && (
           <Button
             positive
             icon
