@@ -10,8 +10,7 @@ import { TwistyPlayer as ImportTwistyPlayer } from 'cubing/twisty';
 export default function TwistyPlayer({
   wcaEventId,
   scramble = null,
-  isPlaying = false,
-  isReset = true,
+  scramblingProgress,
   styleOverride,
 }) {
   const puzzleId = useMemo(() => eventInfo(wcaEventId)?.puzzleID, [wcaEventId]);
@@ -23,65 +22,38 @@ export default function TwistyPlayer({
 
   const twistyRef = useRef();
 
-  const loadScramble = useCallback((twisty) => {
-    twisty.alg = scramble || getRandomScramble();
-  }, [scramble, getRandomScramble]);
+  const [moveIndexer, setMoveIndexer] = useState();
 
-  const [isPlayingInternal, setIsPlayingInternal] = useState(false);
+  const loadScramble = useCallback((twisty) => {
+    // eslint-disable-next-line no-param-reassign
+    twisty.alg = scramble || getRandomScramble();
+
+    twisty.controller.jumpToStart();
+    twisty.controller.model.indexer.get().then(setMoveIndexer);
+  }, [scramble, getRandomScramble]);
 
   useEffect(() => {
     if (!twistyRef.current) return;
 
-    if (isPlaying) {
-      if (!isPlayingInternal) {
-        twistyRef.current.play();
-      }
-    } else if (isPlayingInternal) {
-      twistyRef.current.jumpToEnd();
-    } else if (isReset) {
-      // Note: This part of the hook also triggers on initial page load,
-      // making an additional "load scramble upon load" hook unnecessary.
-      twistyRef.current.jumpToStart();
-      loadScramble(twistyRef.current);
-    }
+    loadScramble(twistyRef.current);
+  }, [twistyRef, loadScramble]);
 
-    setIsPlayingInternal(isPlaying);
-  }, [twistyRef, isPlaying, isPlayingInternal, isReset, loadScramble]);
+  useEffect(() => {
+    if (!twistyRef.current) return;
+    if (!moveIndexer) return;
 
-  const animationTempo = useMemo(() => {
-    switch (wcaEventId) {
-      case '222':
-        return 1;
-      case '333':
-      case '333bf':
-      case '333fm':
-      case '333mbf':
-      case '333oh':
-        return 2;
-      case '444':
-      case '444bf':
-        return 3;
-      case '555':
-      case '555bf':
-        return 4;
-      case '666':
-        return 5;
-      case '777':
-        return 6;
-      case 'clock':
-        return 2;
-      case 'minx':
-        return 5;
-      case 'pyram':
-        return 1;
-      case 'sq1':
-        return 3;
-      case 'skewb':
-        return 1;
-      default:
-        return 1;
-    }
-  }, [wcaEventId]);
+    const exactPosition = moveIndexer.numAnimatedLeaves() * scramblingProgress;
+
+    const moveIndex = Math.round(exactPosition);
+    const moveStartTime = moveIndexer.indexToMoveStartTimestamp(moveIndex);
+
+    // It feels awkward to display "in progress" moves in the middle of a turn,
+    // so we round to either the start (0) or the end (1) of a move.
+    const moveProgress = Math.round(exactPosition - moveIndex);
+    const movePartialDuration = moveIndexer.moveDuration(moveIndex) * moveProgress;
+
+    twistyRef.current.controller.model.timestampRequest.set(moveStartTime + movePartialDuration);
+  }, [twistyRef, moveIndexer, scramblingProgress]);
 
   return (
     <twisty-player
@@ -89,7 +61,6 @@ export default function TwistyPlayer({
       control-panel="none"
       visualization="3D"
       hint-facelets="none"
-      tempo-scale={animationTempo}
       puzzle={puzzleId}
       ref={twistyRef}
       style={styleOverride}
