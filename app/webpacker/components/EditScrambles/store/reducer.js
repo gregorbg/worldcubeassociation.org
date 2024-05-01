@@ -4,10 +4,11 @@ import {
   AddScrambleSet,
   ResetScrambles,
   ToggleCurrentlyScrambling,
-  OverrideCurrentlyScrambling,
   SetExtraScrambleCount,
   SetMbldAttemptedCubes,
   AddExtraScramble,
+  EnqueueScramblingTask,
+  DequeueScramblingTask,
 } from './actions';
 import {
   buildExtraScrambleExtension,
@@ -104,11 +105,6 @@ const reducers = {
     },
   }),
 
-  [OverrideCurrentlyScrambling]: (state, { payload }) => ({
-    ...state,
-    currentlyScrambling: { ...payload.currentlyScrambling },
-  }),
-
   [SetMbldAttemptedCubes]: (state, { payload }) => ({
     ...state,
     wcifEvents: state.wcifEvents.map((wcifEvent) => (
@@ -132,6 +128,22 @@ const reducers = {
         )),
       })),
     })),
+  }),
+
+  [EnqueueScramblingTask]: (state, { payload }) => ({
+    ...state,
+    scramblingQueue: [
+      payload.eventId,
+      ...state.scramblingQueue,
+    ],
+  }),
+
+  [DequeueScramblingTask]: (state, { payload }) => ({
+    ...state,
+    scramblingQueue: state.scramblingQueue.toSpliced(
+      state.scramblingQueue.lastIndexOf(payload.eventId),
+      1,
+    ),
   }),
 };
 

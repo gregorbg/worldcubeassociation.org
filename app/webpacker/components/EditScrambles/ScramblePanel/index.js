@@ -24,6 +24,8 @@ import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
 import ScrambleView from './ScrambleView';
 import {
   addScrambleSet,
+  dequeueScramblingTask,
+  enqueueScramblingTask,
   resetScrambles as resetWcifScrambles,
   setCurrentlyScrambling, setMbldAttemptedCubes,
 } from '../store/actions';
@@ -57,12 +59,11 @@ export default function ScramblePanel({
     currentlyScrambling: {
       [wcifEvent.id]: isScrambling,
     },
+    scramblingQueue,
     wcifSchedule,
   } = useStore();
 
   const dispatch = useDispatch();
-
-  const [isScramblingLocked, setIsScramblingLocked] = useState(false);
 
   const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
 
@@ -70,12 +71,17 @@ export default function ScramblePanel({
     dispatch(setCurrentlyScrambling(wcifEvent.id, scrambling));
   }, [dispatch, wcifEvent.id]);
 
-  const resetScrambles = useCallback(() => {
-    setIsScrambling(false);
+  const enqueueEvent = useCallback(() => {
+    dispatch(enqueueScramblingTask(wcifEvent.id));
+  }, [dispatch, wcifEvent.id]);
 
+  const dequeueEvent = useCallback(() => {
+    dispatch(dequeueScramblingTask(wcifEvent.id));
+  }, [dispatch, wcifEvent.id]);
+
+  const resetScrambles = useCallback(() => {
     dispatch(resetWcifScrambles(wcifEvent.id));
-    setIsScramblingLocked(false);
-  }, [dispatch, wcifEvent.id, setIsScrambling]);
+  }, [dispatch, wcifEvent.id]);
 
   const mbldCubesCountChanged = useCallback((evt, data) => {
     dispatch(setMbldAttemptedCubes(data.value));
@@ -122,16 +128,26 @@ export default function ScramblePanel({
   }, [dispatch, wcifEvent]);
 
   useEffect(() => {
-    if (isScrambling && !isScramblingLocked) {
-      setIsScramblingLocked(true);
+    const hasTask = scramblingQueue.length > 0
+      && scramblingQueue[scramblingQueue.length - 1] === wcifEvent.id;
+
+    if (!isScrambling && hasTask) {
+      setIsScrambling(true);
 
       generateScrambles()
         .finally(() => {
+          dequeueEvent();
           setIsScrambling(false);
-          setIsScramblingLocked(false);
         });
     }
-  }, [isScrambling, setIsScrambling, isScramblingLocked, setIsScramblingLocked, generateScrambles]);
+  }, [
+    scramblingQueue,
+    isScrambling,
+    setIsScrambling,
+    generateScrambles,
+    dequeueEvent,
+    wcifEvent.id,
+  ]);
 
   const targetScrambleCount = wcifEvent.rounds.reduce(
     (acc, round) => (
@@ -151,6 +167,8 @@ export default function ScramblePanel({
     ),
     0,
   );
+
+  const scramblesExist = existingScrambleCount > 0;
 
   const progressRatio = targetScrambleCount > 0 ? (existingScrambleCount / targetScrambleCount) : 0;
   const progressPercent = Math.round(progressRatio * 100);
@@ -213,7 +231,7 @@ export default function ScramblePanel({
                 max={120}
                 value={getMbldCubesCount(wcifEvent)}
                 onChange={mbldCubesCountChanged}
-                disabled={existingScrambleCount > 0}
+                disabled={scramblesExist}
               />
             </Card.Content>
           )}
@@ -226,7 +244,7 @@ export default function ScramblePanel({
             />
           </Card.Content>
           <Card.Content>
-            {existingScrambleCount > 0 && (
+            {scramblesExist && (
               <Button
                 icon
                 secondary
@@ -244,7 +262,7 @@ export default function ScramblePanel({
               positive
               labelPosition="left"
               floated="right"
-              onClick={() => setIsScrambling(true)}
+              onClick={enqueueEvent}
               disabled={isEventFullyScrambled(wcifEvent) || isScrambling}
             >
               <Icon name="shuffle" />
