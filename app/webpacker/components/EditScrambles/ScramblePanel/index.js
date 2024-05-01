@@ -11,7 +11,6 @@ import {
   Icon,
   Input,
   Label,
-  List,
   Progress,
   Segment, Transition,
 } from 'semantic-ui-react';
@@ -36,21 +35,7 @@ import {
   isEventFullyScrambled,
 } from '../utils';
 import { activityMatchesEvent } from '../../../lib/utils/edit-schedule';
-
-function NestedActivityLabels({ activities }) {
-  return (
-    activities.map((act) => (
-      <List.Item key={act.id}>
-        <Label as={act.childActivities.length === 0 && 'a'}>{act.name}</Label>
-        {act.childActivities.length > 0 && (
-          <List.List>
-            <NestedActivityLabels activities={act.childActivities} />
-          </List.List>
-        )}
-      </List.Item>
-    ))
-  );
-}
+import ActivityMatcher from '../ActivityMatcher';
 
 export default function ScramblePanel({
   wcifEvent,
@@ -173,10 +158,13 @@ export default function ScramblePanel({
   const progressRatio = targetScrambleCount > 0 ? (existingScrambleCount / targetScrambleCount) : 0;
   const progressPercent = Math.round(progressRatio * 100);
 
-  const rooms = wcifSchedule.venues.flatMap((venue) => venue.rooms);
-  const topLevelActivities = rooms.flatMap((room) => room.activities);
+  const topLevelActivities = wcifSchedule.venues
+    .flatMap((venue) => venue.rooms)
+    .flatMap((room) => room.activities);
 
-  const eventActivities = topLevelActivities.filter((act) => activityMatchesEvent(act, wcifEvent.id));
+  const eventActivities = topLevelActivities.filter(
+    (act) => activityMatchesEvent(act, wcifEvent.id),
+  );
 
   const [showActivityPicker, setShowActivityPicker] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
@@ -207,15 +195,7 @@ export default function ScramblePanel({
         <>
           <Transition visible={showActivityPicker} animation="scale">
             <Card.Content>
-              <Segment basic>
-                <List>
-                  <NestedActivityLabels activities={eventActivities} />
-                </List>
-              </Segment>
-              <Button fluid icon primary labelPosition="left">
-                <Icon name="lightbulb outline" />
-                Auto-assign
-              </Button>
+              <ActivityMatcher activities={eventActivities} />
             </Card.Content>
           </Transition>
           <Card.Content>
