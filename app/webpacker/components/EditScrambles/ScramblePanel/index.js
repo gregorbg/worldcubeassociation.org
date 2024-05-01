@@ -63,7 +63,6 @@ export default function ScramblePanel({
   const dispatch = useDispatch();
 
   const [isScramblingLocked, setIsScramblingLocked] = useState(false);
-  const [areScramblesComputing, setAreScramblesComputing] = useState(false);
 
   const wcaEvent = useMemo(() => events.byId[wcifEvent.id], [wcifEvent.id]);
 
@@ -83,8 +82,6 @@ export default function ScramblePanel({
   }, [dispatch]);
 
   const generateScrambles = useCallback(() => {
-    setAreScramblesComputing(true);
-
     const roundPromises = wcifEvent.rounds.map((round) => {
       const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
 
@@ -121,25 +118,20 @@ export default function ScramblePanel({
       return Promise.all(scrambleSetPromises);
     });
 
-    return Promise.all(roundPromises)
-      .finally(() => setAreScramblesComputing(false));
+    return Promise.all(roundPromises);
   }, [dispatch, wcifEvent, wcaEvent.id]);
 
   useEffect(() => {
     if (isScrambling && !isScramblingLocked) {
       setIsScramblingLocked(true);
-    }
-  }, [isScrambling, isScramblingLocked]);
 
-  useEffect(() => {
-    if (isScramblingLocked && !areScramblesComputing) {
       generateScrambles()
         .finally(() => {
-          setIsScramblingLocked(false);
           setIsScrambling(false);
+          setIsScramblingLocked(false);
         });
     }
-  }, [isScrambling, generateScrambles, isScramblingLocked, areScramblesComputing, setIsScrambling]);
+  }, [isScrambling, setIsScrambling, isScramblingLocked, setIsScramblingLocked, generateScrambles]);
 
   const targetScrambleCount = wcifEvent.rounds.reduce(
     (acc, round) => (
