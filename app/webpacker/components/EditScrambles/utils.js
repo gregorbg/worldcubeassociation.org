@@ -39,6 +39,26 @@ export const buildMultiCountExtension = (numCubes) => ({
   },
 });
 
+export const getStandardScrambleCount = (wcifRound, wcifEvent) => {
+  const expectedScrambleStr = wcifRound.format.replace('m', '3').replace('a', '5');
+  const baseScrambleCount = Number(expectedScrambleStr);
+
+  return wcifEvent.id === '333mbf'
+    ? getMbldCubesCount(wcifEvent) * baseScrambleCount
+    : baseScrambleCount;
+};
+
+const countScrambles = (scrambleArr, eventId) => (
+  eventId === '333mbf'
+    ? scrambleArr.flatMap((scrString) => scrString.split('\n')).length
+    : scrambleArr.length
+);
+
+export const getGeneratedScramblesCount = (wcifScrambleSet, wcifEvent) => (
+  countScrambles(wcifScrambleSet.scrambles, wcifEvent.id)
+    + countScrambles(wcifScrambleSet.extraScrambles, wcifEvent.id)
+);
+
 export const isRoundScrambled = (wcifRound) => (
   wcifRound.scrambleSets.length >= wcifRound.scrambleSetCount
 );

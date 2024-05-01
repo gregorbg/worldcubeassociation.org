@@ -27,7 +27,12 @@ import {
   resetScrambles as resetWcifScrambles,
   setCurrentlyScrambling, setMbldAttemptedCubes,
 } from '../store/actions';
-import { getExtraScrambleCount, getMbldCubesCount, isEventFullyScrambled } from '../utils';
+import {
+  getExtraScrambleCount, getGeneratedScramblesCount,
+  getMbldCubesCount,
+  getStandardScrambleCount,
+  isEventFullyScrambled,
+} from '../utils';
 import { activityMatchesEvent } from '../../../lib/utils/edit-schedule';
 
 function NestedActivityLabels({ activities }) {
@@ -84,16 +89,10 @@ export default function ScramblePanel({
       const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
 
       const scrambleSetPromises = Array(missingScrambleSets).fill(true).map((_foo) => {
-        const expectedScrambleStr = round.format.replace('m', '3').replace('a', '5');
-        const baseScrambleCount = Number(expectedScrambleStr);
-
-        const expectedScrambleCount = wcaEvent.id === '333mbf'
-          ? getMbldCubesCount(wcifEvent) * baseScrambleCount
-          : baseScrambleCount;
-
+        const standardScrambleCount = getStandardScrambleCount(round, wcifEvent);
         const extraScrambleCount = getExtraScrambleCount(round);
 
-        const totalScrambleCount = expectedScrambleCount + extraScrambleCount;
+        const totalScrambleCount = standardScrambleCount + extraScrambleCount;
 
         const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_bar) => {
           const scrEventId = wcaEvent.id.replace('333mbf', '333bf');
@@ -112,7 +111,7 @@ export default function ScramblePanel({
             }));
           } else {
             dispatch(addScrambleSet(round.id, {
-              scrambles: scrambles.slice(0, expectedScrambleCount),
+              scrambles: scrambles.slice(0, standardScrambleCount),
               extraScrambles: scrambles.slice(-extraScrambleCount),
             }));
           }
@@ -142,17 +141,26 @@ export default function ScramblePanel({
     }
   }, [isScrambling, generateScrambles, isScramblingLocked, areScramblesComputing, setIsScrambling]);
 
-  const targetScrambleSets = wcifEvent.rounds.reduce(
-    (acc, round) => (acc + round.scrambleSetCount),
+  const targetScrambleCount = wcifEvent.rounds.reduce(
+    (acc, round) => (
+      acc + round.scrambleSetCount * (
+        getStandardScrambleCount(round, wcifEvent) + getExtraScrambleCount(round)
+      )
+    ),
     0,
   );
 
-  const existingScrambleSets = wcifEvent.rounds.reduce(
-    (acc, round) => (acc + round.scrambleSets.length),
+  const existingScrambleCount = wcifEvent.rounds.reduce(
+    (acc, round) => (
+      acc + round.scrambleSets.reduce(
+        (scrAcc, scrSet) => (scrAcc + getGeneratedScramblesCount(scrSet, wcifEvent)),
+        0,
+      )
+    ),
     0,
   );
 
-  const progressRatio = targetScrambleSets > 0 ? (existingScrambleSets / targetScrambleSets) : 0;
+  const progressRatio = targetScrambleCount > 0 ? (existingScrambleCount / targetScrambleCount) : 0;
   const progressPercent = Math.round(progressRatio * 100);
 
   const rooms = wcifSchedule.venues.flatMap((venue) => venue.rooms);
@@ -213,7 +221,7 @@ export default function ScramblePanel({
                 max={120}
                 value={getMbldCubesCount(wcifEvent)}
                 onChange={mbldCubesCountChanged}
-                disabled={existingScrambleSets > 0}
+                disabled={existingScrambleCount > 0}
               />
             </Card.Content>
           )}
@@ -226,7 +234,7 @@ export default function ScramblePanel({
             />
           </Card.Content>
           <Card.Content>
-            {existingScrambleSets > 0 && (
+            {existingScrambleCount > 0 && (
               <Button
                 icon
                 secondary
