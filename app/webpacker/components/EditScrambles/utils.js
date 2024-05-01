@@ -1,4 +1,8 @@
 import _ from 'lodash';
+import { useCallback } from 'react';
+import { randomScrambleForEvent } from 'cubing/scramble';
+import { useDispatch } from '../../lib/providers/StoreProvider';
+import { addScrambleSet, setCurrentlyScrambling } from './store/actions';
 
 export const EXTRA_SCRAMBLE_EXTENSION_ID = 'org.worldcubeassociation.scrambles.numExtra';
 export const DEFAULT_EXTRA_SCRAMBLE_COUNT = 2;
@@ -90,3 +94,54 @@ export function nextScrambleSetId(wcifEvents) {
 
   return maxIdOrZero(scrambleSets) + 1;
 }
+
+export const useScramblingAction = () => {
+  const dispatch = useDispatch();
+
+  const generateScrambles = useCallback((wcifEvent) => {
+    const roundPromises = wcifEvent.rounds.map((round) => {
+      const missingScrambleSets = round.scrambleSetCount - round.scrambleSets.length;
+
+      const scrambleSetPromises = Array(missingScrambleSets).fill(true).map((_foo) => {
+        const standardScrambleCount = getStandardScrambleCount(round, wcifEvent);
+        const extraScrambleCount = getExtraScrambleCount(round);
+
+        const totalScrambleCount = standardScrambleCount + extraScrambleCount;
+
+        const scrambleStringPromises = Array(totalScrambleCount).fill(true).map((_bar) => {
+          const scrEventId = wcifEvent.id.replace('333mbf', '333bf');
+
+          return randomScrambleForEvent(scrEventId).then((cubingScr) => cubingScr.toString());
+        });
+
+        return Promise.all(scrambleStringPromises).then((scrambles) => {
+          if (wcifEvent.id === '333mbf') {
+            const baseScrambles = scrambles.slice(0, -extraScrambleCount);
+            const groupedScrambles = _.chunk(baseScrambles, getMbldCubesCount(wcifEvent));
+
+            dispatch(addScrambleSet(round.id, {
+              scrambles: groupedScrambles.map((scs) => scs.join('\n')),
+              extraScrambles: scrambles.slice(-extraScrambleCount),
+            }));
+          } else {
+            dispatch(addScrambleSet(round.id, {
+              scrambles: scrambles.slice(0, standardScrambleCount),
+              extraScrambles: scrambles.slice(-extraScrambleCount),
+            }));
+          }
+        });
+      });
+
+      return Promise.all(scrambleSetPromises);
+    });
+
+    return Promise.all(roundPromises);
+  }, [dispatch]);
+
+  return useCallback((wcifEvent) => {
+    dispatch(setCurrentlyScrambling(wcifEvent.id, true));
+
+    generateScrambles(wcifEvent)
+      .finally(() => dispatch(setCurrentlyScrambling(wcifEvent.id, false)));
+  }, [dispatch, generateScrambles]);
+};
