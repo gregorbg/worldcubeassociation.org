@@ -50,6 +50,11 @@ class Competition < ApplicationRecord
   has_one :tickets_competition_result
   has_one :result_ticket, through: :tickets_competition_result, source: :ticket
 
+  delegate :continent, :country, :latitude_microdegrees, :longitude_microdegrees, to: :main_venue, allow_nil: true
+  delegate :name, :city, :address, :description, to: :main_venue, prefix: :venue, allow_nil: true
+
+  alias_method :venue_details, :venue_description
+
   accepts_nested_attributes_for :competition_events, allow_destroy: true
   accepts_nested_attributes_for :championships, allow_destroy: true
   accepts_nested_attributes_for :competition_series, allow_destroy: false
@@ -76,16 +81,17 @@ class Competition < ApplicationRecord
   scope :between_dates, ->(start_date, end_date) { where("start_date <= ? AND end_date >= ?", end_date, start_date) }
   scope :end_date_passed_since, ->(num_days) { where(end_date: ...(num_days.days.ago)) }
   scope :belongs_to_region, lambda { |region_id|
-    joins(:country).where(
-      "country_id = :region_id OR countries.continent_id = :region_id", region_id: region_id
+    joins(main_venue: [:country]).where(
+      "Countries.id = :region_id OR Countries.continentId = :region_id", region_id: region_id
     )
   }
   scope :contains, lambda { |search_term|
-    where(
-      "competitions.name like :search_term or
-      competitions.city_name like :search_term",
-      search_term: "%#{search_term}%",
-    )
+    joins(:main_venue)
+      .where(
+        "competitions.name like :search_term or
+        competition_venues.city like :search_term",
+        search_term: "%#{search_term}%",
+      )
   }
   scope :has_event, lambda { |event_id|
     joins(
@@ -122,16 +128,9 @@ class Competition < ApplicationRecord
   enum :scoretaking_software, %i[external wca_live internal], prefix: true
 
   CLONEABLE_ATTRIBUTES = %w[
-    city_name
-    country_id
     information
-    venue
-    venue_address
-    venue_details
     generate_website
     external_website
-    latitude
-    longitude
     contact
     remarks
     use_wca_registration
@@ -191,6 +190,7 @@ class Competition < ApplicationRecord
     cancelled_by
     results_posted_by
     posting_by
+    main_venue_id
     main_event_id
     lead_delegate_id
     waiting_list_deadline_date
@@ -332,10 +332,8 @@ class Competition < ApplicationRecord
   # 48 hours
   REGISTRATION_OPENING_EARLIEST = 172_800
 
-  validates :city_name, city: true
-
   # We have stricter validations for confirming a competition
-  validates :city_name, :country_id, :venue, :venue_address, :latitude, :longitude, presence: true, if: :confirmed_or_visible?
+  validates :main_venue_id, presence: true, if: :confirmed_or_visible?
   validates :name_reason, presence: true, if: :name_reason_required?
   validates :external_website, presence: true, if: -> { confirmed_or_visible? && !generate_website }
 
@@ -514,8 +512,9 @@ class Competition < ApplicationRecord
     bookmarked_competitions.count
   end
 
+  # FIXME GB: Temporary backwards compatibility
   def country
-    Country.c_find(self.country_id)
+    main_venue&.country || Country.c_find(self.country_id)
   end
 
   delegate :continent, to: :country
@@ -732,7 +731,6 @@ class Competition < ApplicationRecord
     end
   end
 
-  before_validation :compute_coordinates
   before_validation :create_id_and_cell_name
   # This is a (small) mess. The UI handles "Full Delegates" and "Trainee Delegates"
   #   as separate fields, but the backend just has one "competition_delegates" table
@@ -1015,20 +1013,12 @@ class Competition < ApplicationRecord
     longitude_microdegrees ? longitude_microdegrees / 1e6 : nil
   end
 
-  def longitude_degrees=(new_longitude_degrees)
-    @longitude_degrees = new_longitude_degrees.to_f
-  end
-
   def longitude_radians
     to_radians longitude_degrees
   end
 
   def latitude_degrees
     latitude_microdegrees ? latitude_microdegrees / 1e6 : nil
-  end
-
-  def latitude_degrees=(new_latitude_degrees)
-    @latitude_degrees = new_latitude_degrees.to_f
   end
 
   def latitude_radians
@@ -1045,11 +1035,6 @@ class Competition < ApplicationRecord
 
   def coordinates
     { latitude: self.latitude_microdegrees, longitude: self.longitude_microdegrees }
-  end
-
-  private def compute_coordinates
-    self.latitude_microdegrees = @latitude_degrees * 1e6 unless @latitude_degrees.nil?
-    self.longitude_microdegrees = @longitude_degrees * 1e6 unless @longitude_degrees.nil?
   end
 
   delegate :nonzero?, to: :base_entry_fee, prefix: true
@@ -1447,7 +1432,11 @@ class Competition < ApplicationRecord
   end
 
   def city_and_country
-    [city_name, country&.name].compact.join(', ')
+    [venue_city, country&.name].compact.join(', ')
+  end
+
+  def city_and_country_in(locale)
+    [venue_city, country&.name_in(locale)].compact.join(', ')
   end
 
   def events_with_podium_results
@@ -1656,15 +1645,16 @@ class Competition < ApplicationRecord
       continent = Continent.find(params[:continent])
       raise WcaExceptions::BadApiParameter.new("Invalid continent: '#{params[:continent]}'") unless continent
 
-      competitions = competitions.joins(:country)
-                                 .where(country: { continent: continent })
+      competitions = competitions.joins(main_venue: [:continent])
+                                 .where(main_venue: { continents: { id: continent } })
     end
 
     if params[:country_iso2].present?
       country = Country.find_by(iso2: params[:country_iso2])
       raise WcaExceptions::BadApiParameter.new("Invalid country_iso2: '#{params[:country_iso2]}'") unless country
 
-      competitions = competitions.where(country_id: country.id)
+      competitions = competitions.joins(:main_venue)
+                                 .where(main_venue: { countries: { id: country } })
     end
 
     if params[:delegate].present?
@@ -1729,8 +1719,12 @@ class Competition < ApplicationRecord
     end
 
     query&.split&.each do |part|
-      like_query = %w[id name cell_name city_name country_id].map { |column| "competitions.#{column} LIKE :part" }.join(" OR ")
-      competitions = competitions.where(like_query, part: "%#{part}%")
+      competitions_like_query = %w[id name cellName].map { |column| "competitions.#{column} LIKE :part" }
+      venue_like_query = %w[city].map { |column| "competition_venues.#{column} LIKE :part" }
+      country_like_query = %w[id].map { |column| "Countries.#{column} LIKE :part" }
+      like_query = (competitions_like_query + venue_like_query + country_like_query).join(" OR ")
+      competitions = competitions.joins(main_venue: [:country])
+                                 .where(like_query, part: "%#{part}%")
     end
 
     orderable_fields = %i[name start_date end_date announced_at]
@@ -1880,14 +1874,14 @@ class Competition < ApplicationRecord
                extra_registration_requirements enable_donations refund_policy_limit_date event_change_deadline_date waiting_list_deadline_date
                on_the_spot_registration on_the_spot_entry_fee_lowest_denomination qualification_results event_restrictions
                base_entry_fee_lowest_denomination currency_code allow_registration_edits competitor_can_cancel scoretaking_software
-               allow_registration_without_qualification refund_policy_percent use_wca_registration guests_per_registration_limit venue contact
+               allow_registration_without_qualification refund_policy_percent use_wca_registration guests_per_registration_limit contact
                force_comment_in_registration use_wca_registration external_registration_page guests_entry_fee_lowest_denomination guest_entry_status
                information events_per_registration_limit guests_enabled auto_accept_preference auto_accept_disable_threshold],
       # TODO: h2h_rounds is a temporary method, which should be removed when full-fledged H2H backend support is added - expected in Q1 2026
-      methods: %w[url website short_name city venue_address venue_details latitude_degrees longitude_degrees country_iso2 event_ids
+      methods: %w[url website short_name country_iso2 event_ids
                   main_event_id number_of_bookmarks using_payment_integrations? uses_qualification? uses_cutoff? competition_series_ids registration_full?
                   part_of_competition_series? registration_full_and_accepted? spots_left h2h_rounds tab_names],
-      include: %w[delegates organizers],
+      include: %w[delegates organizers main_venue],
     }
     self.as_json(options)
   end
@@ -2202,7 +2196,6 @@ class Competition < ApplicationRecord
   end
 
   alias_attribute :short_name, :cell_name
-  alias_attribute :city, :city_name
 
   def country_iso2
     country&.iso2
@@ -2270,7 +2263,7 @@ class Competition < ApplicationRecord
   end
 
   def multi_country_fmc_competition?
-    events.length == 1 && events[0].fewest_moves? && Country::FICTIVE_IDS.include?(country_id)
+    events.length == 1 && events[0].fewest_moves? && self.is_multi_location?
   end
 
   def exempt_from_wca_dues?
