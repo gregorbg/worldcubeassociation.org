@@ -23,11 +23,12 @@ import SubSection from '../wca/FormBuilder/SubSection';
 export default function MainForm({
   isCloning = false,
   storedEvents = [],
+  storedVenues = [],
 }) {
   return (
     <>
       <NameDetails />
-      <VenueInfo />
+      <VenueInfo storedVenues={storedVenues} />
       <Divider />
 
       <CompDates />

@@ -2461,6 +2461,7 @@ class Competition < ApplicationRecord
       "name" => name,
       "shortName" => cell_name,
       "nameReason" => name_reason,
+      "mainVenueId" => main_venue_id,
       "venue" => {
         "countryId" => country_id,
         "cityName" => city_name,
@@ -2569,6 +2570,7 @@ class Competition < ApplicationRecord
       "name" => self.persisted? ? [] : (errors[:id] + errors[:name]),
       "shortName" => errors[:cell_name],
       "nameReason" => errors[:name_reason],
+      "mainVenueId" => errors[:main_venue_id],
       "venue" => {
         "countryId" => errors[:country_id],
         "cityName" => errors[:city_name],
@@ -2761,6 +2763,7 @@ class Competition < ApplicationRecord
       name: form_data['name'],
       city_name: form_data.dig('venue', 'cityName'),
       country_id: form_data.dig('venue', 'countryId'),
+      main_venue_id: form_data['mainVenueId']&.presence,
       information: form_data['information'],
       venue: form_data.dig('venue', 'name'),
       venue_address: form_data.dig('venue', 'address'),
@@ -2906,6 +2909,7 @@ class Competition < ApplicationRecord
         "name" => { "type" => "string" },
         "shortName" => { "type" => "string" },
         "nameReason" => { "type" => %w[string null] },
+        "mainVenueId" => { "type" => %w[integer null] },
         "venue" => {
           "type" => "object",
           "properties" => {
