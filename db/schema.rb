@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_02_013953) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_140952) do
   create_table "Competitions", id: { type: :string, limit: 32, default: "" }, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.string "cityName", limit: 50, default: "", null: false
@@ -65,6 +65,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_013953) do
     t.integer "announced_by"
     t.integer "results_posted_by"
     t.string "main_event_id"
+    t.bigint "main_venue_id"
+    t.boolean "is_multi_location", default: false, null: false
     t.datetime "cancelled_at", precision: nil
     t.integer "cancelled_by"
     t.datetime "waiting_list_deadline_date", precision: nil
@@ -80,9 +82,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_013953) do
     t.boolean "force_comment_in_registration"
     t.integer "posting_by"
     t.boolean "uses_v2_registrations", default: false, null: false
+    t.boolean "forbid_newcomers", default: false, null: false
+    t.string "forbid_newcomers_reason"
     t.index ["cancelled_at"], name: "index_Competitions_on_cancelled_at"
     t.index ["countryId"], name: "index_Competitions_on_countryId"
     t.index ["end_date"], name: "index_Competitions_on_end_date"
+    t.index ["main_venue_id"], name: "fk_rails_6ea93be929"
     t.index ["start_date"], name: "index_Competitions_on_start_date"
   end
 
@@ -637,13 +642,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_013953) do
   create_table "competition_venues", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "competition_id", null: false
     t.integer "wcif_id", null: false
-    t.string "name", null: false
+    t.string "name", limit: 240, null: false
+    t.string "city", null: false
+    t.string "address", null: false
+    t.string "description"
+    t.string "website"
     t.integer "latitude_microdegrees", null: false
     t.integer "longitude_microdegrees", null: false
+    t.string "country_iso2", limit: 2, null: false
     t.string "timezone_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "country_iso2", null: false
     t.index ["competition_id", "wcif_id"], name: "index_competition_venues_on_competition_id_and_wcif_id", unique: true
     t.index ["competition_id"], name: "index_competition_venues_on_competition_id"
   end
@@ -1244,6 +1253,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_013953) do
     t.bigint "competition_venue_id", null: false
     t.integer "wcif_id", null: false
     t.string "name", null: false
+    t.string "description"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "color", limit: 7, null: false
@@ -1289,6 +1299,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_013953) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "Competitions", "competition_venues", column: "main_venue_id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
