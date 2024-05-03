@@ -11,11 +11,16 @@ class CompetitionVenue < ApplicationRecord
   delegate :continent, to: :country, allow_nil: true
 
   VALID_TIMEZONES = TZInfo::Timezone.all_identifiers.freeze
+  PATTERN_LINK_RE = /\[\{([^}]+)}\{((https?:|mailto:)[^}]+)}\]/
 
   validates :name, presence: true
+  validates :city, presence: true, city: true
+  validates :address, presence: true
+  validates :website, format: { with: PATTERN_LINK_RE }, allow_nil: true
   validates :wcif_id, numericality: { only_integer: true }
   validates :latitude_microdegrees, presence: true
   validates :longitude_microdegrees, presence: true
+  validates :country_iso2, inclusion: { in: Country.pluck(:iso2).freeze }
   validates :timezone_id, inclusion: { in: VALID_TIMEZONES }
 
   def country
