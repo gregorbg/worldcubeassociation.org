@@ -24,7 +24,7 @@
 
   <div>
     <strong>Location</strong>
-    <%= competition.city_name %>, <%= competition.country.name_in(:en) %>
+    <%= competition.city_and_country_in(:en) %>
     <%= link_to_google_maps_place competition.venue_address, competition.latitude_degrees, competition.longitude_degrees %>
   </div>
 
