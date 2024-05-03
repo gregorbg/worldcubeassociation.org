@@ -6,13 +6,14 @@ import {
   InputNumber,
   InputSelect,
 } from '../../wca/FormBuilder/input/FormInputs';
-import { currenciesData } from '../../../lib/wca-data.js.erb';
+import { countries, currenciesData } from '../../../lib/wca-data.js.erb';
 import I18n from '../../../lib/i18n';
 import { calculateDuesUrl } from '../../../lib/requests/routes.js.erb';
 import useLoadedData from '../../../lib/hooks/useLoadedData';
 import ConditionalSection from './ConditionalSection';
 import SubSection from '../../wca/FormBuilder/SubSection';
 import { useFormObject } from '../../wca/FormBuilder/provider/FormObjectProvider';
+import { useStore } from '../../../lib/providers/StoreProvider';
 
 const currenciesOptions = Object.keys(currenciesData.byIso).map((iso) => ({
   key: iso,
@@ -22,13 +23,20 @@ const currenciesOptions = Object.keys(currenciesData.byIso).map((iso) => ({
 
 export default function RegistrationFees() {
   const {
-    venue: {
-      countryId: country,
-    },
+    mainVenueId,
     entryFees,
     competitorLimit,
     registration,
   } = useFormObject();
+
+  const { storedVenues } = useStore();
+
+  const mainVenue = useMemo(() => (
+    storedVenues.find((venue) => venue.id === mainVenueId)
+  ), [mainVenueId, storedVenues]);
+
+  const countryIso2 = mainVenue?.countryIso2;
+  const countryId = countries.byIso2[countryIso2]?.id;
 
   const currency = entryFees.currencyCode;
 
@@ -41,10 +49,10 @@ export default function RegistrationFees() {
     params.append('competitor_limit', competitorLimit.count);
     params.append('currency_code', entryFees.currencyCode);
     params.append('base_entry_fee_lowest_denomination', entryFees.baseEntryFee);
-    params.append('country_id', country);
+    params.append('country_id', countryId);
 
     return params;
-  }, [competitorLimit, country, entryFees]);
+  }, [competitorLimit, countryId, entryFees]);
 
   const entryFeeDuesUrl = useMemo(
     () => `${calculateDuesUrl}?${savedParams.toString()}`,
