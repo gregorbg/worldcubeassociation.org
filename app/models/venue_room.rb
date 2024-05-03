@@ -27,6 +27,7 @@ class VenueRoom < ApplicationRecord
     {
       "id" => wcif_id,
       "name" => name,
+      "description" => description,
       "color" => color,
       "activities" => schedule_activities.map(&:to_wcif),
       "extensions" => wcif_extensions.map(&:to_wcif),
@@ -45,6 +46,7 @@ class VenueRoom < ApplicationRecord
       "properties" => {
         "id" => { "type" => "integer" },
         "name" => { "type" => "string" },
+        "description" => { "type" => ["string", "null"] },
         "color" => { "type" => "string" },
         "activities" => { "type" => "array", "items" => ScheduleActivity.wcif_json_schema },
         "extensions" => { "type" => "array", "items" => WcifExtension.wcif_json_schema },
@@ -68,6 +70,7 @@ class VenueRoom < ApplicationRecord
     {
       wcif_id: wcif["id"],
       name: wcif["name"],
+      description: wcif["description"],
       color: wcif["color"],
     }
   end
