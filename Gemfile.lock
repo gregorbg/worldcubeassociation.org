@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/HarlemSquirrel/tzf-rb
+  revision: 5ec442e9e79cd7d255106a71f46b6627171a3712
+  branch: main
+  specs:
+    tzf (0.4.5)
+      rb_sys (~> 0.9.89)
+
+GIT
   remote: https://github.com/derekprior/momentjs-rails.git
   revision: de473b81db40d0dc19e277895746c79b41a0607a
   specs:
@@ -597,6 +605,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rb_sys (0.9.97)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     react-rails (3.2.0)
@@ -928,6 +937,7 @@ DEPENDENCIES
   timecop
   translighterate
   twitter_cldr
+  tzf!
   unicorn
   valid_email
   vault
