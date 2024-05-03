@@ -291,6 +291,7 @@ function CompetitionForm() {
 export default function Wrapper({
   competition = null,
   storedEvents = [],
+  storedVenues = [],
   isAdminView = false,
   isPersisted = false,
   isSeriesPersisted = false,
@@ -304,6 +305,7 @@ export default function Wrapper({
         initialCompetition: competition,
         errors: null,
         storedEvents,
+        storedVenues,
         isAdminView,
         isPersisted,
         isSeriesPersisted,

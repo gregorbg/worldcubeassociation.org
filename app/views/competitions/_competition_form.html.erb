@@ -3,6 +3,7 @@
 <%= react_component("CompetitionForm", {
   competition: @competition.to_form_data,
   storedEvents: @competition.events,
+  storedVenues: @competition.competition_venues.map(&:to_wcif),
   isAdminView: @competition_admin_view,
   isPersisted: @competition.persisted?,
   isSeriesPersisted: @competition.competition_series&.persisted? || false,
