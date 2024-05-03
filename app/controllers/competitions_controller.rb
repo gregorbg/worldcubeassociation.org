@@ -144,7 +144,7 @@ class CompetitionsController < ApplicationController
       @competitions = @competitions.not_cancelled
     end
 
-    @competitions = @competitions.includes(:country).where(showAtAll: true)
+    @competitions = @competitions.includes(main_venue: [:country]).where(showAtAll: true)
     @competitions = if @by_announcement_selected
                       @competitions.order_by_announcement_date
                     else
@@ -429,7 +429,7 @@ class CompetitionsController < ApplicationController
       daysUntil: days_until,
       startDate: other_comp.start_date,
       endDate: other_comp.end_date,
-      location: "#{other_comp.cityName}, #{other_comp.countryId}",
+      location: other_comp.city_and_country,
       distance: {
         km: competition.kilometers_to(other_comp).round(2),
         from: {
@@ -488,11 +488,9 @@ class CompetitionsController < ApplicationController
       delegates: users_to_sentence(other_comp.delegates),
       registrationOpen: other_comp.registration_open,
       minutesUntil: competition.minutes_until_other_registration_starts(other_comp),
-      cityName: other_comp.cityName,
-      countryId: other_comp.countryId,
-      events: other_comp.events.map { |event|
-        event.id
-      },
+      cityName: other_comp.venue_city,
+      countryId: other_comp.country&.id,
+      events: other_comp.events.ids,
     }
   end
 

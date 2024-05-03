@@ -16,14 +16,14 @@
       <dd><%= competition.city_and_country %></dd>
 
       <dt><%= t '.venue' %></dt>
-      <dd><%=md competition.venue %></dd>
+      <dd><%=md competition.venue_name %></dd>
 
       <dt class="text-muted"><%= t '.address' %></dt>
-      <dd><%= link_to_google_maps_place competition.venueAddress, competition.latitude_degrees, competition.longitude_degrees %></dd>
+      <dd><%= link_to_google_maps_place competition.venue_address, competition.latitude_degrees, competition.longitude_degrees %></dd>
 
-      <% if competition.venueDetails.present? %>
+      <% if competition.venue_details.present? %>
         <dt class="text-muted"><%= t '.details' %></dt>
-        <dd><%=md competition.venueDetails %></dd>
+        <dd><%=md competition.venue_details %></dd>
       <% end %>
 
       <% if competition.external_website %>

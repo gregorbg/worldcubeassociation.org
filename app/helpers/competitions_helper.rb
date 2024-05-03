@@ -197,7 +197,7 @@ module CompetitionsHelper
         name: c.name,
         latitude_degrees: c.latitude_degrees,
         longitude_degrees: c.longitude_degrees,
-        cityName: c.cityName,
+        cityName: c.venue_city,
         marker_date: wca_date_range(c.start_date, c.end_date),
         is_probably_over: c.is_probably_over?,
         url: competition_path(c),
