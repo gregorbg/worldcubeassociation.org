@@ -9,6 +9,8 @@ import Loading from '../../Requests/Loading';
 import TableWrapper from './TableWrapper';
 import useLoadedData from '../../../lib/hooks/useLoadedData';
 import { useFormObject } from '../../wca/FormBuilder/provider/FormObjectProvider';
+import { toDegrees } from '../../../lib/utils/edit-schedule';
+import { useStore } from '../../../lib/providers/StoreProvider';
 
 function MissingInfo({ missingDate, missingLocation }) {
   return (
@@ -22,20 +24,22 @@ function MissingInfo({ missingDate, missingLocation }) {
 export default function NearbyComps() {
   const {
     competitionId,
-    venue: {
-      coordinates,
-    },
+    mainVenueId,
     startDate,
     endDate,
   } = useFormObject();
 
-  const lat = parseFloat(coordinates.lat);
-  const long = parseFloat(coordinates.long);
+  const { storedVenues } = useStore();
+
+  const mainVenue = useMemo(() => (
+    storedVenues.find((venue) => venue.id === mainVenueId)
+  ), [mainVenueId, storedVenues]);
+
+  const lat = toDegrees(mainVenue?.latitudeMicrodegrees);
+  const long = toDegrees(mainVenue?.longitudeMicrodegrees);
 
   const missingDate = !startDate || !endDate;
-  const missingLocation = !coordinates
-    || Number.isNaN(lat)
-    || Number.isNaN(long);
+  const missingLocation = !mainVenue;
 
   const savedParams = useMemo(() => {
     const params = new URLSearchParams();
