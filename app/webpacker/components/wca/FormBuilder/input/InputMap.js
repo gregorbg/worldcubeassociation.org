@@ -107,7 +107,7 @@ export function CompetitionsMap({
         attribution={provider.attribution}
         maxZoom={19}
       />
-      <GeoSearchControl setCoords={setCoords} setZoom={setZoom} />
+      {setCoords && <GeoSearchControl setCoords={setCoords} setZoom={setZoom} />}
       <ZoomControl position="topright" />
       {children}
     </MapContainer>

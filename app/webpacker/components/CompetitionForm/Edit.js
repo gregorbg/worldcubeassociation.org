@@ -20,6 +20,7 @@ function EditCompetition({
   competition,
   editingUserId,
   storedEvents,
+  storedVenues,
   isAdminView,
   isSeriesPersisted,
   areResultsSubmitted,
@@ -121,7 +122,10 @@ function EditCompetition({
         globalDisabled={isDisabled}
         globalAllowIgnoreDisabled={allowIgnoreDisabled}
       >
-        <MainForm storedEvents={storedEvents} />
+        <MainForm
+          storedEvents={storedEvents}
+          storedVenues={storedVenues}
+        />
       </EditForm>
     </StoreProvider>
   );
@@ -131,6 +135,7 @@ export default function Wrapper({
   competition,
   editingUserId,
   storedEvents = [],
+  storedVenues = [],
   isAdminView = false,
   isSeriesPersisted = false,
   areResultsSubmitted = false,
@@ -141,6 +146,7 @@ export default function Wrapper({
         competition={competition}
         editingUserId={editingUserId}
         storedEvents={storedEvents}
+        storedVenues={storedVenues}
         isAdminView={isAdminView}
         isSeriesPersisted={isSeriesPersisted}
         areResultsSubmitted={areResultsSubmitted}
