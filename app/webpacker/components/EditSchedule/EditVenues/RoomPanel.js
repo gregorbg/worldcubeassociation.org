@@ -71,6 +71,13 @@ function RoomPanel({
               value={room.color}
               onChange={handleChange}
             />
+            <Form.Input
+              id="room-description"
+              label="Description"
+              name="description"
+              value={room.description}
+              onChange={handleChange}
+            />
           </Form>
         </Card.Description>
       </Card.Content>
