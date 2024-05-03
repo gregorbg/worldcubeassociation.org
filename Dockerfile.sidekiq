@@ -32,6 +32,7 @@ RUN apt-get update -qq && \
       build-essential \
       software-properties-common \
       git \
+      clang \
       pkg-config \
       zip \
       python-is-python3 \

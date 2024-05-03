@@ -363,7 +363,8 @@ Rails.application.routes.draw do
       get '/persons/:wca_id' => "persons#show", as: :person
       get '/persons/:wca_id/results' => "persons#results", as: :person_results
       get '/persons/:wca_id/competitions' => "persons#competitions", as: :person_competitions
-      get '/geocoding/search' => 'geocoding#get_location_from_query', as: :geocoding_search
+      get '/geocoding/search' => 'geocoding#location_from_query', as: :geocoding_search
+      get '/geocoding/time_zone' => 'geocoding#time_zone_from_coordinates', as: :geocoding_time_zone
       get '/countries' => 'api#countries'
       get '/competition_series/:id' => 'api#competition_series'
       resources :competitions, only: [:index, :show] do
