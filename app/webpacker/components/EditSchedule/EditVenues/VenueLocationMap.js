@@ -46,7 +46,7 @@ export function DraggableMarker({
 }) {
   const map = useMap();
 
-  const updatePosition = useCallback((e) => setPosition(e, e.target.getLatLng()), [setPosition]);
+  const updatePosition = useCallback((e) => setPosition(e.target.getLatLng()), [setPosition]);
 
   useEffect(() => {
     map.panTo(position);
@@ -87,21 +87,26 @@ function VenueLocationMap({
     lng: toDegrees(venue.longitudeMicrodegrees),
   }), [venue.latitudeMicrodegrees, venue.longitudeMicrodegrees]);
 
-  const setVenuePosition = useCallback((evt, { lat, lng }) => {
+  const setVenuePosition = useCallback(({ lat, lng }) => {
     dispatch(editVenue(venue.id, 'latitudeMicrodegrees', toMicrodegrees(lat)));
     dispatch(editVenue(venue.id, 'longitudeMicrodegrees', toMicrodegrees(lng)));
+  }, [dispatch, venue.id]);
+
+  const setVenueAddress = useCallback((address) => {
+    dispatch(editVenue(venue.id, 'address', address));
   }, [dispatch, venue.id]);
 
   const provider = userTileProvider;
 
   const onGeoSearchResult = useCallback((evt) => {
-    setVenuePosition(evt, {
+    setVenuePosition({
       lat: evt.location.y,
       lng: evt.location.x,
     });
 
+    setVenueAddress(evt.location.label);
     setSearchResultPopup(evt.location.label);
-  }, [setVenuePosition, setSearchResultPopup]);
+  }, [setVenuePosition, setVenueAddress, setSearchResultPopup]);
 
   return (
     <MapContainer
