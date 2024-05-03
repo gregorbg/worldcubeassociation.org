@@ -5,12 +5,21 @@ class CompetitionVenue < ApplicationRecord
   has_many :venue_rooms, dependent: :destroy
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
 
+  belongs_to :country, foreign_key: :country_iso2, primary_key: :iso2
+  has_one :continent, through: :country
+
   VALID_TIMEZONES = TZInfo::Timezone.all_identifiers.freeze
+  PATTERN_LINK_RE = /\[\{([^}]+)}\{((https?:|mailto:)[^}]+)}\]/
+
+  validates :city, presence: true, city: true
+  validates :website, format: { with: PATTERN_LINK_RE }
 
   validates_presence_of :name
+  validates_presence_of :address
   validates_numericality_of :wcif_id, only_integer: true
   validates_presence_of :latitude_microdegrees
   validates_presence_of :longitude_microdegrees
+  validates_inclusion_of :country_iso2, in: Country.pluck(:iso2).freeze
   validates_inclusion_of :timezone_id, in: VALID_TIMEZONES
 
   def load_wcif!(wcif)
