@@ -24,8 +24,6 @@ class Competition < ApplicationRecord
   has_one :delegate_report, dependent: :destroy
   has_many :competition_venues, dependent: :destroy
   belongs_to :main_venue, class_name: "CompetitionVenue", optional: true
-  belongs_to :country, foreign_key: :countryId
-  has_one :continent, foreign_key: :continentId, through: :country
   has_many :championships, dependent: :delete_all
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
   has_many :bookmarked_competitions, dependent: :delete_all
@@ -38,6 +36,11 @@ class Competition < ApplicationRecord
   belongs_to :announced_by_user, optional: true, foreign_key: "announced_by", class_name: "User"
   belongs_to :cancelled_by_user, optional: true, foreign_key: "cancelled_by", class_name: "User"
   has_many :competition_payment_integrations
+
+  delegate :continent, :country, :latitude_microdegrees, :longitude_microdegrees, to: :main_venue, allow_nil: true
+  delegate :name, :city, :address, :description, to: :main_venue, prefix: :venue, allow_nil: true
+
+  alias_method :venue_details, :venue_description
 
   accepts_nested_attributes_for :competition_events, allow_destroy: true
   accepts_nested_attributes_for :championships, allow_destroy: true
@@ -56,16 +59,17 @@ class Competition < ApplicationRecord
   scope :not_over, -> { where("results_posted_at IS NULL AND end_date >= ?", Date.today) }
   scope :end_date_passed_since, lambda { |num_days| where(end_date: ...(num_days.days.ago)) }
   scope :belongs_to_region, lambda { |region_id|
-    joins(:country).where(
-      "countryId = :region_id OR Countries.continentId = :region_id", region_id: region_id
+    joins(main_venue: [:country]).where(
+      "Countries.id = :region_id OR Countries.continentId = :region_id", region_id: region_id
     )
   }
   scope :contains, lambda { |search_term|
-    where(
-      "Competitions.name like :search_term or
-      Competitions.cityName like :search_term",
-      search_term: "%#{search_term}%",
-    )
+    joins(:main_venue)
+      .where(
+        "Competitions.name like :search_term or
+        competition_venues.city like :search_term",
+        search_term: "%#{search_term}%",
+      )
   }
   scope :has_event, lambda { |event_id|
     joins(
@@ -95,16 +99,9 @@ class Competition < ApplicationRecord
   }, _prefix: true
 
   CLONEABLE_ATTRIBUTES = %w(
-    cityName
-    countryId
     information
-    venue
-    venueAddress
-    venueDetails
     generate_website
     external_website
-    latitude
-    longitude
     contact
     remarks
     use_wca_registration
@@ -163,6 +160,7 @@ class Competition < ApplicationRecord
     cancelled_by
     results_posted_by
     posting_by
+    main_venue_id
     main_event_id
     waiting_list_deadline_date
     event_change_deadline_date
@@ -291,10 +289,8 @@ class Competition < ApplicationRecord
   # 48 hours
   REGISTRATION_OPENING_EARLIEST = 172_800
 
-  validates :cityName, city: true
-
   # We have stricter validations for confirming a competition
-  validates :cityName, :countryId, :venue, :venueAddress, :latitude, :longitude, presence: true, if: :confirmed_or_visible?
+  validates :main_venue_id, presence: true, if: :confirmed_or_visible?
   validates :name_reason, presence: true, if: :name_reason_required?
   validates :external_website, presence: true, if: -> { confirmed_or_visible? && !generate_website }
 
@@ -392,6 +388,11 @@ class Competition < ApplicationRecord
     Event.c_find(main_event_id)
   end
 
+  # FIXME GB: Temporary backwards compatibility
+  def country
+    main_venue&.country || Country.c_find(self.countryId)
+  end
+
   def with_old_id
     new_id = self.id
     self.id = id_was
@@ -424,14 +425,6 @@ class Competition < ApplicationRecord
 
   def number_of_bookmarks
     bookmarked_users.count
-  end
-
-  def country
-    Country.c_find(self.countryId)
-  end
-
-  def continent
-    country.continent
   end
 
   def main_event_id=(event_id)
@@ -678,10 +671,6 @@ class Competition < ApplicationRecord
   after_create :create_delegate_report!
 
   validate :dates_must_be_valid
-
-  alias_attribute :latitude_microdegrees, :latitude
-  alias_attribute :longitude_microdegrees, :longitude
-  before_validation :compute_coordinates
 
   before_validation :create_id_and_cell_name
   def create_id_and_cell_name(force_override: false)
@@ -993,20 +982,12 @@ class Competition < ApplicationRecord
     longitude_microdegrees ? longitude_microdegrees / 1e6 : nil
   end
 
-  def longitude_degrees=(new_longitude_degrees)
-    @longitude_degrees = new_longitude_degrees.to_f
-  end
-
   def longitude_radians
     to_radians longitude_degrees
   end
 
   def latitude_degrees
     latitude_microdegrees ? latitude_microdegrees / 1e6 : nil
-  end
-
-  def latitude_degrees=(new_latitude_degrees)
-    @latitude_degrees = new_latitude_degrees.to_f
   end
 
   def latitude_radians
@@ -1021,15 +1002,6 @@ class Competition < ApplicationRecord
     {
       "London" => "Europe/London",
     }
-  end
-
-  private def compute_coordinates
-    unless @latitude_degrees.nil?
-      self.latitude_microdegrees = @latitude_degrees * 1e6
-    end
-    unless @longitude_degrees.nil?
-      self.longitude_microdegrees = @longitude_degrees * 1e6
-    end
   end
 
   def has_events_with_ids?(event_ids)
@@ -1272,10 +1244,6 @@ class Competition < ApplicationRecord
     !registration_open.nil?
   end
 
-  def has_location?
-    latitude.present? && longitude.present?
-  end
-
   # The division is to convert the end result from secods to days. .to_date removed some hours from the subtraction
   def days_until
     start_date ? ((start_date.to_time(:utc) - Time.now.utc)/(86_400)).to_i : nil
@@ -1472,7 +1440,11 @@ class Competition < ApplicationRecord
   end
 
   def city_and_country
-    [cityName, country&.name].compact.join(', ')
+    [venue_city, country&.name].compact.join(', ')
+  end
+
+  def city_and_country_in(locale)
+    [venue_city, country&.name_in(locale)].compact.join(', ')
   end
 
   def events_with_podium_results
@@ -1709,8 +1681,8 @@ class Competition < ApplicationRecord
       if !continent
         raise WcaExceptions::BadApiParameter.new("Invalid continent: '#{params[:continent]}'")
       end
-      competitions = competitions.joins('INNER JOIN Countries ON Competitions.countryId = Countries.id')
-                                 .where('continentId = ?', continent.id)
+      competitions = competitions.joins(main_venue: [:continent])
+                                 .where(main_venue: { Continents: { id: continent } })
     end
 
     if params[:country_iso2].present?
@@ -1718,7 +1690,8 @@ class Competition < ApplicationRecord
       if !country
         raise WcaExceptions::BadApiParameter.new("Invalid country_iso2: '#{params[:country_iso2]}'")
       end
-      competitions = competitions.where(countryId: country.id)
+      competitions = competitions.joins(:main_venue)
+                                 .where(main_venue: { Countries: { id: country } })
     end
 
     if params[:delegate].present?
@@ -1778,8 +1751,12 @@ class Competition < ApplicationRecord
     end
 
     query&.split&.each do |part|
-      like_query = %w(id name cellName cityName countryId).map { |column| "Competitions.#{column} LIKE :part" }.join(" OR ")
-      competitions = competitions.where(like_query, part: "%#{part}%")
+      competitions_like_query = %w(id name cellName).map { |column| "Competitions.#{column} LIKE :part" }
+      venue_like_query = %w(city).map { |column| "competition_venues.#{column} LIKE :part" }
+      country_like_query = %w(id).map { |column| "Countries.#{column} LIKE :part" }
+      like_query = (competitions_like_query + venue_like_query + country_like_query).join(" OR ")
+      competitions = competitions.joins(main_venue: [:country])
+                                 .where(like_query, part: "%#{part}%")
     end
 
     orderable_fields = %i(name start_date end_date announced_at)
@@ -1836,12 +1813,12 @@ class Competition < ApplicationRecord
                extra_registration_requirements enable_donations refund_policy_limit_date event_change_deadline_date waiting_list_deadline_date
                on_the_spot_registration on_the_spot_entry_fee_lowest_denomination qualification_results event_restrictions
                base_entry_fee_lowest_denomination currency_code allow_registration_edits allow_registration_self_delete_after_acceptance
-               allow_registration_without_qualification refund_policy_percent use_wca_registration guests_per_registration_limit venue contact
+               allow_registration_without_qualification refund_policy_percent use_wca_registration guests_per_registration_limit contact
                force_comment_in_registration use_wca_registration external_registration_page guests_entry_fee_lowest_denomination guest_entry_status
                information events_per_registration_limit],
-      methods: %w[url website short_name city venue_address venue_details latitude_degrees longitude_degrees country_iso2 event_ids registration_currently_open?
+      methods: %w[url website short_name event_ids registration_currently_open?
                   main_event_id number_of_bookmarks using_payment_integrations? uses_qualification? uses_cutoff? competition_series_ids registration_full?],
-      include: %w[delegates organizers],
+      include: %w[delegates organizers main_venue],
     }
     self.as_json(options)
   end
@@ -2147,10 +2124,7 @@ class Competition < ApplicationRecord
     }
   end
 
-  alias_attribute :venue_address, :venueAddress
-  alias_attribute :venue_details, :venueDetails
   alias_attribute :short_name, :cellName
-  alias_attribute :city, :cityName
 
   def country_iso2
     country&.iso2
@@ -2208,12 +2182,8 @@ class Competition < ApplicationRecord
     championships.map(&:championship_type).any? { |ct| Championship::MAJOR_CHAMPIONSHIP_TYPES.include?(ct) }
   end
 
-  def multi_country_fmc_competition?
-    events.length == 1 && events[0].fewest_moves? && Country::FICTIVE_IDS.include?(countryId)
-  end
-
   def exempt_from_wca_dues?
-    world_or_continental_championship? || multi_country_fmc_competition?
+    world_or_continental_championship? || is_multi_location?
   end
 
   validate :series_siblings_must_be_valid
