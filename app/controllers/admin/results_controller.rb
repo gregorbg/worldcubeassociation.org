@@ -20,7 +20,7 @@ module Admin
             current_user: current_user.as_json(user_attributes),
             competitions: @pending_competitions.as_json(
               only: ["id", "name", "results_submitted_at"],
-              methods: ["city", "country_iso2"],
+              methods: ["venue_city", "country_iso2"],
               include: { posting_user: user_attributes },
             ),
           }

@@ -11,7 +11,7 @@ function CompetitionItem({
       <div>{item.name}</div>
       <div className="extra-details">
         <RegionFlag iso2={item.country_iso2} />
-        {`${item.city} (${item.id})`}
+        {`${item.venue_city} (${item.id})`}
       </div>
     </div>
   );

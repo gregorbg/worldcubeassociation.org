@@ -14,7 +14,7 @@ import {
   isCancelled,
   isInProgress,
   isProbablyOver,
-  PseudoLinkMarkdown,
+  VenueDetails,
   reportAdminCellContent,
   resultsSubmittedAtAdminCellContent,
   startYear,
@@ -166,10 +166,10 @@ export function CompetitionsTable({
               </Table.Cell>
               <Table.Cell width={4}>
                 <strong>{countries.byIso2[comp.country_iso2].name}</strong>
-                {`, ${comp.city}`}
+                {`, ${comp.venue_city}`}
               </Table.Cell>
               <Table.Cell width={5}>
-                <PseudoLinkMarkdown text={comp.venue} />
+                <VenueDetails competition={comp} />
               </Table.Cell>
             </Table.Row>
           </React.Fragment>
@@ -224,9 +224,9 @@ export function CompetitionsTabletTable({
               <Table.Cell width={7}>
                 <span>
                   <strong>{countries.byIso2[comp.country_iso2].name}</strong>
-                  {`, ${comp.city}`}
+                  {`, ${comp.venue_city}`}
                 </span>
-                <PseudoLinkMarkdown text={comp.venue} />
+                <VenueDetails competition={comp} />
               </Table.Cell>
             </Table.Row>
           </React.Fragment>
@@ -277,10 +277,10 @@ export function CompetitionsMobileTable({
               <Table.Cell style={{ marginTop: '1px' }}>
                 <span>
                   <strong>{countries.byIso2[comp.country_iso2].name}</strong>
-                  {`, ${comp.city}`}
+                  {`, ${comp.venue_city}`}
                 </span>
                 {' '}
-                <PseudoLinkMarkdown text={comp.venue} RenderAs="span" />
+                <VenueDetails competition={comp} RenderAs="span" />
               </Table.Cell>
             </Table.Row>
           </React.Fragment>
@@ -350,7 +350,7 @@ function AdminCompetitionsTable({
                   <a href={competitionUrl(comp.id)}>{comp.short_display_name}</a>
                   <br />
                   <strong>{countries.byIso2[comp.country_iso2].name}</strong>
-                  {`, ${comp.city}`}
+                  {`, ${comp.venue_city}`}
                 </Table.Cell>
                 <Table.Cell width={3}>
                   <List verticalAlign="middle" link>

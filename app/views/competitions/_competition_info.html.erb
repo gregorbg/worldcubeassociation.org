@@ -16,7 +16,7 @@
       <dd><%= competition.city_and_country %></dd>
 
       <dt><%= t '.venue' %></dt>
-      <dd><%=md competition.venue %></dd>
+      <dd><%=md competition.venue_name %></dd>
 
       <dt class="text-muted"><%= t '.address' %></dt>
       <dd><%= link_to_google_maps_place competition.venue_address, competition.latitude_degrees, competition.longitude_degrees %></dd>

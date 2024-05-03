@@ -172,24 +172,20 @@ export function computeReportsAndResultsStatus(comp, refDate) {
   return lookupStatus(numOfDays, reportResultsStatusLookup, (a, b) => a > b, defaultStatus);
 }
 
-// Currently, the venue attribute of a competition object can be written as markdown,
-// and using third party libraries like react-markdown to parse it requires too much work
-export function PseudoLinkMarkdown({ text, RenderAs = 'p' }) {
-  const openBracketIndex = text.indexOf('[');
-  const closeBracketIndex = text.indexOf(']', openBracketIndex);
-  const openParenIndex = text.indexOf('(', closeBracketIndex);
-  const closeParenIndex = text.indexOf(')', openParenIndex);
-
-  if (openBracketIndex === -1 || closeBracketIndex === -1
-    || openParenIndex === -1 || closeParenIndex === -1) {
-    return <RenderAs>{text}</RenderAs>;
+export function VenueDetails({ competition, RenderAs = 'p' }) {
+  if (competition.venue_website) {
+    return (
+      <RenderAs>
+        <a href={competition.venue_website} target="_blank" rel="noreferrer">
+          {competition.venue_name}
+        </a>
+      </RenderAs>
+    );
   }
 
   return (
     <RenderAs>
-      <a href={text.slice(openParenIndex + 1, closeParenIndex)} target="_blank" rel="noreferrer">
-        {text.slice(openBracketIndex + 1, closeBracketIndex)}
-      </a>
+      {competition.venue_name}
     </RenderAs>
   );
 }

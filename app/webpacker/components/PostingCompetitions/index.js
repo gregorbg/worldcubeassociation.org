@@ -73,7 +73,7 @@ function PostingCompetitionsIndex({
             <Header as="h5" floated="left">
               {c.name}
               <Header.Subheader>
-                {c.city}
+                {c.venue_city}
                 {' '}
                 <RegionFlag iso2={c.country_iso2} />
               </Header.Subheader>

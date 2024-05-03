@@ -54,7 +54,7 @@ function MapView({
             <Popup>
               <a href={competitionUrl(comp.id)}>{comp.name}</a>
               <br />
-              {`${dateRange(comp.start_date, comp.end_date)} - ${comp.city}`}
+              {`${dateRange(comp.start_date, comp.end_date)} - ${comp.venue_city}`}
             </Popup>
           </Marker>
         ))}
