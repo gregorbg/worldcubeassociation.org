@@ -25,6 +25,7 @@ class Competition < ApplicationRecord
   has_many :venue_continents, -> { distinct }, through: :competition_venues, source: :continent
   belongs_to :country
   has_one :continent, through: :country
+  belongs_to :main_venue, class_name: "CompetitionVenue", optional: true
   has_many :championships, dependent: :delete_all
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
   has_many :bookmarked_competitions, dependent: :delete_all
@@ -236,7 +237,6 @@ class Competition < ApplicationRecord
   validates :cell_name, length: { maximum: MAX_CELL_NAME_LENGTH },
                         format: { with: VALID_NAME_RE, message: proc { I18n.t('competitions.errors.invalid_name_message') } }, if: :name_valid_or_updating?
   strip_attributes only: %i[name cell_name], collapse_spaces: true, allow_empty: true
-  validates :venue, format: { with: PATTERN_TEXT_WITH_LINKS_RE }
   validates :external_website, format: { with: URL_RE }, allow_blank: true
   validates :external_registration_page, presence: true, format: { with: URL_RE }, if: :external_registration_page_required?
 

@@ -11,7 +11,11 @@ class CompetitionVenue < ApplicationRecord
   delegate :continent, to: :country, allow_nil: true
 
   VALID_TIMEZONES = TZInfo::Timezone.all_identifiers.freeze
+  PATTERN_LINK_RE = /\[\{([^}]+)}\{((https?:|mailto:)[^}]+)}\]/
 
+  validates :city, presence: true, city: true
+  validates :country_iso2, inclusion: { in: Country::WCA_COUNTRY_ISO_CODES }
+  validates :website, format: { with: PATTERN_LINK_RE }
   validates :name, presence: true
   validates :wcif_id, numericality: { only_integer: true }
   validates :latitude_microdegrees, presence: true
@@ -74,8 +78,8 @@ class CompetitionVenue < ApplicationRecord
         "name" => { "type" => "string" },
         "city" => { "type" => "string" },
         "address" => { "type" => "string" },
-        "description" => { "type" => ["string", "null"] },
-        "website" => { "type" => ["string", "null"] },
+        "description" => { "type" => %w[string null] },
+        "website" => { "type" => %w[string null] },
         "latitudeMicrodegrees" => { "type" => "integer" },
         "longitudeMicrodegrees" => { "type" => "integer" },
         "countryIso2" => { "type" => "string" },
