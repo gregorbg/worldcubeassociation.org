@@ -51,6 +51,10 @@ class CompetitionVenue < ApplicationRecord
     {
       "id" => wcif_id,
       "name" => name,
+      "city" => city,
+      "address" => address,
+      "description" => description,
+      "website" => website,
       "latitudeMicrodegrees" => latitude_microdegrees,
       "longitudeMicrodegrees" => longitude_microdegrees,
       "countryIso2" => country_iso2,
@@ -66,6 +70,10 @@ class CompetitionVenue < ApplicationRecord
       "properties" => {
         "id" => { "type" => "integer" },
         "name" => { "type" => "string" },
+        "city" => { "type" => "string" },
+        "address" => { "type" => "string" },
+        "description" => { "type" => ["string", "null"] },
+        "website" => { "type" => ["string", "null"] },
         "latitudeMicrodegrees" => { "type" => "integer" },
         "longitudeMicrodegrees" => { "type" => "integer" },
         "countryIso2" => { "type" => "string" },
@@ -81,6 +89,10 @@ class CompetitionVenue < ApplicationRecord
     {
       wcif_id: wcif["id"],
       name: wcif["name"],
+      city: wcif["city"],
+      address: wcif["address"],
+      description: wcif["description"],
+      website: wcif["website"],
       country_iso2: wcif["countryIso2"],
       latitude_microdegrees: wcif["latitudeMicrodegrees"],
       longitude_microdegrees: wcif["longitudeMicrodegrees"],
