@@ -211,6 +211,34 @@ function VenuePanel({
               value={venue.timezone}
               onChange={handleVenueChange}
             />
+            <Form.Input
+              id="venue-city"
+              label="City"
+              name="city"
+              value={venue.city}
+              onChange={handleVenueChange}
+            />
+            <Form.Input
+              id="venue-address"
+              label="Address"
+              name="address"
+              value={venue.address}
+              onChange={handleVenueChange}
+            />
+            <Form.Input
+              id="venue-description"
+              label="Description"
+              name="description"
+              value={venue.description}
+              onChange={handleVenueChange}
+            />
+            <Form.Input
+              id="venue-website"
+              label="Website"
+              name="website"
+              value={venue.website}
+              onChange={handleVenueChange}
+            />
           </Form>
         </Card.Description>
       </Card.Content>
