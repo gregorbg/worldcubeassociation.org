@@ -1,44 +1,86 @@
-import React from 'react';
-import { Form } from 'semantic-ui-react';
+import React, { useEffect, useMemo } from 'react';
+import { Circle } from 'react-leaflet';
 import {
-  countries,
   nearbyCompetitionDistanceDanger,
   nearbyCompetitionDistanceWarning,
 } from '../../../lib/wca-data.js.erb';
 import {
-  InputMap,
-  InputNumber,
+  InputBoolean,
   InputSelect,
-  InputString,
 } from '../../wca/FormBuilder/input/FormInputs';
-import SubSection from '../../wca/FormBuilder/SubSection';
 
-const countriesOptions = Object.values(countries.byIso2).map((country) => ({
-  key: country.id,
-  value: country.id,
-  text: country.name,
-})).sort((a, b) => a.text.localeCompare(b.text));
+import { useFormObject, useFormUpdateAction } from '../../wca/FormBuilder/provider/FormObjectProvider';
+import { toDegrees } from '../../../lib/utils/edit-schedule';
+import { CompetitionsMap, StaticMarker } from '../../wca/FormBuilder/input/InputMap';
 
-export default function VenueInfo() {
+export default function VenueInfo({ storedVenues = [] }) {
+  const {
+    mainVenueId,
+    isMultiLocation,
+  } = useFormObject();
+
+  const updateFormObject = useFormUpdateAction();
+
   const circles = [
     { id: 'danger', radius: nearbyCompetitionDistanceDanger, color: '#d9534f' },
     { id: 'warning', radius: nearbyCompetitionDistanceWarning, color: '#f0ad4e' },
   ];
 
+  const mainVenueOptions = useMemo(() => {
+    const storedVenueOptions = storedVenues.map((venue) => ({
+      key: venue.id,
+      value: venue.id,
+      text: venue.name,
+    }));
+
+    return [{
+      key: '',
+      value: '',
+      text: '',
+    }, ...storedVenueOptions];
+  }, [storedVenues]);
+
+  const mainVenue = useMemo(() => (
+    storedVenues.find((venue) => venue.id === mainVenueId)
+  ), [mainVenueId, storedVenues]);
+
+  useEffect(() => {
+    if (mainVenue) {
+      updateFormObject('isMultiLocation', false);
+    }
+  }, [mainVenue, updateFormObject]);
+
+  useEffect(() => {
+    if (isMultiLocation) {
+      updateFormObject('mainVenueId', null);
+    }
+  }, [isMultiLocation, updateFormObject]);
+
+  const coords = [
+    toDegrees(mainVenue?.latitudeMicrodegrees),
+    toDegrees(mainVenue?.longitudeMicrodegrees),
+  ];
+
   return (
-    <SubSection section="venue">
-      <InputSelect id="countryId" options={countriesOptions} search required />
-      <InputString id="cityName" required />
-      <InputString id="name" mdHint required />
-      <InputString id="details" mdHint required />
-      <InputString id="address" required />
-      <InputMap id="coordinates" wrapperId="map" circles={circles} noHint="blank" />
-      <SubSection section="coordinates">
-        <Form.Group widths="equal">
-          <InputNumber id="lat" attachedLabel="Latitude" step={0.01} noLabel="ignore" noHint="blank" />
-          <InputNumber id="long" attachedLabel="Longitude" step={0.01} noLabel="ignore" noHint="blank" />
-        </Form.Group>
-      </SubSection>
-    </SubSection>
+    <>
+      <InputSelect id="mainVenueId" options={mainVenueOptions} />
+      {mainVenueId && (
+        <div id="venue-map-wrapper">
+          <CompetitionsMap id="map" coords={coords}>
+            {circles.map((circle) => (
+              <Circle
+                key={circle.id}
+                center={coords}
+                fill={false}
+                radius={circle.radius * 1000}
+                color={circle.color}
+              />
+            ))}
+            <StaticMarker coords={coords} disabled />
+          </CompetitionsMap>
+        </div>
+      )}
+      <InputBoolean id="isMultiLocation" />
+    </>
   );
 }

@@ -1620,6 +1620,8 @@ en:
         name: "Name"
         short_name: "Competition short name"
         name_reason: "The reason for the name"
+        main_venue_id: "Main Venue"
+        is_multi_location: "This is a multi-location competition as per the WCRP"
         venue:
           country_id: "Region"
           city_name: "City name"
@@ -1703,6 +1705,8 @@ en:
         name: "The full name of the competition including the year at the end (e.g., Danish Open 2016). Be sure to capitalize. The name must contain only alphanumeric characters, dashes(-), ampersands(&), periods(.), colons(:), apostrophes('), and spaces( )."
         short_name: "A short name for displaying. If the name of the competition is below %{short_name_limit} characters this should not be edited and should be the same as the normal name."
         name_reason_html: "A brief explanation of the competition name. The name must comply with the <a href='https://documents.worldcubeassociation.org/documents/policies/external/Competition%20Requirements.pdf'>WCA Competition Requirements Policy</a>."
+        main_venue_id: "The main venue will be used when applying the Proximity Policy, adding to Series, calculating Dues, etc."
+        is_multi_location: "This option is only relevant for special competitions, like distributed FMC events."
         venue:
           country_id: ""
           city_name: "Name of the city and state (if applicable) where the competition takes place. Do not include country (e.g., Paris OR San Francisco, California)."
