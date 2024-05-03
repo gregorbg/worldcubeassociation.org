@@ -10,6 +10,7 @@ import TableWrapper from './TableWrapper';
 import { useStore } from '../../../lib/providers/StoreProvider';
 import useLoadedData from '../../../lib/hooks/useLoadedData';
 import { useFormObject, useFormUpdateAction } from '../../wca/FormBuilder/provider/FormObjectProvider';
+import { toDegrees } from '../../../lib/utils/edit-schedule';
 
 function MissingInfo({ missingDate, missingLocation }) {
   return (
@@ -20,13 +21,12 @@ function MissingInfo({ missingDate, missingLocation }) {
   );
 }
 
-export default function SeriesComps() {
+export default function SeriesComps({ storedVenues = [] }) {
   const { isPersisted } = useStore();
+
   const {
     competitionId,
-    venue: {
-      coordinates,
-    },
+    mainVenueId,
     startDate,
     endDate,
     series,
@@ -34,13 +34,15 @@ export default function SeriesComps() {
 
   const updateFormObject = useFormUpdateAction();
 
-  const lat = parseFloat(coordinates.lat);
-  const long = parseFloat(coordinates.long);
+  const mainVenue = useMemo(() => (
+    storedVenues.find((venue) => venue.id === mainVenueId)
+  ), [mainVenueId, storedVenues]);
+
+  const lat = toDegrees(mainVenue?.latitudeMicrodegrees);
+  const long = toDegrees(mainVenue?.longitudeMicrodegrees);
 
   const missingDate = !startDate || !endDate;
-  const missingLocation = !coordinates
-    || Number.isNaN(lat)
-    || Number.isNaN(long);
+  const missingLocation = !mainVenue;
 
   const savedParams = useMemo(() => {
     const params = new URLSearchParams();

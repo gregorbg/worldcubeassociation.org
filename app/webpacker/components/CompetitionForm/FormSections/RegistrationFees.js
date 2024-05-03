@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import {
   InputBoolean,
@@ -7,7 +7,7 @@ import {
   InputNumber,
   InputSelect,
 } from '../../wca/FormBuilder/input/FormInputs';
-import { currenciesData } from '../../../lib/wca-data.js.erb';
+import { countries, currenciesData } from '../../../lib/wca-data.js.erb';
 import ConditionalSection from './ConditionalSection';
 import SubSection from '../../wca/FormBuilder/SubSection';
 import { useFormObject } from '../../wca/FormBuilder/provider/FormObjectProvider';
@@ -19,16 +19,22 @@ const currenciesOptions = Object.keys(currenciesData.byIso).map((iso) => ({
   text: `${currenciesData.byIso[iso].name} (${iso})`,
 }));
 
-export default function RegistrationFees() {
+export default function RegistrationFees({ storedVenues = [] }) {
   const {
-    venue: {
-      countryId: country,
-    },
+    mainVenueId,
     entryFees,
     competitorLimit,
     registration,
   } = useFormObject();
+
   const [showDuesEstimate, setShowDuesEstimate] = useState(false);
+
+  const mainVenue = useMemo(() => (
+    storedVenues.find((venue) => venue.id === mainVenueId)
+  ), [mainVenueId, storedVenues]);
+
+  const countryIso2 = mainVenue?.countryIso2;
+  const countryId = countries.byIso2[countryIso2]?.id;
 
   const currency = entryFees.currencyCode;
 
@@ -42,7 +48,7 @@ export default function RegistrationFees() {
       {showDuesEstimate && (
         <DuesEstimate
           close={() => setShowDuesEstimate(false)}
-          countryId={country}
+          countryId={countryId}
           currencyCode={entryFees.currencyCode}
           baseEntryFee={entryFees.baseEntryFee}
           competitorLimit={competitorLimit.count}

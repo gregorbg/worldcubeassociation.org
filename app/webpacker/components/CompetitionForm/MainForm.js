@@ -32,7 +32,7 @@ export default function MainForm({
       <Divider />
 
       <CompDates />
-      <NearbyComps />
+      <NearbyComps storedVenues={storedVenues} />
       <Series />
       <Divider />
 
@@ -51,7 +51,7 @@ export default function MainForm({
       <Divider />
 
       <RegistrationDetails />
-      <RegistrationFee />
+      <RegistrationFee storedVenues={storedVenues} />
       <Divider />
 
       <EventRestrictions isCloning={isCloning} storedEvents={storedEvents} />

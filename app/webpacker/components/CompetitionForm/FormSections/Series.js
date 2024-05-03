@@ -9,7 +9,7 @@ import SubSection from '../../wca/FormBuilder/SubSection';
 import { useFormObject, useFormUpdateAction } from '../../wca/FormBuilder/provider/FormObjectProvider';
 import { useSectionDisabled } from '../../wca/FormBuilder/provider/FormSectionProvider';
 
-export default function Series() {
+export default function Series({ storedVenues = [] }) {
   const {
     isAdminView,
     isSeriesPersisted,
@@ -20,7 +20,7 @@ export default function Series() {
 
   const updateFormObject = useFormUpdateAction();
 
-  if (!series) return <SeriesComps />;
+  if (!series) return <SeriesComps storedVenues={storedVenues} />;
 
   const { name } = series;
 
