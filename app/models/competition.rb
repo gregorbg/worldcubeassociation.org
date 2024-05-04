@@ -2262,6 +2262,7 @@ class Competition < ApplicationRecord
       "shortName" => cell_name,
       "nameReason" => name_reason,
       "mainVenueId" => main_venue_id,
+      "isMultiLocation" => is_multi_location?,
       "venue" => {
         "countryId" => country_id,
         "cityName" => city_name,
@@ -2368,6 +2369,7 @@ class Competition < ApplicationRecord
       "shortName" => errors[:cell_name],
       "nameReason" => errors[:name_reason],
       "mainVenueId" => errors[:main_venue_id],
+      "isMultiLocation" => errors[:is_multi_location],
       "venue" => {
         "countryId" => errors[:country_id],
         "cityName" => errors[:city_name],
@@ -2543,6 +2545,7 @@ class Competition < ApplicationRecord
       id: form_data['competitionId'],
       name: form_data['name'],
       main_venue_id: form_data['mainVenueId']&.presence,
+      is_multi_location: form_data['isMultiLocation'],
       city_name: form_data.dig('venue', 'cityName'),
       country_id: form_data.dig('venue', 'countryId'),
       information: form_data['information'],
@@ -2684,6 +2687,7 @@ class Competition < ApplicationRecord
         "shortName" => { "type" => "string" },
         "nameReason" => { "type" => ["string", "null"] },
         "mainVenueId" => { "type" => ["integer", "null"] },
+        "isMultiLocation" => { "type" => "boolean" },
         "venue" => {
           "type" => "object",
           "properties" => {
