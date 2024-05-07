@@ -1,11 +1,13 @@
 import React from 'react';
 import {
-  List, Icon, Popup, Loader, Table, Flag, Label, Segment, Header, Container,
+  List, Icon, Popup, Loader, Table, Flag, Label, Segment, Header, Container, Image,
 } from 'semantic-ui-react';
 
 import I18n from '../../lib/i18n';
 import {
+  announcedBeforeStart,
   dayDifferenceFromToday,
+  formatDateString,
   hasResultsPosted,
   isCancelled,
   isInProgress,
@@ -102,6 +104,80 @@ export function CompetitionsTable({
               </Table.Cell>
               <Table.Cell width={4}>
                 <PseudoLinkMarkdown text={comp.venue} />
+              </Table.Cell>
+            </Table.Row>
+          </React.Fragment>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+}
+
+export function CompetitionsAdminTable({
+  competitions,
+  isLoading,
+  isSortedByAnnouncement = false,
+}) {
+  const nonePresent = !competitions && !isLoading;
+
+  if (nonePresent || competitions?.length === 0) {
+    return (
+      <Container text textAlign="center">{I18n.t('competitions.index.no_comp_found')}</Container>
+    );
+  }
+
+  return (
+    <Table striped compact="very" basic="very">
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Name and Location</Table.HeaderCell>
+          <Table.HeaderCell>Delegate(s)</Table.HeaderCell>
+          <Table.HeaderCell>Date</Table.HeaderCell>
+          <Table.HeaderCell>Announced</Table.HeaderCell>
+          <Table.HeaderCell>Report posted</Table.HeaderCell>
+          <Table.HeaderCell>Results submitted</Table.HeaderCell>
+          <Table.HeaderCell />
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {competitions?.map((comp, index) => (
+          <React.Fragment key={comp.id}>
+            <ConditionalYearHeader
+              competitions={competitions}
+              index={index}
+              isSortedByAnnouncement={isSortedByAnnouncement}
+            />
+            <Table.Row error={isCancelled(comp)}>
+              <Table.Cell width={5}>
+                <Flag name={comp.country_iso2?.toLowerCase()} />
+                <a href={comp.url}>{comp.short_display_name}</a>
+                <br />
+                <strong>{countries.byIso2[comp.country_iso2].name}</strong>
+                {`, ${comp.city}`}
+              </Table.Cell>
+              <Table.Cell width={5}>
+                <List selection verticalAlign="middle">
+                  {comp.delegates.map((delegate) => (
+                    <List.Item key={delegate.id}>
+                      <Image avatar src={delegate.avatar.thumb_url} />
+                      <List.Content>
+                        {delegate.name}
+                      </List.Content>
+                    </List.Item>
+                  ))}
+                </List>
+              </Table.Cell>
+              <Table.Cell width={3}>
+                {comp.date_range}
+              </Table.Cell>
+              <Table.Cell width={1}>
+                {announcedBeforeStart(comp)}
+              </Table.Cell>
+              <Table.Cell width={1}>
+                {formatDateString(comp.announced_at)}
+              </Table.Cell>
+              <Table.Cell width={1}>
+                {formatDateString(comp.announced_at)}
               </Table.Cell>
             </Table.Row>
           </React.Fragment>

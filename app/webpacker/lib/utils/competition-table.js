@@ -16,6 +16,25 @@ export function dayDifferenceFromToday(yyyymmddDateString) {
   return Math.floor(exactDaysDiff * -1);
 }
 
+export function formatDateString(isoDateString) {
+  const dateLuxon = DateTime.fromISO(isoDateString);
+  return dateLuxon.toLocaleString();
+}
+
+function ceilDaysBetween(startDate, endDate) {
+  const intervalInDays = endDate.diff(startDate, 'days');
+  const daysExact = intervalInDays.toObject().days;
+
+  return Math.ceil(daysExact);
+}
+
+export function announcedBeforeStart(competition) {
+  const startDate = parseDateString(competition.start_date);
+  const announcedAt = DateTime.fromISO(competition.announced_at);
+
+  return ceilDaysBetween(announcedAt, startDate);
+}
+
 export function startYear(competition) {
   const dateLuxon = parseDateString(competition.end_date);
   return dateLuxon.year;
