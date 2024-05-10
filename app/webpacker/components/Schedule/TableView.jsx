@@ -16,8 +16,7 @@ import AddToCalendar from './AddToCalendar';
 import useStoredState from '../../lib/hooks/useStoredState';
 import i18n from '../../lib/i18n';
 import { formats } from '../../lib/wca-data.js.erb';
-import { timeLimitToString } from '../../lib/utils/wcif';
-import { advancementConditionToString, cutoffToString } from '../../lib/utils/wcif';
+import { advancementConditionToString, cutoffToString, timeLimitToString } from '../../lib/utils/wcif';
 
 export default function TableView({
   dates,
@@ -115,40 +114,42 @@ function SingleDayTable({
         {title}
       </Header>
 
-      <Table striped compact>
-        <Table.Header>
-          <HeaderRow isExpanded={isExpanded} />
-        </Table.Header>
+      <div style={{ overflowX: 'scroll' }}>
+        <Table striped compact unstackable singleLine>
+          <Table.Header>
+            <HeaderRow isExpanded={isExpanded} />
+          </Table.Header>
 
-        <Table.Body>
-          {hasActivities ? (
-            groupedActivities.map((activityGroup) => {
-              const activityRound = rounds.find(
-                (round) => round.id === getActivityRoundId(activityGroup[0]),
-              );
+          <Table.Body>
+            {hasActivities ? (
+              groupedActivities.map((activityGroup) => {
+                const activityRound = rounds.find(
+                  (round) => round.id === getActivityRoundId(activityGroup[0]),
+                );
 
-              return (
-                <ActivityRow
-                  key={activityGroup[0].id}
-                  isExpanded={isExpanded}
-                  activityGroup={activityGroup}
-                  events={events}
-                  round={activityRound}
-                  rooms={rooms}
-                  timeZone={timeZone}
-                  wcifEvents={wcifEvents}
-                />
-              );
-            })
-          ) : (
-            <Table.Row>
-              <Table.Cell colSpan={4}>
-                <em>{i18n.t('competitions.schedule.no_activities')}</em>
-              </Table.Cell>
-            </Table.Row>
-          )}
-        </Table.Body>
-      </Table>
+                return (
+                  <ActivityRow
+                    key={activityGroup[0].id}
+                    isExpanded={isExpanded}
+                    activityGroup={activityGroup}
+                    events={events}
+                    round={activityRound}
+                    rooms={rooms}
+                    timeZone={timeZone}
+                    wcifEvents={wcifEvents}
+                  />
+                );
+              })
+            ) : (
+              <Table.Row>
+                <Table.Cell colSpan={4}>
+                  <em>{i18n.t('competitions.schedule.no_activities')}</em>
+                </Table.Cell>
+              </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
+      </div>
     </Segment>
   );
 }
