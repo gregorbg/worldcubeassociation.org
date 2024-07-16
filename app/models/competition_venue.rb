@@ -6,7 +6,7 @@ class CompetitionVenue < ApplicationRecord
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
 
   belongs_to :country, foreign_key: :country_iso2, primary_key: :iso2
-  has_one :continent, through: :country
+  has_one :continent, through: :country, required: true
 
   VALID_TIMEZONES = TZInfo::Timezone.all_identifiers.freeze
   PATTERN_LINK_RE = /\[\{([^}]+)}\{((https?:|mailto:)[^}]+)}\]/
@@ -31,6 +31,18 @@ class CompetitionVenue < ApplicationRecord
     self.venue_rooms = new_rooms
     WcifExtension.update_wcif_extensions!(self, wcif["extensions"]) if wcif["extensions"]
     self
+  end
+
+  def country
+    Country.find_by_iso2(self.country_iso2)
+  end
+
+  def country_id
+    country.id
+  end
+
+  def continent_id
+    country.continent_id
   end
 
   def latitude_degrees

@@ -23,6 +23,8 @@ class Competition < ApplicationRecord
   has_many :tabs, -> { order(:display_order) }, dependent: :delete_all, class_name: "CompetitionTab"
   has_one :delegate_report, dependent: :destroy
   has_many :competition_venues, dependent: :destroy
+  has_many :venue_countries, -> { distinct }, through: :competition_venues, source: :country
+  has_many :venue_continents, -> { distinct }, through: :competition_venues, source: :continent
   belongs_to :main_venue, class_name: "CompetitionVenue", optional: true
   has_many :championships, dependent: :delete_all
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
@@ -177,6 +179,7 @@ class Competition < ApplicationRecord
   MAX_CELL_NAME_LENGTH = 32
   MAX_COMPETITOR_LIMIT = 5000
   MAX_GUEST_LIMIT = 100
+  REGION_WORLD = '__World'
   validates_inclusion_of :competitor_limit_enabled, in: [true, false], if: :competitor_limit_required?
   validates_numericality_of :competitor_limit, greater_than_or_equal_to: 1, less_than_or_equal_to: MAX_COMPETITOR_LIMIT, if: :competitor_limit_enabled?
   validates :competitor_limit_reason, presence: true, if: :competitor_limit_enabled?
@@ -386,9 +389,39 @@ class Competition < ApplicationRecord
     Event.c_find(main_event_id)
   end
 
-  # FIXME GB: Temporary backwards compatibility
   def country
-    main_venue&.country || Country.c_find(self.countryId)
+    main_venue&.country || Country.c_find(self.country_id)
+  end
+
+  def country_id
+    # FIXME: GB Temporary backwards compatibility. We normally want to return self.single_country_id as fallback
+    main_venue&.country_id || self.countryId
+  end
+
+  private def single_country_id
+    # If all venues are in the same country, assume that that's the country where the competition is happening
+    venue_country_ids.first if venue_countries.count == 1
+  end
+
+  def continent
+    main_venue&.continent || Continent.c_find(self.continent_id)
+  end
+
+  def continent_id
+    main_venue&.continent_id || single_continent_id
+  end
+
+  private def single_continent_id
+    # If all venues are on the same continent, assume that that's the continent where the competition is happening
+    venue_continent_ids.first if venue_continents.count == 1
+  end
+
+  def region
+    self.country || self.continent
+  end
+
+  def region_id
+    region&.id || REGION_WORLD
   end
 
   def with_old_id
