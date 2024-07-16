@@ -26,8 +26,6 @@ class Competition < ApplicationRecord
   has_many :competition_venues, dependent: :destroy
   has_many :venue_countries, -> { distinct }, through: :competition_venues, source: :country
   has_many :venue_continents, -> { distinct }, through: :competition_venues, source: :continent
-  belongs_to :country
-  has_one :continent, through: :country
   belongs_to :main_venue, class_name: "CompetitionVenue", optional: true
   has_many :championships, dependent: :delete_all
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
@@ -225,6 +223,7 @@ class Competition < ApplicationRecord
   MAX_GUEST_LIMIT = 100
   NEWCOMER_MONTH_ENABLED = false
   NEWCOMER_MONTH_RESERVATIONS_FRACTION = 0.5
+  REGION_WORLD = '__World'
   # Face Turning Octahedron only becomes an official event from this date onwards.
   FTO_INTRODUCTION_DATE = Date.new(2027, 1, 2)
 
@@ -539,7 +538,36 @@ class Competition < ApplicationRecord
     main_venue&.country || Country.c_find(self.country_id)
   end
 
-  delegate :continent, to: :country
+  def country_id
+    # FIXME GB: Temporary backwards compatibility. We normally want to return self.single_country_id as fallback
+    main_venue&.country_id || self.attributes[:country_id]
+  end
+
+  private def single_country_id
+    # If all venues are in the same country, assume that that's the country where the competition is happening
+    venue_country_ids.first if venue_countries.one?
+  end
+
+  def continent
+    main_venue&.continent || Continent.c_find(self.continent_id)
+  end
+
+  def continent_id
+    main_venue&.continent_id || single_continent_id
+  end
+
+  private def single_continent_id
+    # If all venues are on the same continent, assume that that's the continent where the competition is happening
+    venue_continent_ids.first if venue_continents.one?
+  end
+
+  def region
+    self.country || self.continent
+  end
+
+  def region_id
+    region&.id || REGION_WORLD
+  end
 
   def main_event_id=(event_id)
     super(event_id.presence)
