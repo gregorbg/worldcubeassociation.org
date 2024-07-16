@@ -60,12 +60,12 @@ class Competition < ApplicationRecord
   scope :between_dates, ->(start_date, end_date) { where("start_date <= ? AND end_date >= ?", end_date, start_date) }
   scope :end_date_passed_since, lambda { |num_days| where(end_date: ...(num_days.days.ago)) }
   scope :belongs_to_region, lambda { |region_id|
-    joins(main_venue: [:country]).where(
+    joins(competition_venues: [:country]).where(
       "countries.id = :region_id OR countries.continent_id = :region_id", region_id: region_id
     )
   }
   scope :contains, lambda { |search_term|
-    joins(:main_venue)
+    joins(:competition_venues)
       .where(
         "competitions.name like :search_term or
         competition_venues.city like :search_term",
@@ -1630,8 +1630,8 @@ class Competition < ApplicationRecord
       country = Country.find_by(iso2: params[:country_iso2])
       raise WcaExceptions::BadApiParameter.new("Invalid country_iso2: '#{params[:country_iso2]}'") unless country
 
-      competitions = competitions.joins(:main_venue)
-                                 .where(main_venue: { country: country })
+      competitions = competitions.left_outer_joins(:competition_venues)
+                                 .where(competition_venues: { country: country })
     end
 
     if params[:delegate].present?
@@ -1700,7 +1700,7 @@ class Competition < ApplicationRecord
       venue_like_query = %w(city).map { |column| "competition_venues.#{column} LIKE :part" }
       country_like_query = %w(id).map { |column| "countries.#{column} LIKE :part" }
       like_query = (competitions_like_query + venue_like_query + country_like_query).join(" OR ")
-      competitions = competitions.joins(main_venue: [:country])
+      competitions = competitions.joins(competition_venues: [:country])
                                  .where(like_query, part: "%#{part}%")
     end
 
