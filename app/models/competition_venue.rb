@@ -6,9 +6,11 @@ class CompetitionVenue < ApplicationRecord
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
 
   belongs_to :country, foreign_key: :country_iso2, primary_key: :iso2, inverse_of: :competition_venues
-  has_one :continent, through: :country
+  has_one :continent, through: :country, required: true
 
+  delegate :id, to: :country, prefix: true
   delegate :continent, to: :country, allow_nil: true
+  delegate :continent_id, to: :country
 
   VALID_TIMEZONES = TZInfo::Timezone.all_identifiers.freeze
   PATTERN_LINK_RE = /\[\{([^}]+)}\{((https?:|mailto:)[^}]+)}\]/
