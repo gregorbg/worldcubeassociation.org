@@ -108,6 +108,7 @@ gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'after_commit_everywhere'
 gem 'slack-ruby-client'
+gem 'puma'
 
 group :development, :test do
   gem 'spring'
@@ -130,6 +131,7 @@ end
 group :development do
   gem 'overcommit', require: false
   gem 'rubocop', require: false
+  gem 'rubocop-thread_safety', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
@@ -153,7 +155,6 @@ group :test do
 end
 
 group :production do
-  gem 'unicorn'
   gem 'newrelic_rpm'
   gem 'wkhtmltopdf-binary-ng'
 end
