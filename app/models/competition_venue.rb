@@ -6,7 +6,7 @@ class CompetitionVenue < ApplicationRecord
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
 
   belongs_to :country, foreign_key: :country_iso2, primary_key: :iso2
-  has_one :continent, through: :country
+  has_one :continent, through: :country, required: true
 
   delegate :continent, to: :country, allow_nil: true
 
@@ -23,10 +23,6 @@ class CompetitionVenue < ApplicationRecord
   validates :country_iso2, inclusion: { in: Country.pluck(:iso2).freeze }
   validates :timezone_id, inclusion: { in: VALID_TIMEZONES }
 
-  def country
-    Country.find_by(iso2: self.country_iso2)
-  end
-
   def load_wcif!(wcif)
     update!(CompetitionVenue.wcif_to_attributes(wcif))
     new_rooms = wcif["rooms"].map do |room_wcif|
@@ -37,6 +33,13 @@ class CompetitionVenue < ApplicationRecord
     WcifExtension.update_wcif_extensions!(self, wcif["extensions"]) if wcif["extensions"]
     self
   end
+
+  def country
+    Country.find_by_iso2(self.country_iso2)
+  end
+
+  delegate :id, to: :country, prefix: true
+  delegate :id, to: :continent, prefix: true
 
   def latitude_degrees
     latitude_microdegrees / 1e6

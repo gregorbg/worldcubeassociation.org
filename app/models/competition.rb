@@ -190,6 +190,7 @@ class Competition < ApplicationRecord
   MAX_GUEST_LIMIT = 100
   NEWCOMER_MONTH_ENABLED = true
   NEWCOMER_MONTH_RESERVATIONS_FRACTION = 0.5
+  REGION_WORLD = '__World'
 
   validates :competitor_limit_enabled, inclusion: { in: [true, false], if: :competitor_limit_required? }
   validates :competitor_limit, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: MAX_COMPETITOR_LIMIT, if: :competitor_limit_enabled? }
@@ -502,9 +503,39 @@ class Competition < ApplicationRecord
     bookmarked_users.count
   end
 
-  # FIXME GB: Temporary backwards compatibility
   def country
-    main_venue&.country || Country.c_find(self.countryId)
+    main_venue&.country || Country.c_find(self.country_id)
+  end
+
+  def country_id
+    # FIXME: GB Temporary backwards compatibility. We normally want to return self.single_country_id as fallback
+    main_venue&.country_id || self.attributes['country_id']
+  end
+
+  private def single_country_id
+    # If all venues are in the same country, assume that that's the country where the competition is happening
+    venue_country_ids.first if venue_countries.count == 1
+  end
+
+  def continent
+    main_venue&.continent || Continent.c_find(self.continent_id)
+  end
+
+  def continent_id
+    main_venue&.continent_id || single_continent_id
+  end
+
+  private def single_continent_id
+    # If all venues are on the same continent, assume that that's the continent where the competition is happening
+    venue_continent_ids.first if venue_continents.count == 1
+  end
+
+  def region
+    self.country || self.continent
+  end
+
+  def region_id
+    region&.id || REGION_WORLD
   end
 
   def main_event_id=(event_id)
