@@ -67,6 +67,7 @@ function CompetitionForm() {
       {isCloning && (
         <SubSection section="cloning">
           <InputBoolean id="cloneTabs" />
+          <InputBoolean id="cloneCompetitionVenues" />
         </SubSection>
       )}
     </>

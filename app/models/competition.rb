@@ -2387,6 +2387,7 @@ class Competition < ApplicationRecord
       "cloning" => {
         "fromId" => being_cloned_from_id,
         "cloneTabs" => clone_tabs || false,
+        "cloneCompetitionVenues" => clone_competition_venues || false,
       },
     }
   end
@@ -2479,6 +2480,7 @@ class Competition < ApplicationRecord
       "cloning" => {
         "fromId" => errors[:being_cloned_from_id],
         "cloneTabs" => errors[:clone_tabs],
+        "cloneCompetitionVenues" => errors[:clone_competition_venues],
       },
       "other" => {
         "competitionEvents" => errors[:competition_events],
@@ -2575,6 +2577,7 @@ class Competition < ApplicationRecord
       showAtAll: form_data.dig('admin', 'isVisible'),
       being_cloned_from_id: form_data.dig('cloning', 'fromId'),
       clone_tabs: form_data.dig('cloning', 'cloneTabs'),
+      clone_competition_venues: form_data.dig('cloning', 'cloneCompetitionVenues'),
     }
   end
 
