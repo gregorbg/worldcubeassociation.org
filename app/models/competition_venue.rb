@@ -13,6 +13,26 @@ class CompetitionVenue < ApplicationRecord
   VALID_TIMEZONES = TZInfo::Timezone.all_identifiers.freeze
   PATTERN_LINK_RE = /\[\{([^}]+)}\{((https?:|mailto:)[^}]+)}\]/
 
+  CLONEABLE_ATTRIBUTES = %w(
+    name
+    city
+    address
+    description
+    website
+    latitude_microdegrees
+    longitude_microdegrees
+    country_iso2
+    timezone_id
+  ).freeze
+
+  UNCLONEABLE_ATTRIBUTES = %w(
+    id
+    competition_id
+    wcif_id
+    created_at
+    updated_at
+  ).freeze
+
   validates :name, presence: true
   validates :city, presence: true, city: true
   validates :address, presence: true

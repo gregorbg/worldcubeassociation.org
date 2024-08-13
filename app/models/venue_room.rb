@@ -10,6 +10,20 @@ class VenueRoom < ApplicationRecord
   has_many :schedule_activities, as: :holder, dependent: :destroy
   has_many :wcif_extensions, as: :extendable, dependent: :delete_all
 
+  CLONEABLE_ATTRIBUTES = %w(
+    name
+    description
+    color
+  ).freeze
+
+  UNCLONEABLE_ATTRIBUTES = %w(
+    id
+    competition_venue_id
+    wcif_id
+    created_at
+    updated_at
+  ).freeze
+
   validates :color, format: { with: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/, message: "Please input a valid hexadecimal color code" }
 
   before_validation do
