@@ -61,6 +61,7 @@ export default function MainForm({
       {isCloning && (
         <SubSection section="cloning">
           <InputBoolean id="cloneTabs" />
+          <InputBoolean id="cloneCompetitionVenues" />
         </SubSection>
       )}
     </>

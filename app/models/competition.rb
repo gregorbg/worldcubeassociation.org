@@ -2361,6 +2361,7 @@ class Competition < ApplicationRecord
       "cloning" => {
         "fromId" => being_cloned_from_id,
         "cloneTabs" => clone_tabs || false,
+        "cloneCompetitionVenues" => clone_competition_venues || false,
       },
     }
   end
@@ -2457,6 +2458,7 @@ class Competition < ApplicationRecord
       "cloning" => {
         "fromId" => errors[:being_cloned_from_id],
         "cloneTabs" => being_cloned_from_id.present? ? being_cloned_from&.association_errors(:tabs) : errors[:clone_tabs],
+        "cloneCompetitionVenues" => being_cloned_from_id.present? ? being_cloned_from&.association_errors(:competition_venues) : errors[:clone_competition_venues],
       },
       "other" => {
         "competitionEvents" => errors[:competition_events],
@@ -2601,6 +2603,7 @@ class Competition < ApplicationRecord
       force_comment_in_registration: form_data.dig('registration', 'forceComment'),
       being_cloned_from_id: form_data.dig('cloning', 'fromId'),
       clone_tabs: form_data.dig('cloning', 'cloneTabs'),
+      clone_competition_venues: form_data.dig('cloning', 'cloneCompetitionVenues'),
     }
   end
 

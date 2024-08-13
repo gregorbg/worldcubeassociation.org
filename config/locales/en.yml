@@ -1695,6 +1695,7 @@ en:
         remarks: "Remarks"
         cloning:
           clone_tabs: "I would like to clone all tabs with additional information as well"
+          clone_competition_venues: "I would like to clone all venues with all rooms as well"
       #context: for a competition
       hints:
         admin:
