@@ -651,7 +651,6 @@ class Competition < ApplicationRecord
              'competition_delegates',
              'competition_events',
              'competition_organizers',
-             'competition_venues',
              'media',
              'scrambles',
              'country',
@@ -678,9 +677,11 @@ class Competition < ApplicationRecord
           clone.delegates = delegates
         when 'events'
           clone.events = events
-        when 'tabs'
-          # Clone tabs in the clone_associations callback after the competition is saved.
-          clone.clone_tabs = true
+        when 'tabs',
+             'competition_venues'
+          # Clone these associations separately in the clone_associations callback after the competition is saved.
+          cloning_flag = :"@clone_#{association_name}"
+          clone.instance_variable_set(cloning_flag, true)
         else
           raise "Cloning behavior for Competition.#{association_name} is not defined. See Competition#build_clone."
         end
@@ -688,7 +689,7 @@ class Competition < ApplicationRecord
     end
   end
 
-  attr_accessor :clone_tabs
+  attr_accessor :clone_tabs, :clone_competition_venues
 
   # After the cloned competition is created, clone other associations which cannot just be copied.
   after_create :clone_associations
@@ -697,6 +698,16 @@ class Competition < ApplicationRecord
     if clone_tabs
       being_cloned_from&.tabs&.each do |tab|
         tabs.create(tab.attributes.slice(*CompetitionTab::CLONEABLE_ATTRIBUTES))
+      end
+    end
+
+    if clone_competition_venues
+      being_cloned_from&.competition_venues&.each do |venue|
+        cloned_venue = competition_venues.create(venue.attributes.slice(*CompetitionVenue::CLONEABLE_ATTRIBUTES))
+
+        venue.venue_rooms.each do |room|
+          cloned_venue.venue_rooms.create(room.attributes.slice(*VenueRoom::CLONEABLE_ATTRIBUTES))
+        end
       end
     end
   end
