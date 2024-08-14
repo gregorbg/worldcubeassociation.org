@@ -9,27 +9,21 @@ import {
   InputSelect,
 } from '../../wca/FormBuilder/input/FormInputs';
 
-import { useDispatch, useStore } from '../../../lib/providers/StoreProvider';
+import { useStore } from '../../../lib/providers/StoreProvider';
 import { toDegrees } from '../../../lib/utils/edit-schedule';
 import { CompetitionsMap, StaticMarker } from '../../wca/FormBuilder/input/InputMap';
-import { updateFormValue } from '../../wca/FormBuilder/store/actions';
+import { useFormObject } from '../../wca/FormBuilder/provider/FormObjectProvider';
+import { useFormUpdateAction } from '../../wca/FormBuilder/EditForm';
 
 export default function VenueInfo() {
   const {
-    competition: {
-      mainVenueId,
-      isMultiLocation,
-    },
-    storedVenues,
-  } = useStore();
+    mainVenueId,
+    isMultiLocation,
+  } = useFormObject();
 
-  const dispatch = useDispatch();
+  const { storedVenues } = useStore();
 
-  useEffect(() => {
-    if (isMultiLocation) {
-      dispatch(updateFormValue('mainVenueId', null));
-    }
-  }, [isMultiLocation, dispatch]);
+  const updateFormValue = useFormUpdateAction();
 
   const circles = [
     { id: 'danger', radius: nearbyCompetitionDistanceDanger, color: '#d9534f' },
@@ -56,9 +50,15 @@ export default function VenueInfo() {
 
   useEffect(() => {
     if (mainVenue) {
-      dispatch(updateFormValue('isMultiLocation', false));
+      updateFormValue('isMultiLocation', false);
     }
-  }, [mainVenue, dispatch]);
+  }, [mainVenue, updateFormValue]);
+
+  useEffect(() => {
+    if (isMultiLocation) {
+      updateFormValue('mainVenueId', null);
+    }
+  }, [isMultiLocation, updateFormValue]);
 
   const coords = [
     toDegrees(mainVenue?.latitudeMicrodegrees),
