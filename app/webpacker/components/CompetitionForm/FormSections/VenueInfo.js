@@ -12,6 +12,7 @@ import {
 import { useFormObject, useFormUpdateAction } from '../../wca/FormBuilder/provider/FormObjectProvider';
 import { toDegrees } from '../../../lib/utils/edit-schedule';
 import { CompetitionsMap, StaticMarker } from '../../wca/FormBuilder/input/InputMap';
+import ConditionalSection from './ConditionalSection';
 
 export default function VenueInfo({ storedVenues = [] }) {
   const {
@@ -46,12 +47,6 @@ export default function VenueInfo({ storedVenues = [] }) {
   ), [mainVenueId, storedVenues]);
 
   useEffect(() => {
-    if (mainVenue) {
-      updateFormObject('isMultiLocation', false);
-    }
-  }, [mainVenue, updateFormObject]);
-
-  useEffect(() => {
     if (isMultiLocation) {
       updateFormObject('mainVenueId', null);
     }
@@ -64,24 +59,31 @@ export default function VenueInfo({ storedVenues = [] }) {
 
   return (
     <>
-      <InputSelect id="mainVenueId" options={mainVenueOptions} />
-      {mainVenueId && (
-        <div id="venue-map-wrapper">
-          <CompetitionsMap id="map" coords={coords}>
-            {circles.map((circle) => (
-              <Circle
-                key={circle.id}
-                center={coords}
-                fill={false}
-                radius={circle.radius * 1000}
-                color={circle.color}
-              />
-            ))}
-            <StaticMarker coords={coords} disabled />
-          </CompetitionsMap>
-        </div>
-      )}
       <InputBoolean id="isMultiLocation" />
+      <ConditionalSection showIf={!isMultiLocation}>
+        <InputSelect id="mainVenueId" options={mainVenueOptions} />
+        {mainVenueId && (
+          <div id="venue-map-wrapper">
+            <CompetitionsMap
+              id="map"
+              coords={coords}
+              draggable={false}
+              scrollWheelZoom="center"
+            >
+              {circles.map((circle) => (
+                <Circle
+                  key={circle.id}
+                  center={coords}
+                  fill={false}
+                  radius={circle.radius * 1000}
+                  color={circle.color}
+                />
+              ))}
+              <StaticMarker coords={coords} disabled />
+            </CompetitionsMap>
+          </div>
+        )}
+      </ConditionalSection>
     </>
   );
 }
