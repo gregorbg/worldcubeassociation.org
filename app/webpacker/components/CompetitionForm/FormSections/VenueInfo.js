@@ -35,6 +35,7 @@ export default function VenueInfo() {
       key: venue.id,
       value: venue.id,
       text: venue.name,
+      flag: venue.countryIso2.toLowerCase(),
     }));
 
     return [{
