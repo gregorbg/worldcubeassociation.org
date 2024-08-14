@@ -13,3 +13,20 @@ const getTimeZoneName = (tzId, referenceTime, locale) => getTimeZoneIntlPart(tzI
 const getTimeZoneOffset = (tzId, referenceTime) => getTimeZoneIntlPart(tzId, 'shortOffset', referenceTime, 'en-US').replace('GMT', 'UTC');
 
 export const getTimeZoneDropdownLabel = (tzId, referenceTime, locale) => `${getTimeZoneName(tzId, referenceTime, locale)} (${tzId}, ${getTimeZoneOffset(tzId, referenceTime, locale)})`;
+
+const getTimeZoneOffsetInt = (tzId, referenceTime) => {
+  const luxonDate = DateTime.fromISO(referenceTime).setZone(tzId);
+
+  return luxonDate.offset;
+};
+
+export const sortByOffset = (tzIds, referenceTime) => tzIds.toSorted((a, b) => {
+  const offsetA = getTimeZoneOffsetInt(a, referenceTime);
+  const offsetB = getTimeZoneOffsetInt(b, referenceTime);
+
+  if (offsetA === offsetB) {
+    return a.localeCompare(b);
+  }
+
+  return offsetA - offsetB;
+});
