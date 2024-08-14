@@ -89,6 +89,7 @@ export function CompetitionsMap({
   setCoords,
   children,
   id = undefined,
+  draggable = true,
 }) {
   const provider = userTileProvider;
 
@@ -101,6 +102,7 @@ export function CompetitionsMap({
       zoom={zoom}
       zoomControl={false}
       onzoomend={(e) => setZoom(e.target.zoom)}
+      dragging={draggable}
     >
       <TileLayer
         url={provider.url}

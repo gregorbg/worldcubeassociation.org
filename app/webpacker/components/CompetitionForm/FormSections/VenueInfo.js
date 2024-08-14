@@ -14,6 +14,7 @@ import { toDegrees } from '../../../lib/utils/edit-schedule';
 import { CompetitionsMap, StaticMarker } from '../../wca/FormBuilder/input/InputMap';
 import { useFormObject } from '../../wca/FormBuilder/provider/FormObjectProvider';
 import { useFormUpdateAction } from '../../wca/FormBuilder/EditForm';
+import ConditionalSection from './ConditionalSection';
 
 export default function VenueInfo() {
   const {
@@ -50,12 +51,6 @@ export default function VenueInfo() {
   ), [mainVenueId, storedVenues]);
 
   useEffect(() => {
-    if (mainVenue) {
-      updateFormValue('isMultiLocation', false);
-    }
-  }, [mainVenue, updateFormValue]);
-
-  useEffect(() => {
     if (isMultiLocation) {
       updateFormValue('mainVenueId', null);
     }
@@ -68,24 +63,26 @@ export default function VenueInfo() {
 
   return (
     <>
-      <InputSelect id="mainVenueId" options={mainVenueOptions} />
-      {mainVenueId && (
-        <div id="venue-map-wrapper">
-          <CompetitionsMap id="map" coords={coords}>
-            {circles.map((circle) => (
-              <Circle
-                key={circle.id}
-                center={coords}
-                fill={false}
-                radius={circle.radius * 1000}
-                color={circle.color}
-              />
-            ))}
-            <StaticMarker coords={coords} disabled />
-          </CompetitionsMap>
-        </div>
-      )}
       <InputBoolean id="isMultiLocation" />
+      <ConditionalSection showIf={!isMultiLocation}>
+        <InputSelect id="mainVenueId" options={mainVenueOptions} />
+        {mainVenueId && (
+          <div id="venue-map-wrapper">
+            <CompetitionsMap id="map" coords={coords} draggable={false}>
+              {circles.map((circle) => (
+                <Circle
+                  key={circle.id}
+                  center={coords}
+                  fill={false}
+                  radius={circle.radius * 1000}
+                  color={circle.color}
+                />
+              ))}
+              <StaticMarker coords={coords} disabled />
+            </CompetitionsMap>
+          </div>
+        )}
+      </ConditionalSection>
     </>
   );
 }
