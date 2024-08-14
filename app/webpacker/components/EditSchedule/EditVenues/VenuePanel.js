@@ -20,6 +20,8 @@ import {
   removeVenue,
 } from '../store/actions';
 import { toDegrees, toMicrodegrees } from '../../../lib/utils/edit-schedule';
+import { fetchWithAuthenticityToken } from '../../../lib/requests/fetchWithAuthenticityToken';
+import { geocodingTimeZoneUrl } from '../../../lib/requests/routes.js.erb';
 
 const countryOptions = countries.real.map((country) => ({
   key: country.iso2,
@@ -71,6 +73,24 @@ function VenuePanel({
       value: timezoneData[key] || key,
     }));
   }, [countryZones]);
+
+  const handleDetectTimezone = async (evt) => {
+    const url = `${geocodingTimeZoneUrl}?${new URLSearchParams({
+      lat: venue.latitudeMicrodegrees,
+      lng: venue.longitudeMicrodegrees,
+    }).toString()}`;
+
+    const response = await fetchWithAuthenticityToken(url);
+    const possibleTimeZones = await response.json();
+
+    const bestMatch = possibleTimeZones.find(
+      (tz) => timezoneOptions.some((tzOpt) => tzOpt.key === tz),
+    );
+
+    if (bestMatch) {
+      handleVenueChange(evt, { name: 'timezone', value: bestMatch });
+    }
+  };
 
   return (
     <Card fluid raised>
@@ -146,6 +166,10 @@ function VenuePanel({
               value={venue.website}
               onChange={handleVenueChange}
             />
+            <Button floated="right" compact icon labelPosition="left" primary onClick={handleDetectTimezone}>
+              <Icon name="target" />
+              Detect timezone
+            </Button>
             <Form.Select
               label="Timezone"
               name="timezone"
