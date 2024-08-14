@@ -94,6 +94,19 @@ class CompetitionVenue < ApplicationRecord
     }
   end
 
+  def to_form_data
+    {
+      "id" => id,
+      "name" => name,
+      "city" => city,
+      "address" => address,
+      "latitudeMicrodegrees" => latitude_microdegrees,
+      "longitudeMicrodegrees" => longitude_microdegrees,
+      "countryIso2" => country_iso2,
+      "timezone" => timezone_id,
+    }
+  end
+
   def self.wcif_json_schema
     {
       "type" => "object",
