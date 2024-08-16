@@ -29,7 +29,7 @@ module WcaOnRails
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     # Force belongs_to validations even on empty/unset keys.
     #   This is potentially a Rails bug (?!?) and has been reported at https://github.com/rails/rails/issues/52614
