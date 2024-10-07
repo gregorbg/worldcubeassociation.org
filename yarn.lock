@@ -201,6 +201,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-plugin-utils@npm:^7.25.7":
+  version: 7.25.7
+  resolution: "@babel/helper-plugin-utils@npm:7.25.7"
+  checksum: 10c0/241f8cf3c5b7700e91cab7cfe5b432a3c710ae3cd5bb96dc554da536a6d25f5b9f000cc0c0917501ceb4f76ba92599ee3beb25e10adaf96be59f8df89a842faf
+  languageName: node
+  linkType: hard
+
 "@babel/helper-remap-async-to-generator@npm:^7.24.7, @babel/helper-remap-async-to-generator@npm:^7.25.0":
   version: 7.25.0
   resolution: "@babel/helper-remap-async-to-generator@npm:7.25.0"
@@ -480,15 +487,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-proposal-throw-expressions@npm:^7.24.7":
-  version: 7.24.7
-  resolution: "@babel/plugin-proposal-throw-expressions@npm:7.24.7"
+"@babel/plugin-proposal-throw-expressions@npm:^7.25.7":
+  version: 7.25.7
+  resolution: "@babel/plugin-proposal-throw-expressions@npm:7.25.7"
   dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.24.7"
-    "@babel/plugin-syntax-throw-expressions": "npm:^7.24.7"
+    "@babel/helper-plugin-utils": "npm:^7.25.7"
+    "@babel/plugin-syntax-throw-expressions": "npm:^7.25.7"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/186c374296c90811970f695af954e15afe70f96289f19bfafc00cbb73ec5904a82f7fa7bde155fe206aaa82c873c4f785f9b75f53eab4b310280404710e1d37c
+  checksum: 10c0/6a227ec29e035adce84312d76979775efbaec6f839bc15f8348c32d91c989220ee610f13438b1fcdef436edb004afdd3d97dc908347da878ff627eb5b486895f
   languageName: node
   linkType: hard
 
@@ -701,14 +708,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-throw-expressions@npm:^7.24.7":
-  version: 7.24.7
-  resolution: "@babel/plugin-syntax-throw-expressions@npm:7.24.7"
+"@babel/plugin-syntax-throw-expressions@npm:^7.25.7":
+  version: 7.25.7
+  resolution: "@babel/plugin-syntax-throw-expressions@npm:7.25.7"
   dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.24.7"
+    "@babel/helper-plugin-utils": "npm:^7.25.7"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/5fba882b3911badb48d0a3f2144dc4f8a2d4bd51c5da1c8f254f9648825353f01248293d146a3cb8bfd8600b6b26945532b1c5d6336f0744093fef89f6bdb90a
+  checksum: 10c0/ca60803bcfd2999ccd39f313d2cff454c8b60659824ab3e3593fb9242a5327e084e74e81a46472c02df45227adde8ad48035328798a47cc59d0971bc5076f31d
   languageName: node
   linkType: hard
 
@@ -10152,7 +10159,7 @@ __metadata:
     "@babel/plugin-proposal-numeric-separator": "npm:^7.14.5"
     "@babel/plugin-proposal-private-methods": "npm:^7.18.6"
     "@babel/plugin-proposal-private-property-in-object": "npm:^7.21.11"
-    "@babel/plugin-proposal-throw-expressions": "npm:^7.24.7"
+    "@babel/plugin-proposal-throw-expressions": "npm:^7.25.7"
     "@babel/plugin-syntax-dynamic-import": "npm:^7.8.3"
     "@babel/plugin-syntax-import-meta": "npm:^7.10.4"
     "@babel/plugin-transform-destructuring": "npm:^7.24.8"
