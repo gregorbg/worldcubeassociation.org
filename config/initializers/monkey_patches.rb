@@ -111,4 +111,11 @@ Rails.configuration.to_prepare do
       end
     end
   end
+
+  ActiveRecord::Associations::BelongsToPolymorphicAssociation.class_eval do
+    def klass
+      type = owner.read_attribute_for_database(reflection.foreign_type)
+      type.presence && owner.class.polymorphic_class_for(type)
+    end
+  end
 end
