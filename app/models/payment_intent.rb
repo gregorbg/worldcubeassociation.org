@@ -24,6 +24,7 @@ class PaymentIntent < ApplicationRecord
     pending: 'pending', # The user is now attempting to pay, but has not reached a completion state yet
     partial: 'partial', # Some but not all funds have been paid (eg, if the user has selected an instalment-based payment option)
     processing: 'processing', # The payment is in progress, but the user cannot do anything to advance its state (eg, provider waiting for outcome of bank transfer)
+    approved: 'approved', # The payment has been approved by the user, but we still need to capture the payment to actually allocate funds
     failed: 'failed', # The payment did not succeed for any reason (insufficient funds, user error) but the user can still try to pay
     succeeded: 'succeeded', # Completion state - The full amount due is confirmed as being paid by the payment provider
     canceled: 'canceled', # Completion state - the user has indicated that they will no longer attempt to complete payment
