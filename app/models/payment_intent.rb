@@ -51,6 +51,9 @@ class PaymentIntent < ApplicationRecord
           confirmation_source: action_source,
           wca_status: PaymentIntent.wca_statuses[:succeeded],
         )
+
+        # Write any additional details now that the main status cycle is complete
+        self.update_intent_details(captured_remote)
       end
 
       return captured_remote
@@ -118,6 +121,8 @@ class PaymentIntent < ApplicationRecord
       case self.payment_record_type
       when "StripeRecord"
         self.update!(error_details: api_record.last_payment_error)
+      when "PaypalRecord"
+        self.update!(error_details: api_record['most_recent_errors'])
       end
     end
 
