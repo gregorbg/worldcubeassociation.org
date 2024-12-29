@@ -411,7 +411,7 @@ class RegistrationsController < ApplicationController
       return redirect_to competition_register_path(competition)
     end
 
-    remote_intent = stored_intent.retrieve_remote
+    remote_intent = stored_intent.capture_charges_if_needed(payment_account, current_user)
 
     unless remote_intent.present?
       flash[:error] = t("registrations.payment_form.errors.generic.remote_not_found", provider: t("payments.payment_providers.#{payment_integration}"))
