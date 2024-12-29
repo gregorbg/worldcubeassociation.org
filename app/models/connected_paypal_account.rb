@@ -25,6 +25,15 @@ class ConnectedPaypalAccount < ApplicationRecord
     )
   end
 
+  def capture_intent(payment_intent)
+    captured_order = PaypalInterface.capture_payment(self.paypal_merchant_id, payment_intent.payment_record.paypal_id)
+
+    payment_intent.payment_record.tap do |record|
+      # Make sure that our internal records are up to date
+      record.update_status(captured_order)
+    end
+  end
+
   def retrieve_payments(payment_intent)
     captured_order = PaypalInterface.retrieve_order(self.paypal_merchant_id, payment_intent.payment_record.paypal_id)
     raw_captures = captured_order['purchase_units'].first['payments']['captures']
