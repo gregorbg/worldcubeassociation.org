@@ -46,7 +46,7 @@ class PaymentIntent < ApplicationRecord
       when PaymentIntent.wca_statuses[:approved]
         # The payment needs to be captured by us first.
         #   Some gateways (like PayPal) need this explicit step, while others (like Stripe) don't.
-        payment_account.capture_intent(self)
+        captured_record = payment_account.capture_intent(self)
 
         # Record the success timestamp if not already done
         unless self.succeeded?
@@ -58,7 +58,7 @@ class PaymentIntent < ApplicationRecord
           )
         end
 
-        payment_account.retrieve_payments(self) do |payment|
+        payment_account.retrieve_payments(captured_record) do |payment|
           # Only trigger outer update blocks for charges that are actually successful. This is reasonable
           # because we only ever trigger this block for PIs that are marked "successful" in the first place
           charge_successful = payment.determine_wca_status.to_s == PaymentIntent.wca_statuses[:succeeded]
@@ -77,7 +77,7 @@ class PaymentIntent < ApplicationRecord
           )
         end
 
-        payment_account.retrieve_payments(self) do |payment|
+        payment_account.retrieve_payments(self.payment_record) do |payment|
           # Only trigger outer update blocks for charges that are actually successful. This is reasonable
           # because we only ever trigger this block for PIs that are marked "successful" in the first place
           charge_successful = payment.determine_wca_status.to_s == PaymentIntent.wca_statuses[:succeeded]

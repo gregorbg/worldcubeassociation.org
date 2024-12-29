@@ -78,16 +78,14 @@ class ConnectedStripeAccount < ApplicationRecord
     )
   end
 
-  def capture_intent(payment_intent)
+  def capture_intent(intent_record)
     # As of 2024-12-30, we use the (recommended!) `async` capture flag in Stripe,
     #   which means that Stripe will handle the capture for us on every single payment method no matter what.
     # We therefore implement "capturing" as a no-op.
-    payment_intent.payment_record
+    intent_record
   end
 
-  def retrieve_payments(payment_intent)
-    intent_record = payment_intent.payment_record
-
+  def retrieve_payments(intent_record)
     intent_charges = Stripe::Charge.list(
       { payment_intent: intent_record.stripe_id },
       stripe_account: self.account_id,

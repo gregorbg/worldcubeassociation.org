@@ -25,37 +25,37 @@ class ConnectedPaypalAccount < ApplicationRecord
     )
   end
 
-  def capture_intent(payment_intent)
-    captured_order = PaypalInterface.capture_payment(self.paypal_merchant_id, payment_intent.payment_record.paypal_id)
+  def capture_intent(order_record)
+    captured_order = PaypalInterface.capture_payment(self.paypal_merchant_id, order_record.paypal_id)
 
-    payment_intent.payment_record.tap do |record|
+    order_record.tap do |record|
       # Make sure that our internal records are up to date
       record.update_status(captured_order)
     end
   end
 
-  def retrieve_payments(payment_intent)
-    captured_order = PaypalInterface.retrieve_order(self.paypal_merchant_id, payment_intent.payment_record.paypal_id)
+  def retrieve_payments(order_record)
+    captured_order = PaypalInterface.retrieve_order(self.paypal_merchant_id, order_record.paypal_id)
     raw_captures = captured_order['purchase_units'].first['payments']['captures']
 
-    raw_captures.map do |capture|
-      paypal_record = PaypalRecord.find_by(paypal_id: capture['id'])
+    raw_captures.map do |raw_capture|
+      capture_record = PaypalRecord.find_by(paypal_id: raw_capture['id'])
 
-      if paypal_record.present?
-        paypal_record.update_status(capture)
+      if capture_record.present?
+        capture_record.update_status(raw_capture)
       else
-        paypal_record = PaypalRecord.create_from_api(
-          capture,
+        capture_record = PaypalRecord.create_from_api(
+          raw_capture,
           :capture,
           {},
           self.paypal_merchant_id,
-          payment_intent.payment_record,
+          order_record,
         )
 
-        yield paypal_record if block_given?
+        yield capture_record if block_given?
       end
 
-      paypal_record
+      capture_record
     end
   end
 
