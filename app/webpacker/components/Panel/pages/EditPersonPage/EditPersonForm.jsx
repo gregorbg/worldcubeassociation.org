@@ -7,16 +7,11 @@ import { adminCheckRecordsUrl, apiV0Urls } from '../../../../lib/requests/routes
 import useSaveAction from '../../../../lib/hooks/useSaveAction';
 import Loading from '../../../Requests/Loading';
 import I18n from '../../../../lib/i18n';
-import { genders, countries } from '../../../../lib/wca-data.js.erb';
+import { countries } from '../../../../lib/wca-data.js.erb';
 import useLoadedData from '../../../../lib/hooks/useLoadedData';
 import Errored from '../../../Requests/Errored';
 import UtcDatePicker from '../../../wca/UtcDatePicker';
-
-const genderOptions = _.map(genders.byId, (gender) => ({
-  key: gender.id,
-  text: gender.name,
-  value: gender.id,
-}));
+import GenderSelector from '../../../GenderSelector/GenderSelector';
 
 const countryOptions = _.map(countries.byIso2, (country) => ({
   key: country.iso2,
@@ -144,12 +139,10 @@ export default function EditPersonForm({ wcaId, onSuccess }) {
           value={editedUserDetails?.representing || ''}
           onChange={handleFormChange}
         />
-        <Form.Select
-          options={genderOptions}
-          label={I18n.t('activerecord.attributes.user.gender')}
+        <GenderSelector
           name="gender"
           disabled={!editedUserDetails}
-          value={editedUserDetails?.gender || ''}
+          gender={editedUserDetails?.gender || ''}
           onChange={handleFormChange}
         />
         <Form.Field
