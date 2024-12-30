@@ -4,20 +4,15 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { QueryClient, useQuery } from '@tanstack/react-query';
 import I18n from '../../lib/i18n';
 import { apiV0Urls, contactEditProfileActionUrl } from '../../lib/requests/routes.js.erb';
-import { genders, countries } from '../../lib/wca-data.js.erb';
+import { countries } from '../../lib/wca-data.js.erb';
 import Loading from '../Requests/Loading';
 import Errored from '../Requests/Errored';
 import useSaveAction from '../../lib/hooks/useSaveAction';
 import { fetchJsonOrError } from '../../lib/requests/fetchWithAuthenticityToken';
 import UtcDatePicker from '../wca/UtcDatePicker';
+import GenderSelector from '../GenderSelector/GenderSelector';
 
 const CONTACT_EDIT_PROFILE_FORM_QUERY_CLIENT = new QueryClient();
-
-const genderOptions = _.map(genders.byId, (gender) => ({
-  key: gender.id,
-  text: gender.name,
-  value: gender.id,
-}));
 
 const countryOptions = _.map(countries.byIso2, (country) => ({
   key: country.iso2,
@@ -110,11 +105,9 @@ export default function EditProfileForm({
         value={editedProfileDetails?.country_iso2}
         onChange={handleFormChange}
       />
-      <Form.Select
-        options={genderOptions}
-        label={I18n.t('activerecord.attributes.user.gender')}
+      <GenderSelector
         name="gender"
-        value={editedProfileDetails?.gender}
+        gender={editedProfileDetails?.gender}
         onChange={handleFormChange}
       />
       <Form.Field
