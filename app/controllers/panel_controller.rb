@@ -22,6 +22,7 @@ class PanelController < ApplicationController
     panel_details = User.panel_list[@panel_id.to_sym]
     @pages = panel_details[:pages]
     @title = panel_details[:name]
+    @notifications = panel_details[:notifications]
   end
 
   def generate_db_token

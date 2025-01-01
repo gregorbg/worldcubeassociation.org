@@ -649,6 +649,9 @@ class User < ApplicationRecord
       admin: {
         name: 'New Admin panel',
         pages: panel_pages.values,
+        notifications: {
+          panel_pages[:approveAvatars] => User.where.not(pending_avatar: nil).count,
+        },
       },
       staff: {
         name: 'Staff panel',
