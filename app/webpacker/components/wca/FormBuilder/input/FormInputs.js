@@ -17,8 +17,8 @@ import { AddChampionshipButton, ChampionshipSelect } from './InputChampionship';
 import UtcDatePicker from '../../UtcDatePicker';
 import { IdWcaSearch } from '../../../SearchWidget/WcaSearch';
 import SEARCH_MODELS from '../../../SearchWidget/SearchModel';
-import { readValueRecursive, useSectionDisabled, useSections } from '../provider/FormSectionProvider';
-import { useFormContext, useFormObjectSection, useFormUpdateAction } from '../provider/FormObjectProvider';
+import { useSectionDisabled, useSections } from '../provider/FormSectionProvider';
+import { useFormContext } from '../provider/FormObjectProvider';
 
 function snakifyId(id, section = []) {
   const idParts = [...section, id];
@@ -49,6 +49,10 @@ function getHtmlId(id, section = []) {
   return [...section, id].join('-');
 }
 
+function getFormKey(id, section = []) {
+  return [...section, id].join('.');
+}
+
 function FieldWrapper({
   id,
   label,
@@ -56,7 +60,7 @@ function FieldWrapper({
   hint,
   noHint,
   mdHint,
-  error,
+  errors,
   disabled,
   required,
   children,
@@ -76,10 +80,13 @@ function FieldWrapper({
 
   const htmlId = getHtmlId(id, section);
 
+  const hasError = errors.length > 0;
+  const allErrors = errors.join('; ');
+
   return (
     <Form.Field
-      error={!!error}
-      className={(error && 'has-error') || ''}
+      error={hasError}
+      className={hasError && 'has-error'}
       disabled={!!disabled}
       required={!!required}
     >
@@ -87,7 +94,7 @@ function FieldWrapper({
       {!ignoreLabel && <label htmlFor={htmlId} dangerouslySetInnerHTML={{ __html: htmlLabel }} />}
       {children}
       {/* eslint-disable-next-line react/no-danger */}
-      {error && (<p dangerouslySetInnerHTML={{ __html: error || '' }} className="help-block" />)}
+      {hasError && (<p dangerouslySetInnerHTML={{ __html: allErrors }} className="help-block" />)}
       {/* eslint-disable-next-line react/no-danger */}
       <p dangerouslySetInnerHTML={{ __html: htmlHint }} className="help-block" />
     </Form.Field>
@@ -95,69 +102,57 @@ function FieldWrapper({
 }
 
 /* eslint-disable react/destructuring-assignment */
-const wrapInput = (
+function WrapUiInput({
+  apiField,
   WrappedInput,
+  uiProps,
   additionalPropNames = [],
   nullDefault = undefined,
   inputValueKey = 'value',
-) => function WcaFormInput(props) {
-  const { errors } = useFormContext();
-
+}) {
   const section = useSections();
   const sectionDisabled = useSectionDisabled();
 
-  const formValues = useFormObjectSection();
-  const updateFormValue = useFormUpdateAction();
-
   const inputProps = additionalPropNames.reduce((acc, propName) => ({
     ...acc,
-    [propName]: props[propName],
+    [propName]: uiProps[propName],
   }), {});
 
   const onChange = useCallback((e, { [inputValueKey]: newValue }) => {
-    updateFormValue(props.id, newValue, section);
-  }, [updateFormValue, props.id, section]);
+    apiField.handleChange(newValue);
+  }, [apiField, inputValueKey]);
 
-  let value = formValues[props.id];
+  let { value } = apiField.state;
 
   // we want to provide "global default" for input components, as well as allow
   // individual inputs to override their local default value. So we check for defaults twice.
-  if (value === null && props.defaultValue !== undefined) value = props.defaultValue;
+  if (value === null && uiProps.defaultValue !== undefined) value = uiProps.defaultValue;
   if (value === null && nullDefault !== undefined) value = nullDefault;
 
   inputProps[inputValueKey] = value;
 
-  const errorSegment = readValueRecursive(errors, section);
-
-  // sometimes we nest errors deeper than the fields, so we need to be cautious about joining
-  const errorCandidates = errorSegment?.[props.id];
-  const error = Array.isArray(errorCandidates) && errorCandidates.join(', ');
-
   const passDownLabel = additionalPropNames.includes('label');
-  if (passDownLabel) inputProps.label = (props.label || getFieldLabel(props.id, section));
+  if (passDownLabel) inputProps.label = (uiProps.label || getFieldLabel(uiProps.id, section));
 
-  const noLabel = passDownLabel ? 'ignore' : props.noLabel;
+  const noLabel = passDownLabel ? 'ignore' : uiProps.noLabel;
 
-  const disabled = sectionDisabled || props.disabled;
+  const disabled = sectionDisabled || uiProps.disabled;
 
-  const passDownDisabled = additionalPropNames.includes('disabled');
-  if (passDownDisabled) inputProps.disabled = disabled;
-
-  const htmlId = getHtmlId(props.id, section);
-  const htmlName = getFieldLabel(props.id, section);
+  const htmlId = getHtmlId(uiProps.id, section);
+  const htmlName = getFieldLabel(uiProps.id, section);
 
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FieldWrapper
-      id={props.id}
-      label={props.label}
+      id={uiProps.id}
+      label={uiProps.label}
       noLabel={noLabel}
-      hint={props.hint}
-      noHint={props.noHint}
-      mdHint={props.mdHint}
-      error={error}
+      hint={uiProps.hint}
+      noHint={uiProps.noHint}
+      mdHint={uiProps.mdHint}
+      errors={apiField.state.meta.errors}
       disabled={disabled}
-      required={props.required}
+      required={uiProps.required}
     >
       <WrappedInput
         {...inputProps}
@@ -168,8 +163,35 @@ const wrapInput = (
     </FieldWrapper>
   );
   /* eslint-enable react/jsx-props-no-spreading */
-};
+}
 /* eslint-disable react/destructuring-assignment */
+
+const wrapInput = (
+  WrappedInput,
+  additionalPropNames = [],
+  nullDefault = undefined,
+  inputValueKey = 'value',
+) => function WcaFormInput(props) {
+  const { formApi } = useFormContext();
+
+  const section = useSections();
+  const sectionKey = getFormKey(props.id, section);
+
+  return (
+    <formApi.Field name={sectionKey}>
+      {(field) => (
+        <WrapUiInput
+          apiField={field}
+          WrappedInput={WrappedInput}
+          uiProps={props}
+          additionalPropNames={additionalPropNames}
+          nullDefault={nullDefault}
+          inputValueKey={inputValueKey}
+        />
+      )}
+    </formApi.Field>
+  );
+};
 
 export const InputString = wrapInput((props) => (
   <Input

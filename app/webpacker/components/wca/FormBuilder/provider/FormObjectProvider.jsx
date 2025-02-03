@@ -3,36 +3,27 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useReducer,
 } from 'react';
 import _ from 'lodash';
-import { changesSaved, setErrors, updateFormValue } from '../store/actions';
-import formReducer from '../store/reducer';
-import SectionProvider, { readValueRecursive, useSections } from './FormSectionProvider';
+import { useForm, useStore } from '@tanstack/react-form';
+import SectionProvider from './FormSectionProvider';
 
 const FormContext = createContext(null);
-
-const createState = (initialObject) => ({
-  object: initialObject,
-  initialObject,
-  errors: null,
-});
 
 export default function FormObjectProvider({
   children,
   initialObject,
   globalDisabled = false,
 }) {
-  const [formState, dispatch] = useReducer(formReducer, initialObject, createState);
+  const formApi = useForm({
+    defaultValues: initialObject,
+  });
+
+  const formState = useStore(formApi.store, (state) => state.values);
 
   const unsavedChanges = useMemo(() => (
-    !_.isEqual(formState.object, formState.initialObject)
-  ), [formState.object, formState.initialObject]);
-
-  const onSuccess = useCallback(() => {
-    dispatch(changesSaved());
-    dispatch(setErrors(null));
-  }, [dispatch]);
+    !_.isEqual(initialObject, formState)
+  ), [initialObject, formState]);
 
   const onError = useCallback((err) => {
     // check whether the 'json' and 'response' properties are set,
@@ -49,23 +40,21 @@ export default function FormObjectProvider({
             ],
           };
 
-          dispatch(setErrors(jsonSchemaError));
+          formApi.setErrorMap(jsonSchemaError);
         }
       } else {
-        dispatch(setErrors(err.json));
+        formApi.setErrorMap(err.json);
       }
     } else {
       throw err;
     }
-  }, [dispatch]);
+  }, [formApi]);
 
   const formContext = useMemo(() => ({
-    ...formState,
+    formApi,
     unsavedChanges,
-    dispatch,
-    onSuccess,
     onError,
-  }), [formState, unsavedChanges, dispatch, onSuccess, onError]);
+  }), [formApi, onError, unsavedChanges]);
 
   return (
     <FormContext.Provider value={formContext}>
@@ -78,24 +67,17 @@ export default function FormObjectProvider({
 
 export const useFormContext = () => useContext(FormContext);
 
-export const useFormDispatch = () => useFormContext().dispatch;
-
-export const useFormObject = () => useFormContext().object;
-export const useFormInitialObject = () => useFormContext().initialObject;
+export const useFormObject = () => useStore(
+  useFormContext().formApi.store,
+  (state) => state.values,
+);
 
 export const useFormErrorHandler = () => useFormContext().onError;
 
-export const useFormObjectSection = () => {
-  const formObject = useFormObject();
-  const sections = useSections();
-
-  return readValueRecursive(formObject, sections);
-};
-
 export const useFormUpdateAction = () => {
-  const dispatch = useFormDispatch();
+  const formApi = useFormContext();
 
-  return useCallback((key, value, sections = []) => (
-    dispatch(updateFormValue(key, value, sections))
-  ), [dispatch]);
+  return useCallback((key, value) => (
+    formApi.setFieldValue(key, value)
+  ), [formApi]);
 };

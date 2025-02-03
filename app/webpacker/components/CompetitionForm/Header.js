@@ -3,7 +3,7 @@ import { Message } from 'semantic-ui-react';
 import { useStore } from '../../lib/providers/StoreProvider';
 import AnnouncementActions from './AnnouncementActions';
 import UserPreferences from './UserPreferences';
-import { useFormInitialObject } from '../wca/FormBuilder/provider/FormObjectProvider';
+import {useFormContext, useFormInitialObject} from '../wca/FormBuilder/provider/FormObjectProvider';
 import I18nHTMLTranslate from '../I18nHTMLTranslate';
 import Loading from '../Requests/Loading';
 import { useConfirmationData } from './api';
@@ -61,7 +61,9 @@ function AnnouncementMessage({ competitionId }) {
 }
 
 export default function Header() {
-  const { competitionId } = useFormInitialObject();
+  const { formApi } = useFormContext();
+  // TODO refactor this to not rely on this internal options field
+  const { competitionId } = formApi.options.defaultValues;
 
   return (
     <>
