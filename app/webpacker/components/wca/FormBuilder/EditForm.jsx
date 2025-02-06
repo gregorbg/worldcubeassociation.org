@@ -1,6 +1,6 @@
 import React, {
   useCallback,
-  useEffect,
+  useEffect, useMemo,
   useRef,
 } from 'react';
 import {
@@ -11,6 +11,8 @@ import {
   Segment,
   Sticky,
 } from 'semantic-ui-react';
+import { useStore } from '@tanstack/react-form';
+import _ from 'lodash';
 import FormErrors from './FormErrors';
 import FormObjectProvider, { useFormContext, useFormObject } from './provider/FormObjectProvider';
 import ConfirmProvider, { useConfirm } from '../../../lib/providers/ConfirmProvider';
@@ -73,9 +75,16 @@ function EditForm({
   footerActions = [],
 }) {
   const {
-    unsavedChanges,
+    formApi,
+    persistedObject,
     errors,
   } = useFormContext();
+
+  const formState = useStore(formApi.store, (state) => state.values);
+
+  const unsavedChanges = useMemo(() => (
+    !_.isEqual(persistedObject, formState)
+  ), [persistedObject, formState]);
 
   const onUnload = useCallback((e) => {
     // Prompt the user before letting them navigate away from this page with unsaved changes.

@@ -58,7 +58,7 @@ function EditCompetition({
 
   const { data: confirmationData, isLoading } = useConfirmationData(competition.competitionId);
 
-  const footerActions = [
+  const footerActions = useMemo(() => [
     {
       id: 'confirm',
       mutation: confirmCompMutation,
@@ -75,7 +75,7 @@ function EditCompetition({
       buttonText: I18n.t('competitions.competition_form.submit_delete_value'),
       buttonProps: { negative: true },
     },
-  ];
+  ], [confirmCompMutation, deleteCompMutation, confirmationData, isAdminView]);
 
   const isDisabled = useMemo(() => {
     if (isLoading) return true;

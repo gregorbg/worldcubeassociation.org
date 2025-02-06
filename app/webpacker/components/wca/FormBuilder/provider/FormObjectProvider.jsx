@@ -2,9 +2,8 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useMemo,
+  useMemo, useState,
 } from 'react';
-import _ from 'lodash';
 import { useForm, useStore } from '@tanstack/react-form';
 import SectionProvider from './FormSectionProvider';
 
@@ -15,15 +14,16 @@ export default function FormObjectProvider({
   initialObject,
   globalDisabled = false,
 }) {
+  const [persistedObject, setPersistedObject] = useState(initialObject);
+
   const formApi = useForm({
-    defaultValues: initialObject,
+    defaultValues: persistedObject,
+    onSubmit: ({ value }) => setPersistedObject(value),
   });
 
-  const formState = useStore(formApi.store, (state) => state.values);
-
-  const unsavedChanges = useMemo(() => (
-    !_.isEqual(initialObject, formState)
-  ), [initialObject, formState]);
+  const setFormError = useCallback((errorObj) => {
+    formApi.setErrorMap({ onSubmit: errorObj });
+  }, [formApi]);
 
   const onError = useCallback((err) => {
     // check whether the 'json' and 'response' properties are set,
@@ -40,21 +40,22 @@ export default function FormObjectProvider({
             ],
           };
 
-          formApi.setErrorMap(jsonSchemaError);
+          setFormError(jsonSchemaError);
         }
       } else {
-        formApi.setErrorMap(err.json);
+        setFormError(err.json);
       }
     } else {
       throw err;
     }
-  }, [formApi]);
+  }, [setFormError]);
 
   const formContext = useMemo(() => ({
     formApi,
-    unsavedChanges,
+    persistedObject,
+    onSuccess: formApi.handleSubmit,
     onError,
-  }), [formApi, onError, unsavedChanges]);
+  }), [formApi, persistedObject, onError]);
 
   return (
     <FormContext.Provider value={formContext}>
