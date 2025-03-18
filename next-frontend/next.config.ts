@@ -1,5 +1,8 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
+import nextRoutes from "nextjs-routes/config";
+
+const withRoutes = nextRoutes({ outDir: 'src' });
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -7,4 +10,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPayload(nextConfig);
+export default withPayload(withRoutes(nextConfig));
