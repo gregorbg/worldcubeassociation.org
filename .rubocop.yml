@@ -39,6 +39,9 @@ Rails/I18nLocaleAssignment:
   Exclude:
     - 'spec/support/locale_reset.rb'
 
+Rails/Blank:
+  UnlessPresent: false
+
 Bundler/OrderedGems:
   Enabled: false
 
