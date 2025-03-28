@@ -177,3 +177,7 @@ volumes:
 networks:
   wca-main:
     name: wca-main
+    # Docker Engine v28 currently (Mar 28, 2025) messes up the default value for this config
+    #   and disables IPv4 by default on some distros (notably, Arch). By setting this,
+    #   we enforce that the container can always access the Internet of the host machine. //GB
+    enable_ipv4: true
