@@ -167,6 +167,7 @@ services:
     container_name: "playwright"
     environment:
       - DEBUG=pw:api
+      - DISPLAY=$DISPLAY
     ports:
       - "8089:8089"
     working_dir: /app
@@ -178,6 +179,7 @@ services:
     volumes:
       - .:/app
       - node_modules_volume:/app/node_modules
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     networks:
       - wca-main
 
