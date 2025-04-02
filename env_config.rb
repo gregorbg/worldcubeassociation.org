@@ -110,6 +110,9 @@ EnvConfig = SuperConfig.new(raise_exception: !is_compiling_assets) do
   # For local Playwright instances
   optional :PLAYWRIGHT_SERVER_SOCKET_URL, :string, ''
 
+  # For developer setups who have a local Ruby runtime
+  optional :RUN_CAPYBARA_ON_HOST, :bool, false
+
   # For API Only Server
   optional :API_ONLY, :bool, false
 
