@@ -97,6 +97,8 @@ Rails.application.configure do
     # When loading the edit events page for a competition, Bullet erroneously warns that we are
     # not using the rounds association.
     Bullet.add_safelist type: :unused_eager_loading, class_name: "CompetitionEvent", association: :rounds
+
+    Debugbar.config.enabled = !EnvConfig.DISABLE_DEBUGBAR?
   end
 
   # uncomment this if you want to test error pages in development
