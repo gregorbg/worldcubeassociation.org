@@ -53,6 +53,8 @@
   <% stylesheets_to_include = filter_css_packs(*packs_to_include) %>
   <%= stylesheet_pack_tag *stylesheets_to_include %>
 
+  <%= debugbar_head  if defined? Debugbar %>
+
   <% js_assets = (@all_js_assets || "").split(",").uniq %>
   <%# This loads fullCalendar/moment's locale files %>
   <% if I18n.locale != :en %>
@@ -113,6 +115,7 @@
   <% if !hide_wca_navbars %>
     <%= render 'layouts/footer' %>
   <% end %>
+  <%= debugbar_body if defined? Debugbar %>
   <%= render 'cookies_eu/consent_banner' unless current_user&.cookies_acknowledged? %>
 </body>
 </html>
