@@ -142,6 +142,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'web-console'
+  gem 'debugbar'
 end
 
 group :test do

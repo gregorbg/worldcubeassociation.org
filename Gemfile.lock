@@ -240,6 +240,9 @@ GEM
     database_cleaner-core (2.0.1)
     date (3.4.1)
     debug_inspector (1.2.0)
+    debugbar (0.4.3)
+      actioncable
+      rails
     declarative (0.0.20)
     devise (4.9.4)
       bcrypt (~> 3.0)
@@ -999,6 +1002,7 @@ DEPENDENCIES
   daemons
   database_cleaner
   datetimepicker-rails!
+  debugbar
   devise
   devise-bootstrap-views
   devise-i18n
@@ -1174,6 +1178,7 @@ CHECKSUMS
   date (3.4.1) sha256=bf268e14ef7158009bfeaec40b5fa3c7271906e88b196d958a89d4b408abe64f
   datetimepicker-rails (4.7.16)
   debug_inspector (1.2.0) sha256=9bdfa02eebc3da163833e6a89b154084232f5766087e59573b70521c77ea68a2
+  debugbar (0.4.3) sha256=39e681f66ab5a250b1f78acccd9c16cc283ee9c4af76395c67b27fcc0214e1b8
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   devise (4.9.4) sha256=920042fe5e704c548aa4eb65ebdd65980b83ffae67feb32c697206bfd975a7f8
   devise-bootstrap-views (1.1.0) sha256=50a39af0656676eabea5d0eacfe74cb5016c25e20f38f333bfdac641f66d3335
