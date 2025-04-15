@@ -15,8 +15,16 @@ import FormErrors from './FormErrors';
 import FormObjectProvider, { useFormContext, useFormObject } from './provider/FormObjectProvider';
 import ConfirmProvider, { useConfirm } from '../../../lib/providers/ConfirmProvider';
 
-function useSafeMutation(mutation, mutationArgs, unloadListener) {
-  const { onSuccess, onError } = useFormContext();
+function useSafeMutation(mutation, mutationArgs, unloadListener, extraOnError = undefined) {
+  const { onSuccess, onError: onFormError } = useFormContext();
+
+  const onError = useCallback((err) => {
+    onFormError(err);
+
+    if (extraOnError !== undefined) {
+      extraOnError(err);
+    }
+  }, [onFormError, extraOnError]);
 
   return useCallback(() => {
     window.removeEventListener('beforeunload', unloadListener);
@@ -35,12 +43,13 @@ export function FormActionButton({
   buttonText = null,
   buttonProps,
   onUnload,
+  extraOnError = undefined,
   children,
 }) {
   const confirm = useConfirm();
   const formObject = useFormObject();
 
-  const safeMutation = useSafeMutation(mutation, formObject, onUnload);
+  const safeMutation = useSafeMutation(mutation, formObject, onUnload, extraOnError);
 
   const handleClick = useCallback(() => {
     if (confirmationMessage) {
@@ -95,11 +104,18 @@ function EditForm({
     return () => window.removeEventListener('beforeunload', onUnload);
   }, [onUnload]);
 
+  const errorsRef = useRef();
+
+  const scrollToErrors = () => errorsRef?.current?.scrollIntoView(
+    { behavior: 'smooth', block: 'center' },
+  );
+
   const renderSaveButton = (buttonText) => (
     <FormActionButton
       mutation={saveMutation}
       buttonText={buttonText}
       buttonProps={{ primary: true }}
+      extraOnError={scrollToErrors}
       onUnload={onUnload}
     />
   );
@@ -124,7 +140,9 @@ function EditForm({
   return (
     <>
       <div ref={stickyRef}>
-        <FormErrors errors={errors} />
+        <div ref={errorsRef}>
+          <FormErrors errors={errors} />
+        </div>
         {CustomHeader && (
           <Dimmer.Dimmable as={Segment} blurring dimmed={unsavedChanges}>
             <Dimmer active={unsavedChanges}>
