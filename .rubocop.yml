@@ -39,6 +39,12 @@ Rails/I18nLocaleAssignment:
   Exclude:
     - 'spec/support/locale_reset.rb'
 
+Rails/DynamicFindBy:
+  AllowedMethods:
+    # `find_by_iso2` is actually a manually created method on country.rb
+    #   by us that just "happens to" sound like a dynamic finder.
+    - 'find_by_iso2'
+
 Bundler/OrderedGems:
   Enabled: false
 
