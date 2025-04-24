@@ -1025,7 +1025,6 @@ DEPENDENCIES
   i18n-tasks
   icalendar
   image_processing
-  irb
   iso!
   jaro_winkler
   jbuilder

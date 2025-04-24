@@ -2,159 +2,144 @@
 
 source 'https://rubygems.org'
 
-# From https://github.com/bundler/bundler/issues/4978#issuecomment-272248627
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
-end
-
-gem 'rails'
-gem 'rails-i18n'
-gem 'i18n-js'
 gem 'activerecord-import'
-gem 'sass-rails'
-# Some of our very old Sprockets asset code relies on gem-bundled Bootstrap 3 (grrr...)
-#   which uses SCSS features incompatible with Dart SASS 2.
-gem "sassc-embedded", '~> 1'
-gem 'terser'
-gem 'faraday'
-gem 'faraday-retry'
-gem 'sdoc', group: :doc
-gem 'dotenv-rails', require: 'dotenv/load'
-gem 'seedbank'
-gem 'jbuilder'
+gem 'activestorage-validator'
+gem 'after_commit_everywhere'
+gem 'api-pagination'
+gem 'aws-sdk-cloudfront'
+gem 'aws-sdk-rds'
+gem 'aws-sdk-s3'
+gem 'aws-sdk-sqs'
+gem 'blocks'
 gem 'bootstrap-sass'
-gem 'mail_form'
-gem 'simple_form'
-gem 'valid_email'
-gem 'recaptcha', require: 'recaptcha/rails'
-gem 'kaminari'
-gem 'kaminari-i18n'
+gem 'bootstrap-table-rails'
+gem 'cocoon'
+gem 'cookies_eu'
+gem 'csv'
+gem 'daemons'
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', submodules: true
 gem 'devise'
 # NOTE: we put devise-18n before devise-bootstrap-views intentionally.
 # See https://github.com/hisea/devise-bootstrap-views/issues/55 for more details.
 gem 'devise-i18n'
-gem 'devise-bootstrap-views'
-gem 'devise-two-factor'
-gem 'rqrcode'
-gem 'doorkeeper'
-gem 'doorkeeper-openid_connect'
-gem 'doorkeeper-i18n'
-gem 'strip_attributes'
-gem 'time_will_tell', github: 'thewca/time_will_tell'
-gem 'redcarpet'
-gem 'bootstrap-table-rails'
-gem 'money-rails'
-gem 'money-currencylayer-bank'
-gem 'octokit'
-gem 'stripe'
-gem 'oauth2'
-gem 'openssl'
-gem "vault"
-gem 'wca_i18n'
-gem 'cookies_eu'
-gem 'superconfig'
-gem 'eu_central_bank'
+gem 'devise-bootstrap-views' # rubocop:disable Bundler/OrderedGems
 gem 'devise-jwt'
-gem 'jwt'
+gem 'devise-two-factor'
+gem 'doorkeeper'
+gem 'doorkeeper-i18n'
+gem 'doorkeeper-openid_connect'
+gem 'dotenv-rails', require: 'dotenv/load'
+gem 'enum_help'
+gem 'eu_central_bank'
+gem 'faraday'
+gem 'faraday-retry'
+gem 'google-apis-admin_directory_v1'
+gem 'hash_diff'
+# Faster Redis library
+gem 'hiredis'
+gem 'http_accept_language'
+gem 'i18n-country-translations', github: 'thewca/i18n-country-translations'
+gem 'i18n-js'
+gem 'icalendar'
+gem 'image_processing'
 gem 'iso', github: 'thewca/ruby-iso'
-gem 'csv'
-
+gem 'jaro_winkler'
+gem 'jbuilder'
+gem 'json-schema'
+gem 'jwt'
+gem 'kaminari'
+gem 'kaminari-i18n'
+gem 'mail_form'
+gem 'mini_magick'
+gem 'momentjs-rails', github: 'derekprior/momentjs-rails'
+gem 'money-currencylayer-bank'
+gem 'money-rails'
+gem 'mysql2'
+gem 'nokogiri'
+gem 'oauth2'
+gem 'octokit'
+gem 'openssl'
+gem 'playwright-ruby-client', require: 'playwright'
+gem 'premailer-rails'
+gem 'puma'
+gem 'rack-cors', require: 'rack/cors'
+gem 'rails'
+gem 'rails-i18n'
+gem 'react-rails'
+gem 'recaptcha', require: 'recaptcha/rails'
+gem 'redcarpet'
+gem 'redis'
+gem 'rest-client'
+gem 'rqrcode'
+# Some of our very old Sprockets asset code relies on gem-bundled Bootstrap 3 (grrr...)
+#   which uses SCSS features incompatible with Dart SASS 2.
+gem 'sassc-embedded', '~> 1'
+gem 'sass-rails'
+gem 'sdoc', group: :doc
+gem 'seedbank'
 # Pointing to jfly/selectize-rails which has a workaround for
 #  https://github.com/selectize/selectize.js/issues/953
 gem 'selectize-rails', github: 'jfly/selectize-rails'
-
-gem 'aws-sdk-s3'
-gem 'aws-sdk-sqs'
-gem 'aws-sdk-rds'
-gem 'aws-sdk-cloudfront'
-
-gem 'redis'
-# Faster Redis library
-gem 'hiredis'
-gem 'mini_magick'
-gem 'mysql2'
-gem 'premailer-rails'
-gem 'nokogiri'
-gem 'cocoon'
-gem 'momentjs-rails', github: 'derekprior/momentjs-rails'
-gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', submodules: true
-gem 'blocks'
-gem 'rack-cors', require: 'rack/cors'
-gem 'api-pagination'
-gem 'daemons'
-gem 'i18n-country-translations', github: 'thewca/i18n-country-translations'
-gem 'http_accept_language'
-gem 'twitter_cldr'
 # version explicitly specified because Shakapacker wants to keep Gemfile and package.json in sync
 gem 'shakapacker', '8.2.0'
-gem 'json-schema'
-gem 'translighterate'
-gem 'enum_help'
-gem 'google-apis-admin_directory_v1'
-gem 'activestorage-validator'
-gem 'image_processing'
-gem 'rest-client'
-gem 'icalendar'
-# pointing to our fork which has Rails 7 support enabled (aka monkey-patched)
-gem 'starburst', github: 'thewca/starburst'
-gem 'react-rails'
-gem 'sprockets-rails'
-gem 'jaro_winkler'
 gem 'sidekiq'
 gem 'sidekiq-cron'
-gem 'after_commit_everywhere'
+gem 'simple_form'
 gem 'slack-ruby-client'
-gem 'puma'
-gem "tzf"
-gem 'playwright-ruby-client', require: 'playwright'
-gem 'hash_diff'
+gem 'sprockets-rails'
+# pointing to our fork which has Rails 7 support enabled (aka monkey-patched)
+gem 'starburst', github: 'thewca/starburst'
+gem 'strip_attributes'
+gem 'stripe'
+gem 'superconfig'
+gem 'terser'
+gem 'time_will_tell', github: 'thewca/time_will_tell'
+gem 'translighterate'
+gem 'twitter_cldr'
+gem 'tzf'
+gem 'valid_email'
+gem 'vault'
+gem 'wca_i18n'
 
 group :development, :test do
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'rspec-rails'
+  gem 'byebug'
+  gem 'capybara-screenshot'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'capybara-screenshot'
-
-  gem 'byebug'
-  gem 'i18n-tasks'
   gem 'i18n-spec'
-
-  # We may be able to remove this when a future version of bundler comes out.
-  # See https://github.com/bundler/bundler/issues/6929#issuecomment-459151506 and
-  # https://github.com/bundler/bundler/pull/6963 for more information.
-  gem 'irb', require: false
+  gem 'i18n-tasks'
+  gem 'rspec-rails'
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
-  gem 'overcommit', require: false
-  gem 'rubocop', require: false
-  gem 'rubocop-thread_safety', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'rubocop-rspec_rails', require: false
-  gem 'rubocop-factory_bot', require: false
-  gem 'rubocop-capybara', require: false
-  gem 'rubocop-rake', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
+  gem 'overcommit', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-capybara', require: false
+  gem 'rubocop-factory_bot', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rake', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
+  gem 'rubocop-thread_safety', require: false
   gem 'web-console'
 end
 
 group :test do
-  gem 'rake' # As per http://docs.travis-ci.com/user/languages/ruby/
-  gem 'rspec-retry'
+  gem 'capybara'
+  gem 'capybara-playwright-driver'
+  gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'launchy'
-  gem 'capybara'
   gem 'oga' # XML parsing library introduced for testing RSS feed
-  gem 'database_cleaner'
   gem 'rails-controller-testing'
-  gem 'capybara-playwright-driver'
+  gem 'rake'
+  gem 'rspec-retry'
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
   gem 'timecop'
@@ -162,7 +147,7 @@ group :test do
 end
 
 group :production do
-  gem 'rack'
   gem 'newrelic_rpm'
+  gem 'rack'
   gem 'shoryuken'
 end

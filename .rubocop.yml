@@ -40,7 +40,7 @@ Rails/I18nLocaleAssignment:
     - 'spec/support/locale_reset.rb'
 
 Bundler/OrderedGems:
-  Enabled: false
+  TreatCommentsAsGroupSeparators: false
 
 Lint/UnusedMethodArgument:
   Enabled: false
