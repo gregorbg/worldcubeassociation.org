@@ -25,6 +25,7 @@
     "@fullcalendar/luxon3": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
+    "@paypal/react-paypal-js": "^8.8.3",
     "@rails/actioncable": "^8.0.200",
     "@rails/ujs": "^7.1.501",
     "@stripe/react-stripe-js": "^3.6.0",
