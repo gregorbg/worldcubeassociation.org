@@ -451,6 +451,34 @@ class RegistrationsController < ApplicationController
     redirect_to competition_register_path(competition_id)
   end
 
+  def payment_capture
+    competition_id = params[:competition_id]
+    competition = Competition.find(competition_id)
+
+    payment_integration = params[:payment_integration].to_sym
+    payment_account = competition.payment_account_for(payment_integration)
+
+    return head :not_found if payment_account.blank?
+    return head :not_modified unless payment_account.method_defined?(:capture_payment_remote)
+
+    stored_record, secret_check = payment_account.find_payment_from_request(params)
+
+    return head :not_found if stored_record.blank?
+
+    stored_intent = stored_record.payment_intent
+
+    return head :not_found if stored_intent.blank?
+    return head :bad_request if secret_check.present? && stored_intent.client_secret != secret_check
+
+    raw_capture = payment_account.capture_payment_remote(stored_intent)
+
+    # Update our low-level bookkeeping, but not the high-level payment intent!
+    #   That happens later, when invoking the central payment_completion URL
+    stored_record.update_status(raw_capture)
+
+    render json: raw_capture
+  end
+
   def load_payment_intent
     registration = Registration.includes(:competition).find(params[:id])
 
@@ -521,56 +549,5 @@ class RegistrationsController < ApplicationController
 
     flash[:success] = 'Payment was refunded'
     redirect_to redirect_path
-  end
-
-  private def registration_from_params
-    id = params.require(:id)
-    Registration.find(id)
-  end
-
-  def capture_paypal_payment
-    return head :forbidden if PaypalInterface.paypal_disabled?
-
-    registration = registration_from_params
-
-    competition = registration.competition
-    paypal_integration = competition.payment_account_for(:paypal)
-
-    order_id = params.require(:orderID)
-
-    response = PaypalInterface.capture_payment(paypal_integration.paypal_merchant_id, order_id)
-    if response['status'] == 'COMPLETED'
-
-      # TODO: Handle the case where there are multiple captures for a payment
-      # 1) Multiple installments
-      # 2) Some failed, some succeeded
-
-      amount_details = response['purchase_units'][0]['payments']['captures'][0]['amount']
-      currency_code = amount_details['currency_code']
-      amount = PaypalRecord.amount_to_ruby(amount_details["value"], currency_code)
-      order_record = PaypalRecord.find_by(paypal_id: response["id"]) # TODO: Add error handling for the PaypalRecord not being found
-
-      # Create a Capture object and link it to the PaypalRecord
-      # NOTE: This assumes there is only ONE capture per order - not a valid long-term assumption
-      capture_from_response = response['purchase_units'][0]['payments']['captures'][0]
-
-      capture_record = PaypalRecord.create_from_api(
-        capture_from_response,
-        :capture,
-        {}, # TODO: Refactor so that we can actually capture the payload? Perhaps this needs to be called in PaypalInterface?,
-        paypal_integration.paypal_merchant_id,
-        order_record,
-      )
-
-      # Record the payment
-      registration.record_payment(
-        amount,
-        currency_code,
-        capture_record,
-        current_user.id,
-      )
-    end
-
-    render json: response
   end
 end

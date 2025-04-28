@@ -107,7 +107,6 @@ module PaypalInterface
     response.body
   end
 
-  # TODO: Update the status of the PaypalRecord object?
   def self.capture_payment(merchant_id, order_id)
     url = "/v2/checkout/orders/#{order_id}/capture"
 
