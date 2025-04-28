@@ -6,6 +6,7 @@ import StripeWrapper from './StripeWrapper';
 import I18n from '../../../lib/i18n';
 import RegistrationOverview from './RegistrationOverview';
 import { useRegistration } from '../lib/RegistrationProvider';
+import PaypalWrapper from "./PaypalWrapper";
 
 const requirementsStepConfig = {
   key: 'requirements',
@@ -22,7 +23,7 @@ const competingStepConfig = {
 const paymentStepConfig = {
   key: 'payment',
   i18nKey: 'competitions.registration_v2.register.panel.payment',
-  component: StripeWrapper,
+  component: PaypalWrapper,
 };
 
 const registrationOverviewConfig = {
@@ -76,6 +77,7 @@ export default function StepPanel({
   preferredEvents,
   user,
   stripePublishableKey,
+  paypalPublishableKey,
   connectedAccountId,
   qualifications,
   registrationCurrentlyOpen,
@@ -154,6 +156,7 @@ export default function StepPanel({
         preferredEvents={preferredEvents}
         user={user}
         stripePublishableKey={stripePublishableKey}
+        paypalPublishableKey={paypalPublishableKey}
         connectedAccountId={connectedAccountId}
         qualifications={qualifications}
         nextStep={

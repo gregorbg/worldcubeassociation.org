@@ -233,7 +233,7 @@ class Api::V1::Registrations::RegistrationsController < Api::V1::ApiController
     # We could delegate this call to the prepare_intent function given that we're already giving it registration - however,
     # in the long-term we want to decouple registrations from payments, so I'm deliberately not introducing any more tight coupling
     ruby_money = @registration.entry_fee_with_donation(iso_donation_amount)
-    payment_account = @competition.payment_account_for(:stripe)
+    payment_account = @competition.payment_account_for(:paypal)
     payment_intent = payment_account.prepare_intent(@registration, ruby_money.cents, ruby_money.currency.iso_code, @current_user)
     render json: { client_secret: payment_intent.client_secret }
   end

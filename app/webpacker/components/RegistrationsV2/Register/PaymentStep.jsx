@@ -1,7 +1,5 @@
-import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Button,
   Checkbox,
   Divider,
   Form,
@@ -11,6 +9,7 @@ import {
   Message,
   Segment,
 } from 'semantic-ui-react';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import { paymentFinishUrl } from '../../../lib/requests/routes.js.erb';
 import { useDispatch } from '../../../lib/providers/StoreProvider';
 import { showMessage } from './RegistrationMessage';
@@ -21,6 +20,7 @@ import { hasPassed } from '../../../lib/utils/dates';
 import AutonumericField from '../../wca/FormBuilder/input/AutonumericField';
 import getPaymentTicket from '../api/payment/get/getPaymentTicket';
 import { useRegistration } from '../lib/RegistrationProvider';
+import captureOrder from '../api/payment/get/captureOrder';
 
 export default function PaymentStep({
   competitionInfo,
@@ -28,10 +28,7 @@ export default function PaymentStep({
   isoDonationAmount,
   displayAmount,
   nextStep,
-  conversionFetching,
 }) {
-  const stripe = useStripe();
-  const elements = useElements();
   const dispatch = useDispatch();
 
   const { registration } = useRegistration();
@@ -47,49 +44,30 @@ export default function PaymentStep({
     }
   }, [nextStep, registration]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Call submit before doing any async work as per Stripe Documentation
-    await elements.submit();
-
+  const createOrder = useCallback(async () => {
     // Create the PaymentIntent and obtain clientSecret
-    const data = await getPaymentTicket(competitionInfo, isoDonationAmount);
+    const paymentTicket = await getPaymentTicket(competitionInfo, isoDonationAmount);
 
-    const { client_secret: clientSecret } = data;
+    return paymentTicket.client_secret;
+  }, [competitionInfo, isoDonationAmount]);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: paymentFinishUrl(competitionInfo.id, 'stripe'),
-      },
-    });
+  const handlePaypalError = useCallback((sdkError, isManualCancel = false) => {
+    dispatch(showMessage('registrations.payment_form.errors.generic.failed', 'error', {
+      provider: I18n.t('payments.payment_providers.paypal'),
+    }));
+  }, [dispatch]);
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error) {
-      // i18n-tasks-use t('registrations.payment_form.errors.generic.failed')
-      dispatch(showMessage('registrations.payment_form.errors.generic.failed', 'error', {
-        provider: I18n.t('payments.payment_providers.stripe'),
-      }));
+  const onApprove = useCallback(async (data, actions) => {
+    // Create the PaymentIntent and obtain clientSecret
+    const capturedOrder = await captureOrder(competitionInfo, 'paypal', data);
+    const orderId = capturedOrder.id;
 
-      console.error(error);
-    }
+    const rawReturnUrl = paymentFinishUrl(competitionInfo.id, 'paypal');
+    const returnUrl = `${rawReturnUrl}?orderID=${orderId}`;
 
-    setIsLoading(false);
-  };
+    return actions.redirect(returnUrl);
+  }, [competitionInfo]);
+
   if (hasPassed(competitionInfo.registration_close)) {
     return (
       <Message color="red">{I18n.t('registrations.payment_form.errors.registration_closed')}</Message>
@@ -98,8 +76,7 @@ export default function PaymentStep({
 
   return (
     <Segment>
-      <Form id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement id="payment-element" />
+      <Form id="payment-form">
         <Divider />
         { competitionInfo.enable_donations && (
           <FormField>
@@ -122,7 +99,7 @@ export default function PaymentStep({
                 <Label>
                   {I18n.t('registrations.payment_form.labels.donation')}
                 </Label>
-)}
+              )}
             />
             )}
           </FormField>
@@ -138,9 +115,12 @@ export default function PaymentStep({
                 {displayAmount}
               </Header>
               <Divider hidden />
-              <Button type="submit" primary disabled={isLoading || conversionFetching || !stripe || !elements} id="submit">
-                {I18n.t('registrations.payment_form.button_text')}
-              </Button>
+              <PayPalButtons
+                onCancel={(err) => handlePaypalError(err, true)}
+                onError={(err) => handlePaypalError(err, false)}
+                createOrder={createOrder}
+                onApprove={onApprove}
+              />
             </>
           )}
       </Form>

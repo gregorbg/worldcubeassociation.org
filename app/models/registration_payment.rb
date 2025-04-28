@@ -21,7 +21,7 @@ class RegistrationPayment < ApplicationRecord
   end
 
   def payment_status
-    case receipt.stripe_record_type
+    case receipt.paypal_record_type
     when "refund"
       "refund"
     else

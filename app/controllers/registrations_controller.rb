@@ -459,7 +459,7 @@ class RegistrationsController < ApplicationController
     payment_account = competition.payment_account_for(payment_integration)
 
     return head :not_found if payment_account.blank?
-    return head :not_modified unless payment_account.method_defined?(:capture_payment_remote)
+    return head :not_modified unless payment_account.respond_to?(:capture_payment_remote)
 
     stored_record, secret_check = payment_account.find_payment_from_request(params)
 

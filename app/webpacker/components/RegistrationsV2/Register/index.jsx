@@ -24,6 +24,7 @@ export default function Index({
   preferredEvents,
   qualifications,
   stripePublishableKey = '',
+  paypalPublishableKey = '',
   connectedAccountId = '',
   cannotRegisterReasons,
   isProcessing = false,
@@ -43,6 +44,7 @@ export default function Index({
               userCanPreRegister={userCanPreRegister}
               preferredEvents={preferredEvents}
               stripePublishableKey={stripePublishableKey}
+              paypalPublishableKey={paypalPublishableKey}
               connectedAccountId={connectedAccountId}
               qualifications={qualifications}
               cannotRegisterReasons={cannotRegisterReasons}
@@ -62,6 +64,7 @@ function Register({
   preferredEvents,
   connectedAccountId,
   stripePublishableKey,
+  paypalPublishableKey,
   cannotRegisterReasons,
 }) {
   const registrationAlreadyOpen = usePerpetualState(
@@ -114,6 +117,7 @@ function Register({
             registration={registration}
             connectedAccountId={connectedAccountId}
             stripePublishableKey={stripePublishableKey}
+            paypalPublishableKey={paypalPublishableKey}
             qualifications={qualifications}
             registrationCurrentlyOpen={registrationCurrentlyOpen}
           />
