@@ -238,9 +238,6 @@ Rails/SkipsModelValidations:
 Rails/RedundantForeignKey:
   Enabled: false
 
-Rails/InverseOf:
-  Enabled: false
-
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
