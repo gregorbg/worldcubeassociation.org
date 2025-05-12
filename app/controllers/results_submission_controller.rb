@@ -36,6 +36,13 @@ class ResultsSubmissionController < ApplicationController
 
   def convert_xlsx
     @competition = competition_from_params
+
+    uploaded_file = params.require(:workbook_assistant).require(:workbook)
+    file_buffer = uploaded_file.read
+
+    workbook = RubyXL::Parser.parse_buffer(file_buffer)
+
+    render json: { success: true, workbook: workbook.worksheets.map(&:sheet_name) }
   end
 
   def create

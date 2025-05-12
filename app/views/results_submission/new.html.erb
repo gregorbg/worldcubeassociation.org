@@ -14,6 +14,13 @@
         <li>Then the website will run a number of checks. If everything is correct you'll be able to submit these results to the WRT.</li>
       </ul>
     </p>
+
+    <%= simple_form_for :workbook_assistant, url: competition_convert_results_xlsx_path(@competition) do |f| %>
+      <%= f.input :workbook, as: :file, input_html: { accept: '.xlsx' },
+                  label: t('results.import.workbook_file_label'), hint: t('results.import.workbook_file_hint') %>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+
     <%= render "submit_json_panel", upload_json: @upload_json, already_has_submitted_result: @results_validator.any_results? %>
 
     <%= render "check_results_panel",
