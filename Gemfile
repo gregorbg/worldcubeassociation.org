@@ -103,6 +103,7 @@ gem 'puma'
 gem "tzf"
 gem 'playwright-ruby-client', require: 'playwright'
 gem 'hash_diff'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'spring'
