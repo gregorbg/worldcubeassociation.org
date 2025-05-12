@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     get 'submit-results' => 'results_submission#new', as: :submit_results_edit
     post 'submit-results' => 'results_submission#create', as: :submit_results
     post 'upload-json' => 'results_submission#upload_json', as: :upload_results_json
+    post 'convert-xlsx' => 'results_submission#convert_xlsx', as: :convert_results_xlsx
     # WRT views and action
     get '/admin/upload-results' => "admin#new_results", as: :admin_upload_results_edit
     get '/admin/check-existing-results' => "admin#check_competition_results", as: :admin_check_existing_results

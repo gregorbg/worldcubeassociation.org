@@ -34,6 +34,10 @@ class ResultsSubmissionController < ApplicationController
     end
   end
 
+  def convert_xlsx
+    @competition = competition_from_params
+  end
+
   def create
     # Check inbox, create submission, send email
     @competition = competition_from_params
