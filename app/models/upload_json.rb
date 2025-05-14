@@ -102,10 +102,10 @@ class UploadJson
                   round_type_id: round["roundId"],
                   group_id: group["group"],
                   is_extra: scramble_type == "extraScrambles",
-                  scramble_num: index + 1,
-                  scramble: scramble,
+                  scramble_number: index + 1,
+                  scramble_string: scramble,
                 }
-                scrambles_to_import << Scramble.new(new_scramble_attributes)
+                scrambles_to_import << InboxScramble.new(new_scramble_attributes)
               end
             end
           end
@@ -115,9 +115,9 @@ class UploadJson
         ActiveRecord::Base.transaction do
           InboxPerson.where(competition_id: competition_id).delete_all
           InboxResult.where(competition_id: competition_id).delete_all
-          Scramble.where(competition_id: competition_id).delete_all
+          InboxScramble.where(competition_id: competition_id).delete_all
           InboxPerson.import!(persons_to_import)
-          Scramble.import!(scrambles_to_import)
+          InboxScramble.import!(scrambles_to_import)
           InboxResult.import!(results_to_import)
         end
         true
@@ -126,7 +126,7 @@ class UploadJson
         false
       rescue ActiveRecord::RecordInvalid => e
         object = e.record
-        if object.instance_of?(Scramble)
+        if object.instance_of?(InboxScramble)
           errors.add(:results_file, "Scramble in '#{Round.name_from_attributes_id(object.event_id, object.round_type_id)}' is invalid (#{e.message}), please fix it!")
         elsif object.instance_of?(InboxPerson)
           errors.add(:results_file, "Person #{object.name} is invalid (#{e.message}), please fix it!")
