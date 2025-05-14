@@ -224,6 +224,7 @@ module DatabaseDumper
     }.freeze,
     "inbox_persons" => :skip_all_rows,
     "inbox_results" => :skip_all_rows,
+    "inbox_scrambles" => :skip_all_rows,
     "persons" => {
       column_sanitizers: actions_to_column_sanitizers(
         copy: %w[

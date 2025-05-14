@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_14_135956) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_14_141238) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -667,6 +667,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_14_135956) do
     t.index ["event_id"], name: "InboxResults_fk_event"
     t.index ["format_id"], name: "InboxResults_fk_format"
     t.index ["round_type_id"], name: "InboxResults_fk_round"
+  end
+
+  create_table "inbox_scrambles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "competition_id", null: false
+    t.string "event_id", null: false
+    t.string "round_type_id", null: false
+    t.string "group_id", null: false
+    t.boolean "is_extra", default: false, null: false
+    t.integer "scramble_number", null: false
+    t.text "scramble_string", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_inbox_scrambles_on_competition_id"
+    t.index ["event_id"], name: "fk_rails_baa35c0503"
+    t.index ["round_type_id"], name: "fk_rails_be2f9b1dec"
   end
 
   create_table "incident_competitions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -1501,6 +1516,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_14_135956) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "inbox_scrambles", "events"
+  add_foreign_key "inbox_scrambles", "round_types"
   add_foreign_key "live_attempt_history_entries", "live_attempts"
   add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
   add_foreign_key "payment_intents", "users", column: "initiated_by_id"
