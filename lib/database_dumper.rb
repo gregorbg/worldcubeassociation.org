@@ -224,8 +224,6 @@ module DatabaseDumper
     }.freeze,
     "inbox_persons" => :skip_all_rows,
     "inbox_results" => :skip_all_rows,
-    "inbox_scramble_sets" => :skip_all_rows,
-    "inbox_scrambles" => :skip_all_rows,
     "persons" => {
       column_sanitizers: actions_to_column_sanitizers(
         copy: %w[
@@ -456,6 +454,8 @@ module DatabaseDumper
     "live_results" => :skip_all_rows,
     "live_attempts" => :skip_all_rows,
     "live_attempt_history_entries" => :skip_all_rows,
+    "prepared_scramble_sets" => :skip_all_rows,
+    "prepared_scrambles" => :skip_all_rows,
     "schedule_activities" => {
       where_clause: "WHERE (holder_type=\"ScheduleActivity\" AND holder_id IN (#{VISIBLE_ACTIVITY_IDS}) or id in (#{VISIBLE_ACTIVITY_IDS}))",
       column_sanitizers: actions_to_column_sanitizers(
