@@ -53,6 +53,10 @@ module ResultsValidators
       true
     end
 
+    def include_scrambles?
+      true
+    end
+
     protected def validate_competitions(competition_ids, check_real_results)
       if @memory_batch.present?
         competition_ids.each_slice(@memory_batch) do |batch_ids|

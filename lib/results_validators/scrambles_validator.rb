@@ -18,10 +18,13 @@ module ResultsValidators
       false
     end
 
+    def include_scrambles?
+      true
+    end
+
     def competition_associations
       {
         events: [],
-        scrambles: [],
         competition_events: {
           rounds: [:competition_event],
         },
@@ -31,14 +34,14 @@ module ResultsValidators
     def run_validation(validator_data)
       validator_data.each do |competition_data|
         competition = competition_data.competition
-        results_for_comp = competition_data.results
 
-        scrambles = competition.scrambles
+        results_for_comp = competition_data.results
+        scrambles_for_comp = competition_data.scrambles
 
         # Get actual round ids from results
         rounds_ids = results_for_comp.map { |r| "#{r.event_id}-#{r.round_type_id}" }.uniq
 
-        if results_for_comp.any? && scrambles.none?
+        if results_for_comp.any? && scrambles_for_comp.none?
           @errors << ValidationError.new(MISSING_SCRAMBLES_FOR_COMPETITION_ERROR,
                                          :scrambles, competition.id,
                                          competition_id: competition.id)
@@ -46,7 +49,7 @@ module ResultsValidators
         end
 
         # Group scramble by round_id
-        scrambles_by_round_id = scrambles.group_by { |s| "#{s.event_id}-#{s.round_type_id}" }
+        scrambles_by_round_id = scrambles_for_comp.group_by { |s| "#{s.event_id}-#{s.round_type_id}" }
         detected_scrambles_rounds_ids = scrambles_by_round_id.keys
         (rounds_ids - detected_scrambles_rounds_ids).each do |round_id|
           @errors << ValidationError.new(MISSING_SCRAMBLES_FOR_ROUND_ERROR,

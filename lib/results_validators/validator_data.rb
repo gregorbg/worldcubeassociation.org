@@ -6,7 +6,7 @@ module ResultsValidators
 
     BACKOFF_INT_MAX = 2_147_483_648
 
-    attr_accessor :competition, :results, :persons
+    attr_accessor :competition, :results, :persons, :scrambles
 
     def self.from_competitions(validator, competition_ids, check_real_results, batch_size: nil)
       associations = self.load_associations(validator, check_real_results: check_real_results)
@@ -50,6 +50,11 @@ module ResultsValidators
         associations.deep_merge!({ persons_assoc => assoc_models })
       end
 
+      if validator.include_scrambles?
+        scrambles_assoc = check_real_results ? :scrambles : :inbox_scrambles
+        associations.deep_merge!({ scrambles_assoc => [] })
+      end
+
       associations
     end
 
@@ -86,6 +91,10 @@ module ResultsValidators
 
       if validator.include_persons?
         data.persons = check_real_results ? competition.competitors : competition.inbox_persons
+      end
+
+      if validator.include_scrambles?
+        data.scrambles = check_real_results ? competition.scrambles : competition.inbox_scrambles
       end
 
       data
