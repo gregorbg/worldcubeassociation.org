@@ -70,6 +70,7 @@ class AdminController < ApplicationController
       result: Result,
       scramble: Scramble,
       inbox_result: InboxResult,
+      inbox_scramble: InboxScramble,
       inbox_person: InboxPerson,
       newcomer_person: InboxPerson.where(wca_id: ''),
       newcomer_result: Result.select(:person_id).distinct.where("person_id REGEXP '^[0-9]+$'"),
@@ -125,6 +126,11 @@ class AdminController < ApplicationController
 
       Result.insert_all!(result_rows)
       @competition.inbox_results.destroy_all
+
+      scramble_rows = @competition.inbox_scrambles.map { it.slice(*Scramble.column_names) }
+
+      Scramble.insert_all!(scramble_rows)
+      @competition.inbox_scrambles.destroy_all
     end
 
     load_result_posting_steps do
@@ -140,6 +146,8 @@ class AdminController < ApplicationController
     case inbox_model
     when :inbox_result
       @competition.inbox_results.destroy_all
+      # Temporarily grouped under the `inbox_result` step
+      @competition.inbox_scrambles.destroy_all
     when :inbox_person
       # Ugly hack because we don't have primary keys on InboxPerson, also see comment on `InboxPerson#delete`
       @competition.inbox_persons.each(&:delete)
