@@ -63,7 +63,7 @@ export default function ScrambleMatch({
         <Table.Row>
           <Table.HeaderCell />
           <Table.HeaderCell>Assigned Scrambles</Table.HeaderCell>
-          {moveAwayAction && (<Table.HeaderCell>Move</Table.HeaderCell>)}
+          {computeRowDetails && (<Table.HeaderCell>Details</Table.HeaderCell>)}
         </Table.Row>
       </Table.Header>
       <DragDropContext
@@ -120,25 +120,27 @@ export default function ScrambleMatch({
                                     <>
                                       {computeRowName(rowData)}
                                       {' '}
-                                      {computeRowDetails && (
-                                        <Popup
-                                          trigger={<Icon name="info circle" />}
-                                          position="right center"
-                                          style={{ whiteSpace: 'pre-line' }}
-                                        >
-                                          {computeRowDetails(rowData)}
-                                        </Popup>
+                                      {moveAwayAction && (
+                                        <Icon
+                                          name="arrows alternate horizontal"
+                                          link
+                                          onClick={() => moveAwayAction(rowData)}
+                                        />
                                       )}
                                     </>
                                   )}
                               </Table.Cell>
-                              {moveAwayAction && (
+                              {computeRowDetails && (
                                 <Table.Cell textAlign="center" collapsing icon>
-                                  <Icon
-                                    name="arrows alternate horizontal"
-                                    link
-                                    onClick={() => moveAwayAction(rowData)}
-                                  />
+                                  {computeRowDetails && (
+                                    <Popup
+                                      trigger={<Icon name="info circle" />}
+                                      position="left center"
+                                      style={{ whiteSpace: 'pre-line' }}
+                                    >
+                                      {computeRowDetails(rowData)}
+                                    </Popup>
+                                  )}
                                 </Table.Cell>
                               )}
                             </Table.Row>
