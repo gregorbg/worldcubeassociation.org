@@ -116,19 +116,7 @@ export default function ScrambleMatch({
                                 <Icon name={hasError ? 'exclamation triangle' : 'bars'} />
                                 {hasError
                                   ? 'Missing scramble set'
-                                  : (
-                                    <>
-                                      {computeRowName(rowData)}
-                                      {' '}
-                                      {moveAwayAction && (
-                                        <Icon
-                                          name="arrows alternate horizontal"
-                                          link
-                                          onClick={() => moveAwayAction(rowData)}
-                                        />
-                                      )}
-                                    </>
-                                  )}
+                                  : computeRowName(rowData)}
                               </Table.Cell>
                               {computeRowDetails && (
                                 <Table.Cell textAlign="center" collapsing icon>

@@ -1,8 +1,9 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import {
-  Button, Form, Header, Modal,
+  Button, Form, Header, Modal, Ref,
 } from 'semantic-ui-react';
 import { activityCodeToName } from '@wca/helpers';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import ScrambleMatch from './ScrambleMatch';
 import I18n from '../../lib/i18n';
 import Groups from './Groups';
@@ -185,10 +186,13 @@ function RoundsPicker({
   showGroupsPicker = false,
 }) {
   const [selectedRoundId, setSelectedRoundId] = useState();
+
   const selectedRound = useMemo(
     () => wcifRounds.find((r) => r.id === selectedRoundId),
     [wcifRounds, selectedRoundId],
   );
+
+  const onDragEnd = (result) => console.log('hello', result);
 
   return (
     <>
@@ -203,19 +207,28 @@ function RoundsPicker({
           {I18n.t('competitions.index.clear')}
         </Button>
       </Header>
-      <Button.Group>
-        {wcifRounds.map((round) => (
-          <Button
-            key={round.id}
-            toggle
-            basic
-            active={round.id === selectedRoundId}
-            onClick={() => setSelectedRoundId(round.id)}
-          >
-            {activityCodeToName(round.id)}
-          </Button>
-        ))}
-      </Button.Group>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Button.Group>
+          {wcifRounds.map((round) => (
+            <Droppable key={round.id} droppableId={round.id}>
+              {(providedDroppable) => (
+                <Ref innerRef={providedDroppable.innerRef}>
+                  <Button
+                    key={round.id}
+                    {...providedDroppable.droppableProps}
+                    toggle
+                    basic
+                    active={round.id === selectedRoundId}
+                    onClick={() => setSelectedRoundId(round.id)}
+                  >
+                    {activityCodeToName(round.id)}
+                  </Button>
+                </Ref>
+              )}
+            </Droppable>
+          ))}
+        </Button.Group>
+      </DragDropContext>
       {selectedRound && (
         <SelectedRoundPanel
           selectedRound={selectedRound}
