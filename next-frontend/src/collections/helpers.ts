@@ -15,6 +15,7 @@ export const markdownConvertedField = (
   return {
     name: convertedName,
     type: "textarea",
+    virtual: true,
     admin: {
       hidden: true,
     },
@@ -35,13 +36,6 @@ export const markdownConvertedField = (
               ) as RichTextField,
             }),
           });
-        },
-      ],
-      beforeChange: [
-        ({ siblingData }) => {
-          // Ensure that the markdown field is not saved in the database
-          delete siblingData[convertedName];
-          return null;
         },
       ],
     },
