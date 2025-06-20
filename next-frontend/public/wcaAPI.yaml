@@ -1268,6 +1268,14 @@ components:
           type: integer
         extensions:
           type: array
+      required:
+        - id
+        - name
+        - activityCode
+        - startTime
+        - endTime
+        - childActivities
+        - extensions
 
     WcifCountryCode:
       type: string
