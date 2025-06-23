@@ -244,7 +244,7 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-bootstrap-views (1.1.0)
-    devise-i18n (1.13.0)
+    devise-i18n (1.14.0)
       devise (>= 4.9.0)
       rails-i18n
     devise-jwt (0.12.1)
@@ -660,7 +660,7 @@ GEM
       ffi (~> 1.0)
     rb_sys (0.9.115)
       rake-compiler-dock (= 1.9.1)
-    rdoc (6.14.0)
+    rdoc (6.14.1)
       erb
       psych (>= 4.0.0)
     react-rails (3.2.1)
@@ -1185,7 +1185,7 @@ CHECKSUMS
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   devise (4.9.4) sha256=920042fe5e704c548aa4eb65ebdd65980b83ffae67feb32c697206bfd975a7f8
   devise-bootstrap-views (1.1.0) sha256=50a39af0656676eabea5d0eacfe74cb5016c25e20f38f333bfdac641f66d3335
-  devise-i18n (1.13.0) sha256=306753c8ba4c687bdab82bc71daeab566b2286fb3f52311b88e54556f45f2f2e
+  devise-i18n (1.14.0) sha256=15a2cf1ab849d725b65d3aae3e4529654436540c03ad2e32978f0b86a82a0ddb
   devise-jwt (0.12.1) sha256=92d54de07f7769a05df9bd838b2d0ff3a86e6311924136328e9bf7d9afa78810
   devise-two-factor (6.1.0) sha256=90389ea00e6eab999f1868311972b6f4c84e6d7d6d1e90990eea8fcaf3372c10
   diff-lcs (1.6.1) sha256=12a5a83f3e37a8e2f4427268e305914d5f1879f22b4e73bb1a09f76a3dd86cd4
@@ -1366,7 +1366,7 @@ CHECKSUMS
   rb-fsevent (0.11.0) sha256=3a02b6360c856cc16e7f62382573b238f5cfb61a48169dd4c83b842c094b5de3
   rb-inotify (0.10.1) sha256=050062d4f31d307cca52c3f6a7f4b946df8de25fc4bd373e1a5142e41034a7ca
   rb_sys (0.9.115) sha256=4696a623b89131f4a12bd9e38710add1c64b478dc3d2e9275f61a65f42f743ec
-  rdoc (6.14.0) sha256=2c46de58d7129b8743fcf6d76e3db971bdc914150e15ac06b386549bd82ed7db
+  rdoc (6.14.1) sha256=905efa796cd296ef252af4fb31fe41c073dee894de6aad715821f335c632516b
   react-rails (3.2.1) sha256=2235db0b240517596b1cb3e26177ab5bc64d3a56579b0415ee242b1691f81f64
   recaptcha (5.19.0) sha256=b69c021a5b788da06901d2c95ab86f10a8634e6496343096cc5167f0318b2a39
   redcarpet (3.6.1) sha256=d444910e6aa55480c6bcdc0cdb057626e8a32c054c29e793fa642ba2f155f445
