@@ -30,6 +30,8 @@ i18next
       prefix: "%{",
       suffix: "}",
     },
+    keySeparator: false,
+    pluralSeparator: ".",
     detection: {
       order: ["cookie", "navigator"],
       lookupCookie: storageKey,
