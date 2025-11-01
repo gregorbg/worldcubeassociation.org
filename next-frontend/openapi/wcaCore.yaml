@@ -14,6 +14,8 @@ servers:
 paths:
   /v1/competitions/{competitionId}/registrations:
     $ref: 'paths/registrations/registrationsByCompetition.yaml'
+  /v1/competitions/{competitionId}/registration_config:
+    $ref: 'paths/registrations/registrationConfigForCompetition.yaml'
 
   /v0/competitions/{competitionId}/:
     $ref: 'paths/competitions/competitionById.yaml'

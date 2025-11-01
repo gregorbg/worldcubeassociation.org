@@ -1,0 +1,25 @@
+type: object
+properties:
+  eventId:
+    type: string
+    example: '333'
+  best:
+    $ref: './WcifAttemptResult.yaml'
+  type:
+    type: string
+    enum:
+      - single
+      - average
+  worldRanking:
+    type: integer
+  continentalRanking:
+    type: integer
+  nationalRanking:
+    type: integer
+required:
+  - eventId
+  - best
+  - type
+  - worldRanking
+  - continentalRanking
+  - nationalRanking

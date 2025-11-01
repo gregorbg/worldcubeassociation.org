@@ -21,6 +21,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/competitions/{competitionId}/registration_config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get registration config for a competition */
+        get: operations["competitionRegistrationConfig"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v0/competitions/{competitionId}/": {
         parameters: {
             query?: never;
@@ -452,6 +469,106 @@ export interface components {
                 updated_at?: string;
             };
         };
+        BaseRegistrationConfig: {
+            key: string;
+            isEditable: boolean;
+        };
+        RequirementsStepConfig: components["schemas"]["BaseRegistrationConfig"] & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            key: "requirements";
+        };
+        WcifAttemptResult: number;
+        WcifQualificationAttemptResult: {
+            /** Format: date */
+            whenDate: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "attemptResult";
+            /** @enum {string} */
+            resultType: "single" | "average";
+            level: components["schemas"]["WcifAttemptResult"];
+        };
+        WcifRanking: number;
+        WcifQualificationRanking: {
+            /** Format: date */
+            whenDate: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "ranking";
+            /** @enum {string} */
+            resultType: "single" | "average";
+            level: components["schemas"]["WcifRanking"];
+        };
+        WcifQualificationAnyResult: {
+            /** Format: date */
+            whenDate: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "anyResult";
+            /** @enum {string} */
+            resultType: "single" | "average";
+        };
+        WcifQualification: components["schemas"]["WcifQualificationAttemptResult"] | components["schemas"]["WcifQualificationRanking"] | components["schemas"]["WcifQualificationAnyResult"];
+        WcifPersonalBest: {
+            /** @example 333 */
+            eventId: string;
+            best: components["schemas"]["WcifAttemptResult"];
+            /** @enum {string} */
+            type: "single" | "average";
+            worldRanking: number;
+            continentalRanking: number;
+            nationalRanking: number;
+        };
+        CompetingStepConfig: components["schemas"]["BaseRegistrationConfig"] & {
+            parameters: {
+                events_per_registration_limit?: number;
+                allow_registration_edits: boolean;
+                /** @enum {string} */
+                guest_entry_status: "unclear" | "free" | "restricted";
+                guests_per_registration_limit?: number;
+                guests_enabled: boolean;
+                "uses_qualification?": boolean;
+                allow_registration_without_qualification: boolean;
+                force_comment_in_registration: boolean;
+                qualification_wcif: {
+                    [key: string]: components["schemas"]["WcifQualification"];
+                };
+                event_ids: string[];
+                preferredEvents: string[];
+                personalRecords: {
+                    single: components["schemas"]["WcifPersonalBest"][];
+                    average: components["schemas"]["WcifPersonalBest"][];
+                };
+            };
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            key: "competing";
+        };
+        PaymentStepConfig: components["schemas"]["BaseRegistrationConfig"] & {
+            parameters: {
+                stripePublishableKey: string;
+                connectedAccountId: string;
+            };
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            key: "payment";
+        };
+        RegistrationConfig: components["schemas"]["RequirementsStepConfig"] | components["schemas"]["CompetingStepConfig"] | components["schemas"]["PaymentStepConfig"];
         UserAvatar: {
             /**
              * Format: uri
@@ -614,9 +731,11 @@ export interface components {
             longitude_degrees: number;
             /** @example US */
             country_iso2: string;
-            /** @example [
+            /**
+             * @example [
              *       "333"
-             *     ] */
+             *     ]
+             */
             event_ids: string[];
             /** @example 333 */
             main_event_id: string;
@@ -633,13 +752,11 @@ export interface components {
             centiseconds: number;
             cumulativeRoundIds: string[];
         };
-        WcifAttemptResult: number;
         WcifCutoff: {
             /** @example 2 */
             numberOfAttempts: number;
             attemptResult: components["schemas"]["WcifAttemptResult"];
         };
-        WcifRanking: number;
         WcifAdvancementConditionRanking: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -699,42 +816,6 @@ export interface components {
             scrambleSets: components["schemas"]["WcifScrambleSet"][];
             extensions: unknown[];
         };
-        WcifQualificationAttemptResult: {
-            /** Format: date */
-            whenDate: string;
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "attemptResult";
-            /** @enum {string} */
-            resultType: "single" | "average";
-            level: components["schemas"]["WcifAttemptResult"];
-        };
-        WcifQualificationRanking: {
-            /** Format: date */
-            whenDate: string;
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "ranking";
-            /** @enum {string} */
-            resultType: "single" | "average";
-            level: components["schemas"]["WcifRanking"];
-        };
-        WcifQualificationAnyResult: {
-            /** Format: date */
-            whenDate: string;
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "anyResult";
-            /** @enum {string} */
-            resultType: "single" | "average";
-        };
-        WcifQualification: components["schemas"]["WcifQualificationAttemptResult"] | components["schemas"]["WcifQualificationRanking"] | components["schemas"]["WcifQualificationAnyResult"];
         WcifEvent: {
             /** @example 333 */
             id: string;
@@ -1225,6 +1306,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RegistrationDataV2"][];
+                };
+            };
+        };
+    };
+    competitionRegistrationConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                competitionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegistrationConfig"][];
                 };
             };
         };
