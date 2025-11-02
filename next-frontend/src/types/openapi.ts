@@ -742,8 +742,8 @@ export interface components {
             /** @example 123 */
             number_of_bookmarks: number;
             "uses_qualification?": boolean;
-            /** @example true */
             "registration_full?": boolean;
+            "registration_full_and_accepted?": boolean;
             delegates: components["schemas"]["Person"][];
             organizers: components["schemas"]["Organizer"][];
         };
