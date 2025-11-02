@@ -67,7 +67,7 @@ export default function TabMenu({
         <Tabs.Trigger value="custom-2">Custom 2</Tabs.Trigger>
         <Tabs.Trigger value="custom-3">Custom 3</Tabs.Trigger>
       </Tabs.List>
-      <Tabs.Content value={currentPath!}>{children}</Tabs.Content>
+      <Tabs.Content width="full" value={currentPath!}>{children}</Tabs.Content>
     </Tabs.Root>
   );
 }
