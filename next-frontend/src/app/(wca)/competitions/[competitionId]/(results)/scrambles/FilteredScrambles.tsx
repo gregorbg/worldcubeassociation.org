@@ -35,8 +35,6 @@ export default function FilteredScrambles({
         selectedEvents={[activeEventId]}
         onEventClick={setActiveEventId}
         eventList={competitionInfo.event_ids}
-        hideAllButton
-        hideClearButton
       />
       {_.map(scramblesByEvent, (scrambles, roundFormat) => {
         const scramblesByGroup = _.groupBy(scrambles, "group_id");

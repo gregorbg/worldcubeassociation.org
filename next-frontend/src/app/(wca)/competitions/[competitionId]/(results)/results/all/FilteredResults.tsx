@@ -34,8 +34,6 @@ export default function FilteredResults({
         selectedEvents={[activeEventId]}
         onEventClick={setActiveEventId}
         eventList={competitionInfo.event_ids}
-        hideAllButton
-        hideClearButton
       />
       {_.map(results, (results, roundFormat) => (
         <Fragment key={`${activeEventId}-${roundFormat}`}>

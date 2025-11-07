@@ -158,8 +158,6 @@ function FilterBox({ filterState, filterActions, children }: FilterBoxProps) {
               ? filterActions.setEvent("all events")
               : filterActions.setEvent(event)
           }
-          hideAllButton
-          hideClearButton
         />
         <RegionSelector
           region={filterState.region}
