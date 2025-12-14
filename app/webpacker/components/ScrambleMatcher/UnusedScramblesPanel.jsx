@@ -38,7 +38,7 @@ const filterUnusedItems = (
   const masterItems = scrambleFileMaster[currentKey];
   const workingItems = matchState?.[currentKey];
 
-  const usedIds = workingItems?.map((itm) => itm.id);
+  const usedIds = workingItems?.filter(Boolean)?.map((itm) => itm.id);
 
   const unusedItems = masterItems.filter((masterItem) => !usedIds?.includes(masterItem.id));
   const unusedResult = unusedItems.map((entity) => ({ entity, pickerHistory: history }));

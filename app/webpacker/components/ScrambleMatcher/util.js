@@ -114,8 +114,38 @@ export function moveArrayItem(arr, fromIndex, toIndex) {
   ];
 }
 
-export function addItemToArray(arr, entity, targetIdx = arr.length) {
+export function addItemToArray(arr, entity, targetIdx = undefined) {
+  if (targetIdx === undefined) {
+    const smartTargetIdx = arr.findIndex((itm) => itm === undefined);
+
+    if (smartTargetIdx === -1) {
+      return [...arr, entity];
+    }
+
+    return [
+      ...arr.slice(0, smartTargetIdx),
+      entity,
+      ...arr.slice(smartTargetIdx + 1),
+    ];
+  }
+
   return arr.toSpliced(targetIdx, 0, entity);
+}
+
+export function deleteItemFromArray(arr, entity, trimEnd = true) {
+  const withRemoved = arr.map((ent) => (ent?.id === entity.id ? undefined : ent));
+
+  if (trimEnd) {
+    const lastValid = withRemoved.findLastIndex((itm) => itm !== undefined);
+
+    if (lastValid >= 0) {
+      return withRemoved.slice(0, lastValid + 1);
+    }
+
+    return [];
+  }
+
+  return withRemoved;
 }
 
 export const searchRecursive = (data, targetStep, currentKey = 'events', searchHistory = []) => {
@@ -123,6 +153,10 @@ export const searchRecursive = (data, targetStep, currentKey = 'events', searchH
 
   return data[currentKey]?.reduce((foundPath, item, index) => {
     if (foundPath) return foundPath;
+
+    if (item === undefined) {
+      return null;
+    }
 
     const nextHistory = [
       ...searchHistory,
@@ -180,8 +214,8 @@ export function computeMatchingProgress(wcifEvents) {
         return {
           id: wcifRound.id,
           expected: wcifRound.scrambleSetCount,
-          actual: wcifRound.scrambleSets?.length ?? 0,
-          scrambleSets: wcifRound.scrambleSets?.map(
+          actual: wcifRound.scrambleSets?.filter(Boolean)?.length ?? 0,
+          scrambleSets: wcifRound.scrambleSets?.filter(Boolean).map(
             (scrSet, idx) => ({
               id: scrSet.id,
               index: idx,
