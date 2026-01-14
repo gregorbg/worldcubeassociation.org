@@ -538,15 +538,9 @@ class CompetitionsController < ApplicationController
       end
 
       if new_id && !competition.update(id: new_id)
-        # Changing the competition id breaks all our associations, and our view
-        # code was not written to handle this. Rather than trying to update our view
-        # code, just revert the attempted id change. The user will have to deal with
-        # editing the ID text box manually. This will go away once we have proper
-        # immutable ids for competitions.
-        return render json: {
-          status: "ok",
-          redirect: competition_admin_view ? competition_admin_edit_path(competition) : edit_competition_path(competition),
-        }
+        # Changing the competition ID did not work for some reason,
+        # so we should report to the user the reasons for that error.
+        return render status: :bad_request, json: competition.form_errors
       end
 
       new_organizers = competition.organizers - old_organizers
