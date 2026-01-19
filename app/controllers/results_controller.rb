@@ -35,11 +35,11 @@ class ResultsController < ApplicationController
 
     # Default params
     params[:region] ||= REGION_WORLD
-    params[:years] = YEARS_ALL # FIXME: this is disabling years filters for now
+    params[:years] ||= YEARS_ALL
     params[:show] ||= SHOW_100_PERSONS
     params[:gender] ||= GENDER_ALL
 
-    params[:show] = params[:show].gsub(/\d+/, "100") # FIXME: this is disabling anything except show 100 for now
+    #params[:show] = params[:show].gsub(/\d+/, "100") # FIXME: this is disabling anything except show 100 for now
 
     shared_constants_and_conditions
 
@@ -175,7 +175,7 @@ class ResultsController < ApplicationController
     # Default params
     params[:event_id] ||= EVENTS_ALL
     params[:region] ||= REGION_WORLD
-    params[:years] = YEARS_ALL # FIXME: this is disabling years filters for now
+    params[:years] ||= YEARS_ALL
     params[:show] ||= SHOW_MIXED
     params[:gender] ||= GENDER_ALL
 

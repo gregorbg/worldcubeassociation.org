@@ -13,6 +13,7 @@ const ActionTypes = {
   SET_RANKING_TYPE: 'SET_RANKING_TYPE',
   SET_GENDER: 'SET_GENDER',
   SET_SHOW: 'SET_SHOW',
+  SET_YEARS: 'SET_YEARS',
 };
 
 function parseInitialStateFromUrl(url) {
@@ -30,6 +31,7 @@ function parseInitialStateFromUrl(url) {
   const region = params.get('region') || 'world'; // Default to 'all' if not provided
   const gender = params.get('gender') || 'All'; // Default to 'all' if not provided
   const show = params.get('show') || '100 persons'; // Default to 'Persons' if not provided
+  const years = params.get('years') || 'all years'; // Default to 'All Years' if not provided
 
   return {
     event,
@@ -37,6 +39,7 @@ function parseInitialStateFromUrl(url) {
     gender,
     show,
     rankingType,
+    years,
   };
 }
 
@@ -55,6 +58,8 @@ function filterReducer(state, action) {
       return { ...state, gender: action.payload };
     case ActionTypes.SET_SHOW:
       return { ...state, show: action.payload };
+    case ActionTypes.SET_YEARS:
+      return { ...state, years: action.payload };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -85,17 +90,18 @@ export function Rankings() {
         (rankingType) => dispatch({ type: ActionTypes.SET_RANKING_TYPE, payload: rankingType }),
       setGender: (gender) => dispatch({ type: ActionTypes.SET_GENDER, payload: gender }),
       setShow: (show) => dispatch({ type: ActionTypes.SET_SHOW, payload: show }),
+      setYears: (years) => dispatch({ type: ActionTypes.SET_YEARS, payload: years }),
     }),
     [dispatch],
   );
 
   const {
-    event, region, rankingType, gender, show,
+    event, region, rankingType, gender, show, years,
   } = filterState;
 
   useEffect(() => {
-    window.history.replaceState(null, '', rankingsUrl(event, rankingType, region, gender, show));
-  }, [event, region, rankingType, gender, show]);
+    window.history.replaceState(null, '', rankingsUrl(event, rankingType, region, gender, show, years));
+  }, [event, region, rankingType, gender, show, years]);
 
   return (
     <Container fluid>

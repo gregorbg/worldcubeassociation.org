@@ -35,6 +35,7 @@ export default function ResultsFilter({
     setRankingType,
     setGender,
     setShow,
+    setYears,
   } = filterActions;
 
   const regionIso2 = useMemo(() => {

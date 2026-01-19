@@ -407,7 +407,7 @@ export const paymentTicketUrl = (registrationId, isoDonationAmount) => `<%= CGI.
 
 export const uploadScramblesUrl = (competitionId) => `<%= CGI.unescape(Rails.application.routes.url_helpers.competition_upload_scrambles_path("${competitionId}")) %>`;
 
-export const rankingsUrl = (eventId, rankingType, region, gender, show) => {
+export const rankingsUrl = (eventId, rankingType, region, gender, show, years) => {
   const url = `<%= CGI.unescape(Rails.application.routes.url_helpers.rankings_path(event_id: "${eventId}", type: "${rankingType}")) %>`
   const queryParams = new URLSearchParams();
 
@@ -421,6 +421,10 @@ export const rankingsUrl = (eventId, rankingType, region, gender, show) => {
 
   if (show !== '100 persons') {
     queryParams.append('show', show);
+  }
+
+  if (years !== 'all years') {
+    queryParams.append('years', years);
   }
 
   return `${url}?${queryParams.toString()}`
