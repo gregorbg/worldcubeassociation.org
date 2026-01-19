@@ -92,17 +92,15 @@ module CheckRegionalRecords
     marked_records = results_scope.includes(:competition)
                                   .where.not(regional_record_marker => '')
 
-    minimum_result_candidates = results_scope.select("event_id, competition_id, round_type_id, country_id, MIN(#{value_column}) AS `value`")
+    minimum_result_candidates = results_scope.select("round_id, country_id, MIN(#{value_column}) AS `value`")
                                              .where.not(value_column => ..0)
-                                             .group("event_id, competition_id, round_type_id, country_id")
+                                             .group("round_id, country_id")
 
     # Deliberately NOT using `results_scope` here, because the necessary event/competition filtering is
     # implicitly included via the `minimum_result_candidate` view (and doubling up would make the query much slower!)
     minimum_results = Result.includes(:competition)
                             .from("results, (#{minimum_result_candidates.to_sql}) AS `helper`")
-                            .where("results.event_id = helper.event_id")
-                            .where("results.competition_id = helper.competition_id")
-                            .where("results.round_type_id = helper.round_type_id")
+                            .where("results.round_id = helper.round_id")
                             .where("results.country_id = helper.country_id")
                             .where("results.#{value_column} = helper.`value`")
 
