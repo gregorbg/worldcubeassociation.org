@@ -185,15 +185,15 @@ class StripeRecord < ApplicationRecord
 
   def self.create_or_update_from_api!(api_record, parameters = nil, account_id = nil, parent_record = nil)
     StripeRecord.create_or_find_by!(stripe_id: api_record.id, stripe_record_type: api_record.object) do |new_record|
+      new_record.stripe_status = api_record.status
       new_record.parameters = parameters
       new_record.account_id = account_id
       new_record.parent_record = parent_record
     end.tap do |record|
       record.update!(
-        stripe_id: api_record.id,
+        stripe_status: api_record.status,
         amount_stripe_denomination: api_record.amount,
         currency_code: api_record.currency,
-        stripe_status: api_record.status,
       )
     end
   end
