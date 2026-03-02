@@ -462,10 +462,9 @@ class RegistrationsController < ApplicationController
         logger.error "Stripe webhook reported a refund on charge #{event_data.charge} but we never issued that one"
         return head :not_found
       else
-        stored_record.update!(parent_record: original_charge)
+        stored_record.update_from_api!(event_data, parent_record: original_charge)
       end
 
-      stored_record = StripeRecord.create_or_update_from_api!(event_data) if event.type == StripeWebhookEvent::REFUND_UPDATED
       stored_intent = stored_record.root_record.payment_intent
       stored_holder = stored_intent.holder
 
