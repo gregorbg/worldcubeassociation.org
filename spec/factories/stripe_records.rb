@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :stripe_record do
     transient do
       create_child_charge { false }
+      stripe_api_prefix { stripe_record_type[...2] }
     end
 
     stripe_record_type { 'payment_intent' }
@@ -14,14 +15,13 @@ FactoryBot.define do
     account_id { 'test_account_id' }
 
     # The Stripe API has a strong guarantee that their IDs are unique,
-    #   so our database has an SQL `UNIQUE` constraint.
+    #   so our database has an SQL `UNIQUE` constraint on `(stripe_id, stripe_record_type)`.
     # In order to make sure that tests don't break under this constraint,
     #   we mock some non-cryptographic hashes for testing purposes
     sequence(:stripe_id) do |seq|
-      type_prefix = stripe_record_type[...2]
+      hex_digest = Digest::SHA1.hexdigest("#{stripe_record_type}-#{seq}")
 
-      digest_payload = "#{type_prefix}-#{seq}"
-      Digest::SHA1.hexdigest(digest_payload).slice(0, 20)
+      "#{stripe_api_prefix}_#{hex_digest}"
     end
 
     trait :not_started do
