@@ -7,12 +7,22 @@ FactoryBot.define do
     end
 
     stripe_record_type { 'payment_intent' }
-    stripe_id { 'test_stripe_id' }
     parameters { 'test_parameters' }
     amount_stripe_denomination { 1000 }
     currency_code { 'USD' }
     stripe_status { 'pending' }
     account_id { 'test_account_id' }
+
+    # The Stripe API has a strong guarantee that their IDs are unique,
+    #   so our database has an SQL `UNIQUE` constraint.
+    # In order to make sure that tests don't break under this constraint,
+    #   we mock some non-cryptographic hashes for testing purposes
+    sequence(:stripe_id) do |seq|
+      type_prefix = stripe_record_type[...2]
+
+      digest_payload = "#{type_prefix}-#{seq}"
+      Digest::SHA1.hexdigest(digest_payload).slice(0, 20)
+    end
 
     trait :not_started do
       stripe_status { 'requires_payment_method' }
@@ -25,13 +35,11 @@ FactoryBot.define do
 
     trait :charge do
       stripe_record_type { 'charge' }
-      stripe_id { 'test_charge_id' }
       stripe_status { 'succeeded' }
     end
 
     trait :refund do
       stripe_record_type { 'refund' }
-      stripe_id { 're_3RiDX8I8ds2wj1dZ0RDaaCQg' }
       stripe_status { 'succeeded' }
     end
 
