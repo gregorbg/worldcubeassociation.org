@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Scramble < ApplicationRecord
+  self.table_name = "scramble_sets"
+
   belongs_to :competition
   belongs_to :round
 

@@ -1334,7 +1334,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_104945) do
     t.index ["uploaded_by"], name: "index_scramble_file_uploads_on_uploaded_by"
   end
 
-  create_table "scrambles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "scramble_sets", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "competition_id", limit: 32, null: false
     t.string "event_id", limit: 6, null: false
     t.string "group_id", limit: 3, null: false
@@ -1344,7 +1344,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_104945) do
     t.text "scramble", null: false
     t.integer "scramble_num", null: false
     t.index ["competition_id", "event_id"], name: "competitionId"
-    t.index ["round_id"], name: "index_scrambles_on_round_id"
+    t.index ["round_id"], name: "index_scramble_sets_on_round_id"
+  end
+
+  create_table "scrambles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "is_extra", default: false, null: false
+    t.integer "scramble_number", null: false
+    t.bigint "scramble_set_id", null: false
+    t.text "scramble_string", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scramble_set_id", "scramble_number", "is_extra"], name: "idx_on_scramble_set_id_scramble_number_is_extra_0742baf6af", unique: true
+    t.index ["scramble_set_id"], name: "index_scrambles_on_scramble_set_id"
   end
 
   create_table "server_settings", primary_key: "name", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -1675,7 +1686,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_104945) do
   add_foreign_key "schedule_activities", "schedule_activities", column: "parent_activity_id"
   add_foreign_key "schedule_activities", "venue_rooms"
   add_foreign_key "scramble_file_uploads", "users", column: "uploaded_by"
-  add_foreign_key "scrambles", "rounds"
+  add_foreign_key "scramble_sets", "rounds"
+  add_foreign_key "scrambles", "scramble_sets", on_delete: :cascade
   add_foreign_key "stripe_records", "stripe_records", column: "parent_record_id"
   add_foreign_key "stripe_webhook_events", "stripe_records"
   add_foreign_key "ticket_comments", "ticket_stakeholders", column: "acting_stakeholder_id"
