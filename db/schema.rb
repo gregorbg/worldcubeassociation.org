@@ -1344,6 +1344,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_104945) do
     t.text "scramble", null: false
     t.integer "scramble_num", null: false
     t.index ["competition_id", "event_id"], name: "competitionId"
+    t.index ["round_id", "group_id"], name: "sets_backfilling_speedup"
     t.index ["round_id"], name: "index_scramble_sets_on_round_id"
   end
 

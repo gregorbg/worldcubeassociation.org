@@ -3,14 +3,19 @@
 class Scramble < ApplicationRecord
   self.table_name = "scramble_sets"
 
+  BACKFILLING_SCRAMBLE = '%%BACKFILL%%'
+
   belongs_to :competition
   belongs_to :round
+  belongs_to :event
+  belongs_to :round_type
+
+  has_many :individual_scrambles, dependent: :destroy
 
   validates :group_id, format: { presence: true, with: /\A[A-Z]+\Z/, message: "Invalid scramble group name" }
-  validates :event_id, presence: true
-  validates :round_type_id, presence: true
   validates :scramble, presence: true
-  validates :scramble_num, numericality: { presence: true, greater_than: 0 }
+  validates :scramble_num, presence: true
+  validates :scramble_num, numericality: { greater_than: 0, unless: :backfilled? }
   validates :is_extra, inclusion: { presence: true, in: [true, false] }
 
   delegate :competition_id, :round_type_id, :event_id, to: :round, prefix: true
@@ -18,8 +23,10 @@ class Scramble < ApplicationRecord
   validates :round_type_id, comparison: { equal_to: :round_round_type_id }
   validates :event_id, comparison: { equal_to: :round_event_id }
 
-  def round_type
-    RoundType.c_find(round_type_id)
+  delegate :event, :round_type, to: :round
+
+  def backfilled?
+    self.scramble == BACKFILLING_SCRAMBLE && self.scramble_num.zero?
   end
 
   DEFAULT_SERIALIZE_OPTIONS = {

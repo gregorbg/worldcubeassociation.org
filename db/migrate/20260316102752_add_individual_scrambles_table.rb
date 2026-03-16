@@ -12,5 +12,7 @@ class AddIndividualScramblesTable < ActiveRecord::Migration[8.1]
       t.timestamps
       t.index %i[scramble_set_id scramble_number is_extra], unique: true
     end
+
+    add_index :scramble_sets, %i[round_id group_id], name: "sets_backfilling_speedup"
   end
 end
