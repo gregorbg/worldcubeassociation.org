@@ -4,7 +4,7 @@ module Admin
   class ScramblesController < AdminController
     def show
       respond_to do |format|
-        format.json { render json: Scramble.find(params.require(:id)) }
+        format.json { render json: IndividualScramble.find(params.require(:id)) }
       end
     end
     # NOTE: authentication is performed by admin controller
@@ -22,14 +22,14 @@ module Admin
     end
 
     def edit
-      @scramble = Scramble.includes(:competition).find(params[:id])
+      @scramble = IndividualScramble.includes(scramble_set: [:competition]).find(params[:id])
     end
 
     def create
       json = {}
       # Build a brand new scramble, validations will make sure the specified round
       # data are valid.
-      scramble = Scramble.new(scramble_params)
+      scramble = IndividualScramble.new(scramble_params) # TODO GB
       if scramble.save
         # We just inserted a new scramble, make sure we at least give it correct information.
         validator = ResultsValidators::ScramblesValidator.new(apply_fixes: true)
@@ -42,11 +42,11 @@ module Admin
     end
 
     def update
-      scramble = Scramble.find(params.require(:id))
+      scramble = IndividualScramble.find(params.require(:id))
       # Since we may move the scramble to another competition, we want to validate
       # both competitions if needed.
       competitions_to_validate = [scramble.competition_id]
-      if scramble.update(scramble_params)
+      if scramble.update(scramble_params) # TODO GB
         competitions_to_validate << scramble.competition_id
         competitions_to_validate.uniq!
         validator = ResultsValidators::ScramblesValidator.new(apply_fixes: true)
@@ -70,7 +70,7 @@ module Admin
     end
 
     def destroy
-      scramble = Scramble.find(params.require(:id))
+      scramble = IndividualScramble.find(params.require(:id)) # TODO GB destroy hook
       competition_id = scramble.competition_id
       scramble.destroy!
 

@@ -157,27 +157,36 @@ class ResultsSubmissionController < ApplicationController
                                                      })
     end
 
-    scrambles_to_import = competition.matched_scramble_sets.flat_map do |scramble_set|
+    scrambles_with_sets = competition.matched_scramble_sets.map do |scramble_set|
+      scr_set = ScrambleSet.new({
+                                  competition_id: competition.id,
+                                  event_id: scramble_set.event_id,
+                                  round_type_id: scramble_set.round_type_id,
+                                  round_id: scramble_set.round_id,
+                                  group_id: scramble_set.alphabetic_group_index,
+                                })
+
       extra_scrambles, std_scrambles = scramble_set.matched_scrambles.partition(&:is_extra?)
 
-      [std_scrambles, extra_scrambles].flat_map do |scramble_family|
-        scramble_family.map do |scramble|
-          Scramble.new({
-                         competition_id: competition.id,
-                         event_id: scramble_set.event_id,
-                         round_type_id: scramble_set.round_type_id,
-                         round_id: scramble_set.round_id,
-                         group_id: scramble_set.alphabetic_group_index,
-                         is_extra: scramble.is_extra?,
-                         scramble_num: scramble.ordered_index + 1,
-                         scramble: scramble.scramble_string,
-                       })
+      assoc_scrambles = [std_scrambles, extra_scrambles].flat_map do |scramble_family|
+        scramble_family.map.with_index do |scramble, idx|
+          scr_set.scrambles.build({
+                                    is_extra: scramble.is_extra?,
+                                    scramble_num: idx + 1,
+                                    scramble: scramble.scramble_string,
+                                  })
         end
       end
+
+      [scr_set, assoc_scrambles]
     end
+
+    scramble_sets_to_import = scrambles_with_sets.map(&:first)
+    scrambles_to_import = scrambles_with_sets.flat_map(&:second)
 
     temporary_results_data = {
       results_to_import: results_to_import,
+      scramble_sets_to_import: scramble_sets_to_import,
       scrambles_to_import: scrambles_to_import,
       persons_to_import: persons_to_import,
     }

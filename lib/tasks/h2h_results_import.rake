@@ -127,17 +127,20 @@ namespace :h2h_results do
         r.matched_scramble_sets.each do |set|
           puts "> handling scramble set: #{set.inspect}"
 
+          scr_set = ScrambleSet.create!(
+            competition: competition,
+            round: r,
+            round_type_id: r.round_type_id,
+            event_id: r.event_id,
+            group_id: set.alphabetic_group_index,
+          )
+
           extra_scrambles, std_scrambles = set.matched_scrambles.partition(&:is_extra)
 
           [std_scrambles, extra_scrambles].each do |matched_scrambles|
             matched_scrambles.each_with_index do |ms, i|
-              Scramble.create!(
-                competition: competition,
-                round: r,
-                round_type_id: r.round_type_id,
-                event_id: r.event_id,
-                group_id: set.alphabetic_group_index,
-                is_extra: ms.is_extra,
+              scr_set.scrambles.create!(
+                is_extra: ms.is_extra?,
                 scramble: ms.scramble_string,
                 scramble_num: i + 1,
               )

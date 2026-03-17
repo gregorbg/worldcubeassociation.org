@@ -12,16 +12,19 @@ module CompetitionResultsImport
     errors = []
 
     results_to_import = temporary_results_data[:results_to_import]
+    scramble_sets_to_import = temporary_results_data[:scramble_sets_to_import]
     scrambles_to_import = temporary_results_data[:scrambles_to_import]
     persons_to_import = temporary_results_data[:persons_to_import]
 
     ActiveRecord::Base.transaction do
       InboxPerson.where(competition_id: competition.id).delete_all
       InboxResult.where(competition_id: competition.id).delete_all
-      Scramble.where(competition_id: competition.id).delete_all
+      # Foreign Key handles transitive deletion of individual scrambles
+      ScrambleSet.where(competition_id: competition.id).delete_all
       InboxPerson.import!(persons_to_import)
-      Scramble.import!(scrambles_to_import)
       InboxResult.import!(results_to_import)
+      ScrambleSet.import!(scramble_sets_to_import)
+      Scramble.import!(scrambles_to_import)
 
       competition.touch(:results_submitted_at) if mark_result_submitted && !competition.results_submitted?
 
@@ -30,8 +33,10 @@ module CompetitionResultsImport
       errors << "Duplicate record found while uploading results. Maybe there is a duplicate personId in the JSON?"
     rescue ActiveRecord::RecordInvalid => e
       object = e.record
-      errors << if object.instance_of?(Scramble)
-                  "Scramble in '#{Round.name_from_attributes_id(object.event_id, object.round_type_id)}' is invalid (#{e.message}), please fix it!"
+      errors << if object.instance_of?(ScrambleSet)
+                  "Scramble Set in '#{Round.name_from_attributes_id(object.event_id, object.round_type_id)}' is invalid (#{e.message}), please fix it!"
+                elsif object.instance_of?(Scramble)
+                  "Scramble in set of '#{Round.name_from_attributes_id(object.event_id, object.round_type_id)}' is invalid (#{e.message}), please fix it!"
                 elsif object.instance_of?(InboxPerson)
                   "Person #{object.name} is invalid (#{e.message}), please fix it!"
                 elsif object.instance_of?(InboxResult)

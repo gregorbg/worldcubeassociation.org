@@ -7,7 +7,8 @@ class Competition < ApplicationRecord
   has_many :rounds, through: :competition_events
   has_many :registrations, dependent: :destroy
   has_many :results
-  has_many :scrambles, -> { order(:group_id, :is_extra, :scramble_num) }, inverse_of: :competition
+  has_many :scramble_sets, -> { order(:group_id) }, inverse_of: :competition
+  has_many :scrambles, -> { order(:is_extra, :scramble_num) }, through: :scramble_sets
   has_many :uploaded_jsons, dependent: :destroy
   has_many :competitors, -> { distinct }, through: :results, source: :person
   has_many :competitor_users, -> { distinct }, through: :competitors, source: :user

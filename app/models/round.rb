@@ -48,7 +48,8 @@ class Round < ApplicationRecord
   has_many :live_results, -> { order(:global_pos) }, inverse_of: :round
   has_many :live_competitors, through: :live_results, source: :registration
   has_many :results
-  has_many :scrambles
+  has_many :scramble_sets
+  has_many :scrambles, through: :scramble_sets
 
   has_many :sibling_rounds, through: :competition_event, source: :rounds
 
