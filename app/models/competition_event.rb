@@ -120,9 +120,23 @@ class CompetitionEvent < ApplicationRecord
         "Cannot edit rounds for a competition which has qualification rounds or b-finals. Please contact WRT or WST if you need to make change to this competition.",
       )
     end
-    model_rounds = wcif["rounds"].map do |round_wcif|
+    sorted_wcif_rounds = wcif["rounds"].sort_by { Round.parse_wcif_id(it["id"])[:round_number] }
+    model_rounds = sorted_wcif_rounds.reduce([]) do |previous_rounds, round_wcif|
       round = rounds.find { it.wcif_id == round_wcif["id"] } || rounds.build
-      round.update!(**Round.wcif_to_round_attributes(self.event, round_wcif, wcif["rounds"], version: version))
+
+      round_attrs = Round.wcif_to_round_attributes(self.event, round_wcif, wcif["rounds"], version: version)
+      # We need to have the attributes in-memory to compute any backlinking
+      round.assign_attributes(**round_attrs)
+
+      # participation_source must be chronologically prior to the current round.
+      #   So because we sorted by round number first, we know that the `reduce` memo value
+      #   will be enough for determining the backlinking. This saves one write operation on the DB.
+      round_backlinking = Round.wcif_backlinking(round, previous_rounds)
+      round.assign_attributes(**round_backlinking)
+
+      # Persist everything to the DB at once
+      round.save!
+
       WcifExtension.update_wcif_extensions!(round, round_wcif["extensions"]) if round_wcif["extensions"]
       round
     end

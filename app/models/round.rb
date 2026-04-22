@@ -540,7 +540,7 @@ class Round < ApplicationRecord
     }
   end
 
-  def self.backport_participation_source(round_model, all_rounds_model)
+  def self.backport_participation_source(round_model, previous_rounds_model)
     return round_model.competition_event if round_model.number == 1
 
     if round_model.linked_round.present?
@@ -549,16 +549,14 @@ class Round < ApplicationRecord
       if round_model != first_round_in_link
         return self.backport_participation_source(
           first_round_in_link,
-          all_rounds_model,
+          previous_rounds_model,
         )
       end
     end
 
     # If we reached this point, we implicitly know that round_number > 1
-    #   so looking back in the all_rounds array is fine.
-    # Note that we calculate -1 for "previous round" AND -1 because round numbers are 1-based,
-    #   which gives -2 in total.
-    previous_round = all_rounds_model[round_model.number - 2]
+    #   so looking back in the previous_rounds array is safe.
+    previous_round = previous_rounds_model.last
 
     previous_round.linked_round || previous_round
   end
@@ -575,8 +573,8 @@ class Round < ApplicationRecord
     end
   end
 
-  def self.wcif_backlinking(round_model, all_rounds_model)
-    participation_source = self.backport_participation_source(round_model, all_rounds_model)
+  def self.wcif_backlinking(round_model, previous_rounds_model)
+    participation_source = self.backport_participation_source(round_model, previous_rounds_model)
 
     {
       participation_source: participation_source,
