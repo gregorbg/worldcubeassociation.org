@@ -364,7 +364,7 @@ class Round < ApplicationRecord
     ScheduleActivity.parse_activity_code(wcif_id)
   end
 
-  def load_live_results!(round_results_wcif, current_user)
+  def load_live_results!(round_results_wcif, current_user, round_locked: true)
     person_id_to_registration_id = self.competition.registrations
                                        .to_h { [it.registrant_id, it.id] }
 
@@ -420,6 +420,8 @@ class Round < ApplicationRecord
         #   we have to manually assign the value instead.
         attempts_count = round_result_wcif["attempts"]&.length || 0
 
+        locked_by_id = current_user.id if round_locked
+
         {
           registration_id: registration_db_id,
           round_id: self.id,
@@ -427,6 +429,7 @@ class Round < ApplicationRecord
           average: round_result_wcif["average"],
           global_pos: round_result_wcif["ranking"],
           local_pos: round_result_wcif["ranking"],
+          locked_by_id: locked_by_id,
           last_attempt_entered_at: last_attempt_entered_at,
           live_attempts_count: attempts_count,
         }

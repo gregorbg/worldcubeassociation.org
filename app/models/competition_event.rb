@@ -120,17 +120,20 @@ class CompetitionEvent < ApplicationRecord
         "Cannot edit rounds for a competition which has qualification rounds or b-finals. Please contact WRT or WST if you need to make change to this competition.",
       )
     end
-    model_rounds = wcif["rounds"].map do |round_wcif|
+    sorted_rounds = wcif["rounds"].sort_by { Round.parse_wcif_id(it["id"])[:round_number] }
+    model_rounds = sorted_rounds.map do |round_wcif|
       round = rounds.find { it.wcif_id == round_wcif["id"] } || rounds.build
-      round.update!(**Round.wcif_to_round_attributes(self.event, round_wcif, wcif["rounds"], version: version))
+      round.update!(**Round.wcif_to_round_attributes(self.event, round_wcif, sorted_rounds, version: version))
       WcifExtension.update_wcif_extensions!(round, round_wcif["extensions"]) if round_wcif["extensions"]
       round
     end
     # Have to do this in a second pass because nested associations (mostly `linked_round` and `participation_source`)
     #   need the record to already exist in the database in order to reference their IDs
-    new_rounds = model_rounds.zip(wcif["rounds"]).map do |round, round_wcif|
+    new_rounds = model_rounds.zip(sorted_rounds).map do |round, round_wcif|
       round.update!(**Round.wcif_backlinking(round, model_rounds))
-      round.load_live_results!(round_wcif["results"], current_user) if round_wcif["results"]
+      next_round_index = round.next_round.number - 1
+      next_has_wcif_results = sorted_rounds[next_round_index]["results"].present?
+      round.load_live_results!(round_wcif["results"], current_user, round_locked: next_has_wcif_results) if round_wcif["results"].present?
       round
     end
     wcif_qualification = CompetitionEvent.load_wcif_qualification(wcif, version: version)
