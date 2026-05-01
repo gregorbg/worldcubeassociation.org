@@ -1622,6 +1622,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_110117) do
     t.index ["extendable_type", "extendable_id"], name: "index_wcif_extensions_on_extendable_type_and_extendable_id"
   end
 
+  create_table "wcif_patch_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "competition_id", null: false
+    t.datetime "created_at", null: false
+    t.text "exception_message"
+    t.integer "exception_status"
+    t.string "exception_type"
+    t.integer "oauth_application_id"
+    t.json "payload", null: false
+    t.integer "response_status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["competition_id"], name: "index_wcif_patch_logs_on_competition_id"
+    t.index ["oauth_application_id"], name: "index_wcif_patch_logs_on_oauth_application_id"
+    t.index ["user_id"], name: "index_wcif_patch_logs_on_user_id"
+  end
+
   create_table "wfc_dues_redirects", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "redirect_source_id", null: false
