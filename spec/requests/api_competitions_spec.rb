@@ -231,6 +231,17 @@ RSpec.describe "API Competitions" do
         response_json = response.parsed_body
         expect(response_json["error"]).to eq "Please log in"
       end
+
+      it "records that somebody tried to access anonymously" do
+        patch api_v0_competition_update_wcif_path(competition)
+
+        expect(WcifPatchLog.count).to eq 1
+
+        wcif_patch_log = WcifPatchLog.first
+        expect(wcif_patch_log.competition_id).to eq competition.id
+        expect(wcif_patch_log.user_id).to be_nil
+        expect(wcif_patch_log.exception_type).to eq "WcaExceptions::MustLogIn"
+      end
     end
 
     context "when signed in as not a competition manager" do
@@ -567,7 +578,7 @@ RSpec.describe "API Competitions" do
               average: 622,
             },
           ]
-          patch api_v0_competition_update_wcif_path(competition), params: wcif.to_json, headers: { "CONTENT_TYPE" => "application/json" }
+          patch api_v0_competition_update_wcif_path(competition), params: wcif.to_json, headers: headers
           expect(response).to be_successful
           rounds = competition.reload.competition_events.find_by(event_id: "333").rounds
           expect(rounds.length).to eq 1
@@ -577,6 +588,66 @@ RSpec.describe "API Competitions" do
           expect(rounds.first.live_results.length).to eq 1
           expect(rounds.first.live_results.first.live_attempts.pluck(:value)).to eq [456, 745, 657, 465, 835]
           expect(rounds.first.live_results.first.live_attempts.count).to eq 5
+        end
+
+        context "records changes as log entries" do
+          it "when making a valid change" do
+            competitor = create(:registration, :accepted, competition: competition)
+            wcif = create_wcif_with_events(%w[333])
+            round333_first = wcif[:events][0][:rounds][0]
+            round333_first[:scrambleSetCount] = 2
+            round333_first[:results] = [
+              {
+                personId: competitor.registrant_id,
+                ranking: 10,
+                attempts: [{ result: 456 }, { result: 745 }, { result: 657 }, { result: 465 }, { result: 835 }],
+                best: 456,
+                average: 622,
+              },
+            ]
+
+            patch api_v0_competition_update_wcif_path(competition), params: wcif.to_json, headers: headers
+
+            expect(WcifPatchLog.count).to eq 1
+
+            wcif_patch_log = WcifPatchLog.first
+            expect(wcif_patch_log.competition_id).to eq competition.id
+            expect(wcif_patch_log.user_id).to eq competition.organizers.first.id
+            expect(wcif_patch_log.exception_type).to be_nil
+            expect(wcif_patch_log.response_status).to eq 200
+            expect(wcif_patch_log.payload).to eq wcif.with_indifferent_access
+          end
+
+          it "when attempting a syntactically invalid change" do
+            invalid_wcif = { "formatVersion" => "2.1.1", "id" => competition.id, "somethingNotPartOfWcif" => "what the heck?" }
+
+            patch api_v0_competition_update_wcif_path(competition), params: invalid_wcif.to_json, headers: headers
+
+            expect(WcifPatchLog.count).to eq 1
+
+            wcif_patch_log = WcifPatchLog.first
+            expect(wcif_patch_log.competition_id).to eq competition.id
+            expect(wcif_patch_log.user_id).to eq competition.organizers.first.id
+            expect(wcif_patch_log.response_status).to eq 400
+            expect(wcif_patch_log.payload).to eq invalid_wcif.with_indifferent_access
+          end
+
+          it "when attempting a semantically invalid change" do
+            competition = create(:competition, :future, :with_delegate, :with_organizer, :visible, :confirmed, event_ids: %w[222 333])
+            api_sign_in_as(competition.organizers.first, scopes: scopes)
+
+            events_wcif = create_wcif_with_events(%w[333 333oh 222])
+
+            patch api_v0_competition_update_wcif_path(competition), params: events_wcif.to_json, headers: headers
+
+            expect(WcifPatchLog.count).to eq 1
+
+            wcif_patch_log = WcifPatchLog.first
+            expect(wcif_patch_log.competition_id).to eq competition.id
+            expect(wcif_patch_log.user_id).to eq competition.organizers.first.id
+            expect(wcif_patch_log.exception_type).to eq "WcaExceptions::BadApiParameter"
+            expect(wcif_patch_log.payload).to eq events_wcif.with_indifferent_access
+          end
         end
       end
 
@@ -591,11 +662,22 @@ RSpec.describe "API Competitions" do
 
         it "can't update wcif" do
           wcif = create_wcif_with_events(%w[333])
-          patch api_v0_competition_update_wcif_path(competition), params: wcif.to_json, headers: { "CONTENT_TYPE" => "application/json" }
+          patch api_v0_competition_update_wcif_path(competition), params: wcif.to_json, headers: headers
           expect(response).to have_http_status :forbidden
           response_json = response.parsed_body
           expect(response_json["error"]).to eq "Not authorized to manage competition"
           expect(competition.reload.competition_events.find_by(event_id: "333").rounds.length).to eq 0
+        end
+
+        it "records that somebody tried to access" do
+          patch api_v0_competition_update_wcif_path(competition)
+
+          expect(WcifPatchLog.count).to eq 1
+
+          wcif_patch_log = WcifPatchLog.first
+          expect(wcif_patch_log.competition_id).to eq competition.id
+          expect(wcif_patch_log.user_id).to eq user.id
+          expect(wcif_patch_log.exception_type).to eq "WcaExceptions::NotPermitted"
         end
       end
     end
