@@ -18,7 +18,7 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
   end
 
   def mine
-    grouped_competitions, registration_statuses = require_user!.my_competitions
+    grouped_competitions, registration_statuses = authenticated_user.my_competitions
 
     serial_competitions = grouped_competitions
                           .transform_keys { :"#{it}_competitions" }
@@ -265,7 +265,7 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
 
     WcifPatchLog.create!(
       competition_id: params.require(:competition_id),
-      user_id: doorkeeper_token&.resource_owner_id,
+      user_id: authenticated_user&.id,
       oauth_application_id: doorkeeper_token&.application_id,
       payload: wcif_patch_params,
       exception_type: e&.class,
@@ -292,7 +292,7 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
     # Strictness will be enforced at some time in May 2026. Signed GB 2026-05-01
     strict_schema_checks = params.key?(:strict) ? ActiveRecord::Type::Boolean.new.cast(params[:strict]) : Rails.env.local?
 
-    competition.set_wcif!(wcif, require_user!, strict_schema_checks: strict_schema_checks)
+    competition.set_wcif!(wcif, authenticated_user, strict_schema_checks: strict_schema_checks)
     render json: {
       status: "Successfully saved WCIF",
     }
