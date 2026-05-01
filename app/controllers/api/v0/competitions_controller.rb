@@ -252,6 +252,29 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
     render_wcif(competition, best_version)
   end
 
+  around_action :log_wcif_patch_attempt, only: :update_wcif
+
+  private def log_wcif_patch_attempt
+    yield
+  rescue StandardError => e
+    # Bubble up the exception so the existing tool chain can handle it
+    #   in the same way it would've without this logging method
+    raise e
+  ensure
+    mapped_status = e&.tap { ActionDispatch::ExceptionWrapper.status_code_for_exception(it.class.name) }
+
+    WcifPatchLog.create!(
+      competition_id: params.require(:competition_id),
+      user_id: doorkeeper_token&.resource_owner_id,
+      oauth_application_id: doorkeeper_token&.application_id,
+      payload: wcif_patch_params,
+      exception_type: e&.class,
+      exception_message: e&.message,
+      exception_status: e&.try(:status) || mapped_status,
+      response_status: response.status,
+    )
+  end
+
   def update_wcif
     competition = competition_from_params
     require_can_manage!(competition)
@@ -259,14 +282,7 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
     # Only admins can update WCIF (including schedule) after results are submitted
     require_can_admin_competitions! if competition.results_submitted?
 
-    # We need to clean out some Rails-y stuff.
-    #   Normally, this isn't a problem because you're never supposed to just use `params.permit!`
-    #   without _explicitly_ sanitizing which parameters you *approve*, but WCIF is too big
-    #   for any one developer's mental sanity to control that.
-    # Note that none of the keys that we're "throwing away" here are currently WCIF-compliant,
-    #   nor are we ever likely to introduce any of them in top-level WCIF.
-    wcif = params.permit!.to_h.except(:controller, :action, :competition_id, :competition, :strict)
-
+    wcif = wcif_patch_params
     wcif = wcif["_json"] || wcif
 
     # If the user specified a "strictness" param, then use it.
@@ -303,6 +319,16 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
     raise WcaExceptions::NotFound.new("Competition with id #{id} not found") unless competition
 
     competition
+  end
+
+  private def wcif_patch_params
+    # We need to clean out some Rails-y stuff.
+    #   Normally, this isn't a problem because you're never supposed to just use `params.permit!`
+    #   without _explicitly_ sanitizing which parameters you *approve*, but WCIF is too big
+    #   for any one developer's mental sanity to control that.
+    # Note that none of the keys that we're "throwing away" here are currently WCIF-compliant,
+    #   nor are we ever likely to introduce any of them in top-level WCIF.
+    params.permit!.to_h.except(:controller, :action, :competition_id, :competition, :strict)
   end
 
   private def can_perform_action?(*oauth_scopes)
