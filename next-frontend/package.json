@@ -63,6 +63,23 @@
     "react-markdown": "^10.1.0",
     "react-world-flags": "^1.6.0"
   },
+  "dependenciesMeta": {
+    "@datadog/pprof": {
+      "built": true
+    },
+    "@newrelic/fn-inspect": {
+      "built": true
+    },
+    "@newrelic/native-metrics": {
+      "built": true
+    },
+    "esbuild": {
+      "built": true
+    },
+    "sharp": {
+      "built": true
+    }
+  },
   "devDependencies": {
     "@chakra-ui/cli": "^3.35.0",
     "@eslint/eslintrc": "^3",

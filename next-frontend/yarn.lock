@@ -12570,6 +12570,17 @@ __metadata:
     react-world-flags: "npm:^1.6.0"
     typescript: "npm:^6"
     vitest: "npm:^4.1.5"
+  dependenciesMeta:
+    "@datadog/pprof":
+      built: true
+    "@newrelic/fn-inspect":
+      built: true
+    "@newrelic/native-metrics":
+      built: true
+    esbuild:
+      built: true
+    sharp:
+      built: true
   languageName: unknown
   linkType: soft
 
