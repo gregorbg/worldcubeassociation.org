@@ -585,7 +585,19 @@ class Round < ApplicationRecord
     end
   end
 
-  def self.wcif_backlinking(round_model, all_rounds_model)
+  def self.compute_linked_round(round_wcif, round_model, all_rounds_model)
+    linked_round_ids = round_wcif["linkedRounds"]&.sort_by { self.parse_wcif_id(it)[:round_number] }
+
+    return nil if linked_round_ids.blank?
+
+    existing_linked_round = all_rounds_model.filter { linked_round_ids.include? it.wcif_id }
+                                            .filter { it.number < round_model.number } # always start building links in-order
+                                            .filter_map(&:linked_round)
+
+    existing_linked_round || round_model.build_linked_round
+  end
+
+  def self.backport_participation_ruleset(round_model, all_rounds_model)
     participation_source = self.backport_participation_source(round_model, all_rounds_model)
 
     {

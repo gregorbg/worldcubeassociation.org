@@ -132,8 +132,11 @@ class CompetitionEvent < ApplicationRecord
     end
     # Have to do this in a second pass because nested associations (mostly `linked_round` and `participation_source`)
     #   need the record to already exist in the database in order to reference their IDs
-    new_rounds = model_rounds.map do |round|
-      round.update!(**Round.wcif_backlinking(round, model_rounds))
+    new_rounds = wcif["rounds"].zip(model_rounds).map do |round_wcif, round|
+      round.update!(
+        **Round.backport_participation_ruleset(round, model_rounds),
+        linked_round: Round.compute_linked_round(round_wcif, round, model_rounds),
+      )
       round
     end
     # This is not techincally a third pass, because we're not updating the round itself.
