@@ -97,7 +97,7 @@ class LinkedRound < ApplicationRecord
 
   # The _removed_round argument is passed by Rails
   # as part of the `has_many :rounds, after_remove: :destroy_if_orphaned` callback chain
-  def destroy_if_orphaned(_removed_round)
+  def destroy_if_orphaned(_removed_round = nil)
     return unless persisted? && rounds.size <= 1
 
     self.destroy # NULL is handled by has_many#dependent set to :nullify above

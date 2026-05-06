@@ -12,6 +12,7 @@ class CompetitionEvent < ApplicationRecord
   has_many :formats, through: :rounds
   has_many :preferred_formats, through: :event
   has_many :target_rounds, class_name: "Round", as: :participation_source
+  has_many :linked_rounds, -> { distinct }, through: :rounds
 
   accepts_nested_attributes_for :rounds, allow_destroy: true
 
@@ -30,6 +31,11 @@ class CompetitionEvent < ApplicationRecord
     remaining_rounds = rounds.reject(&:marked_for_destruction?)
     numbers = remaining_rounds.map(&:number).sort
     errors.add(:rounds, "#{numbers} is wrong") if numbers != (1..remaining_rounds.length).to_a
+  end
+
+  after_save :clean_linked_rounds
+  private def clean_linked_rounds
+    linked_rounds.each(&:destroy_if_orphaned)
   end
 
   def advancing_competitor_ids
