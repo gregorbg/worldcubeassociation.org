@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LinkedRound < ApplicationRecord
-  has_many :rounds, -> { ordered }, inverse_of: :linked_round
+  has_many :rounds, -> { ordered }, inverse_of: :linked_round, dependent: :nullify, after_remove: :destroy_if_orphaned
   has_many :results, through: :rounds
   has_many :live_results, through: :rounds
   has_many :formats, -> { distinct }, through: :rounds
@@ -80,5 +80,13 @@ class LinkedRound < ApplicationRecord
       "roundIds" => self.wcif_ids,
       "resultCondition" => target_round.participation_condition&.to_wcif,
     }
+  end
+
+  # The _removed_round argument is passed by Rails
+  # as part of the `has_many :rounds, after_remove: :destroy_if_orphaned` callback chain
+  def destroy_if_orphaned(_removed_round)
+    return unless persisted? && rounds.size <= 1
+
+    self.destroy # NULL is handled by has_many#dependent set to :nullify above
   end
 end
