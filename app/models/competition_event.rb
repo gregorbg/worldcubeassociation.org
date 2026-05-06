@@ -124,24 +124,27 @@ class CompetitionEvent < ApplicationRecord
         "Cannot edit rounds for a competition which has qualification rounds or b-finals. Please contact WRT or WST if you need to make change to this competition.",
       )
     end
-    wcif["rounds"].each do |wcif_round|
-      next if (linked_rounds = wcif_round["linkedRounds"]).blank?
+    at_least_v2 = Gem::Version.new(version) >= Gem::Version.new("2.0.0")
+    if at_least_v2
+      wcif["rounds"].each do |wcif_round|
+        next if (linked_rounds = wcif_round["linkedRounds"]).blank?
 
-      raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} must contain itself") unless linked_rounds.include?(wcif_round["id"])
-      raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} must be longer than one entry") if linked_rounds.length <= 1
+        raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} must contain itself") unless linked_rounds.include?(wcif_round["id"])
+        raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} must be longer than one entry") if linked_rounds.length <= 1
 
-      defined_round_ids = wcif["rounds"].pluck("id")
-      non_existing_round_ids = linked_rounds.reject { defined_round_ids.include?(it) }
+        defined_round_ids = wcif["rounds"].pluck("id")
+        non_existing_round_ids = linked_rounds.reject { defined_round_ids.include?(it) }
 
-      raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} references non-existing rounds [#{non_existing_round_ids.join(',')}]") unless non_existing_round_ids.empty?
+        raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} references non-existing rounds [#{non_existing_round_ids.join(',')}]") unless non_existing_round_ids.empty?
 
-      non_matching_siblings = linked_rounds.filter do |sibling_wcif_id|
-        sibling_matching = wcif["rounds"].find { it["id"] == sibling_wcif_id }&.dig("linkedRounds")
+        non_matching_siblings = linked_rounds.filter do |sibling_wcif_id|
+          sibling_matching = wcif["rounds"].find { it["id"] == sibling_wcif_id }&.dig("linkedRounds")
 
-        linked_rounds != sibling_matching
+          linked_rounds != sibling_matching
+        end
+
+        raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} does not match the linking of rounds [#{non_matching_siblings.join(',')}]") unless non_matching_siblings.empty?
       end
-
-      raise WcaExceptions::BadApiParameter.new("The linking for round #{wcif_round['id']} does not match the linking of rounds [#{non_matching_siblings.join(',')}]") unless non_matching_siblings.empty?
     end
     model_rounds = wcif["rounds"].map do |round_wcif|
       round = rounds.find { it.wcif_id == round_wcif["id"] } || rounds.build
@@ -153,8 +156,10 @@ class CompetitionEvent < ApplicationRecord
     # Have to do this in a second pass because nested associations (mostly `linked_round` and `participation_source`)
     #   need the record to already exist in the database in order to reference their IDs
     new_rounds = wcif["rounds"].zip(model_rounds).map do |round_wcif, round|
-      # Linked Round already needs to be present for computing the backlinking below
-      round.linked_round = Round.compute_linked_round(round_wcif, round, model_rounds)
+      if at_least_v2
+        # Linked Round already needs to be present for computing the backlinking below
+        round.linked_round = Round.compute_linked_round(round_wcif, round, model_rounds)
+      end
 
       round.update!(**Round.backport_participation_ruleset(round, model_rounds))
       round
