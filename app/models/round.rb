@@ -600,6 +600,7 @@ class Round < ApplicationRecord
     existing_linked_round = all_rounds_model.filter { linked_round_ids.include? it.wcif_id }
                                             .filter { it.number < round_model.number } # always start building links in-order
                                             .filter_map(&:linked_round)
+                                            .first
 
     existing_linked_round || round_model.build_linked_round
   end
