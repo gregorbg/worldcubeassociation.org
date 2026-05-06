@@ -11,14 +11,14 @@ RSpec.describe LinkedRound do
       create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 2, number: 1)
       create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 2, number: 2)
 
-      expect(linked_round.reload).to be_final_round
+      expect(linked_round).to be_final_round
     end
 
     it "returns false for Dual Rounds with round 1 + 2 of 3" do
       create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 1)
       create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 2)
 
-      expect(linked_round.reload).not_to be_final_round
+      expect(linked_round).not_to be_final_round
     end
   end
 end

@@ -82,6 +82,11 @@ class Round < ApplicationRecord
   validates :advancement_condition, presence: { if: :advancement_condition_changed?, unless: :final_round?, message: "cannot be un-set on a non-final round" }, on: :update
   validates :advancement_condition, absence: { if: :final_round?, message: "cannot be set on a final round" }
 
+  after_save :reset_linked_rounds, if: :linked_round_previously_changed?
+  private def reset_linked_rounds
+    self.linked_round&.rounds&.reset
+  end
+
   def initialize(attributes = nil)
     # Overrides the default constructor to setup the default time limit if not
     # set explicitly.
