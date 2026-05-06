@@ -10,6 +10,13 @@ class LinkedRound < ApplicationRecord
 
   validates :competition_event_ids, length: { maximum: 1, message: "must all belong to the same competition event" }
 
+  # see https://www.worldcubeassociation.org/regulations/#9v1
+  validates :first_round_number, comparison: { less_than_or_equal_to: 2, message: "can only include the first two rounds of a competition" }
+  validates :round_ids, length: { maximum: 2, message: "can only include up to 2 rounds in a Dual Round" }
+
+  # see https://www.worldcubeassociation.org/regulations/#9v2
+  validates :final_round_of_championship?, absence: true
+
   # see https://www.worldcubeassociation.org/regulations/#9v3
   validates :format_ids, length: { maximum: 1, message: "all rounds must have the same format" }
   validates :round_cutoffs, length: { maximum: 1, message: "all rounds must have the same cutoff" }
@@ -21,6 +28,12 @@ class LinkedRound < ApplicationRecord
 
   def round_time_limits
     rounds.map(&:time_limit).uniq
+  end
+
+  delegate :number, to: :first_round_in_link, prefix: :first_round
+
+  def final_round_of_championship?
+    last_round_in_link.final_round? && last_round_in_link.competition.any_championship?
   end
 
   def merged_live_results
