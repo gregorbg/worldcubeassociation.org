@@ -8,7 +8,20 @@ class LinkedRound < ApplicationRecord
   has_many :competition_events, -> { distinct }, through: :rounds
   has_many :target_rounds, class_name: "Round", as: :participation_source
 
-  validates :competition_event_ids, length: { maximum: 1, message: "must all belong to the same competition" }
+  validates :competition_event_ids, length: { maximum: 1, message: "must all belong to the same competition event" }
+
+  # see https://www.worldcubeassociation.org/regulations/#9v3
+  validates :format_ids, length: { maximum: 1, message: "all rounds must have the same format" }
+  validates :round_cutoffs, length: { maximum: 1, message: "all rounds must have the same cutoff" }
+  validates :round_time_limits, length: { maximum: 1, message: "all rounds must have the same time limit" }
+
+  def round_cutoffs
+    rounds.map(&:cutoff).uniq
+  end
+
+  def round_time_limits
+    rounds.map(&:time_limit).uniq
+  end
 
   def merged_live_results
     LinkedRound.combine_results(self.live_results)
