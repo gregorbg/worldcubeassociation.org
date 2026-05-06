@@ -522,6 +522,10 @@ class Round < ApplicationRecord
       next_wcif_round = all_wcif_rounds[round_number] # WCIF numbers are 1-based, so no +1 necessary
       next_participation_condition = next_wcif_round.dig("participationRuleset", "participationSource", "resultCondition")
 
+      # We know that `next_wcif_round` definitely exists, but historical records (cf. Worlds 2003)
+      #   may not have any advancement data present in our records.
+      return nil if next_participation_condition.nil?
+
       backported_wcif_v1 = {
         "type" => next_participation_condition["type"].gsub('resultAchieved', 'attemptResult'),
         "level" => next_participation_condition["value"],
