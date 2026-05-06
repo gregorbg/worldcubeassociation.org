@@ -85,6 +85,8 @@ class Round < ApplicationRecord
   after_save :reset_linked_rounds, if: :linked_round_previously_changed?
   private def reset_linked_rounds
     self.linked_round&.rounds&.reset
+    self.linked_round&.formats&.reset
+    self.linked_round&.competition_events&.reset
   end
 
   def initialize(attributes = nil)
