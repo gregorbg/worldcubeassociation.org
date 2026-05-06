@@ -4,18 +4,18 @@ class LinkedRound < ApplicationRecord
   has_many :rounds, -> { ordered }, inverse_of: :linked_round, dependent: :nullify, after_remove: :destroy_if_orphaned
   has_many :results, through: :rounds
   has_many :live_results, through: :rounds
-  has_many :formats, -> { distinct }, through: :rounds
-  has_many :competition_events, -> { distinct }, through: :rounds
+  has_many :formats, -> { unscope(:order).distinct }, through: :rounds
+  has_many :competition_events, -> { unscope(:order).distinct }, through: :rounds
   has_many :target_rounds, class_name: "Round", as: :participation_source
 
   validates :competition_event_ids, length: { maximum: 1, message: "must all belong to the same competition event" }
 
   # see https://www.worldcubeassociation.org/regulations/#9v1
-  validates :first_round_number, comparison: { less_than_or_equal_to: 2, message: "can only include the first two rounds of a competition", allow_nil: true }
+  validates :first_round_number, comparison: { equal_to: 1, message: "can only include the first two rounds of a competition", allow_nil: true }
   validates :round_ids, length: { maximum: 2, message: "can only include up to 2 rounds in a Dual Round" }
 
   # see https://www.worldcubeassociation.org/regulations/#9v2
-  validates :final_round_of_championship?, absence: true
+  validates :final_round_of_championship?, absence: { message: "cannot include the final round of any championship" }
 
   # see https://www.worldcubeassociation.org/regulations/#9v3
   validates :format_ids, length: { maximum: 1, message: "all rounds must have the same format" }
@@ -23,11 +23,11 @@ class LinkedRound < ApplicationRecord
   validates :round_time_limits, length: { maximum: 1, message: "all rounds must have the same time limit" }
 
   def round_cutoffs
-    rounds.map(&:cutoff).uniq
+    rounds.filter_map(&:cutoff).uniq(&:to_wcif)
   end
 
   def round_time_limits
-    rounds.map(&:time_limit).uniq
+    rounds.filter_map(&:time_limit).uniq(&:to_wcif)
   end
 
   delegate :number, to: :first_round_in_link, prefix: :first_round, allow_nil: true
