@@ -101,4 +101,37 @@ RSpec.describe LinkedRound do
       end
     end
   end
+
+  context "cleaning up orphans via after_destroy hook" do
+    it "does not clean up a perfectly valid Dual Round" do
+      create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 1)
+      create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 2)
+
+      expect(linked_round.reload).not_to be_nil
+    end
+
+    it "cleans up a valid Dual Round after deleting one round" do
+      create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 1)
+      r2 = create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 2)
+
+      expect(linked_round.reload).not_to be_nil
+
+      linked_round.rounds.delete(r2)
+
+      expect(r2.reload.linked_round_id).to be_nil
+      expect { linked_round.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "does not clean up while building a perfectly valid Dual Round" do
+      create(:round, event_id: "333", competition: competition, linked_round: linked_round, total_number_of_rounds: 3, number: 1)
+
+      # Intentionally create it without a linked_round first
+      r2 = create(:round, event_id: "333", competition: competition, total_number_of_rounds: 3, number: 2)
+
+      expect(linked_round.reload).not_to be_nil
+
+      linked_round.rounds << r2
+      expect(linked_round.reload).not_to be_nil
+    end
+  end
 end
