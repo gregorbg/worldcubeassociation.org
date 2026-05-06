@@ -2,7 +2,7 @@
 
 class Round < ApplicationRecord
   belongs_to :competition_event
-  belongs_to :linked_round, optional: true, validate: true
+  belongs_to :linked_round, optional: true, validate: true, touch: true
 
   has_one :competition, through: :competition_event
   delegate :competition_id, to: :competition_event
@@ -82,11 +82,9 @@ class Round < ApplicationRecord
   validates :advancement_condition, presence: { if: :advancement_condition_changed?, unless: :final_round?, message: "cannot be un-set on a non-final round" }, on: :update
   validates :advancement_condition, absence: { if: :final_round?, message: "cannot be set on a final round" }
 
-  after_save :reset_linked_rounds, if: :linked_round_previously_changed?
-  private def reset_linked_rounds
-    self.linked_round&.rounds&.reset
-    self.linked_round&.formats&.reset
-    self.linked_round&.competition_events&.reset
+  after_save :reset_linked_round_information, if: :linked_round_previously_changed?
+  private def reset_linked_round_information
+    self.linked_round&.reset_round_information
   end
 
   def initialize(attributes = nil)

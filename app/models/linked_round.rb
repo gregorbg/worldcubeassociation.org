@@ -22,6 +22,16 @@ class LinkedRound < ApplicationRecord
   validates :round_cutoffs, length: { maximum: 1, message: "all rounds must have the same cutoff" }
   validates :round_time_limits, length: { maximum: 1, message: "all rounds must have the same time limit" }
 
+  after_touch :reset_round_information
+  def reset_round_information
+    self.rounds.reset
+
+    # Even associations that define `through` have their own cache
+    #   which needs to be reset individually
+    self.formats.reset
+    self.competition_events.reset
+  end
+
   def round_cutoffs
     rounds.filter_map(&:cutoff).uniq(&:to_wcif)
   end
