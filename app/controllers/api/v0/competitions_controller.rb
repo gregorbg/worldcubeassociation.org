@@ -32,7 +32,7 @@ class Api::V0::CompetitionsController < Api::V0::ApiController
   def competition_index
     admin_mode = current_user&.can_see_admin_competitions?
 
-    competitions_scope = Competition.includes(:events, :championships)
+    competitions_scope = Competition.includes(:events, :championships, :main_venue)
     competitions_scope = competitions_scope.includes(:delegate_report, delegates: [:current_avatar]) if admin_mode
 
     competitions = competitions_scope.search(params[:q], params: params)
