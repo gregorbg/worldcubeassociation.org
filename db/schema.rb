@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_12_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_23_193041) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -433,10 +433,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_000000) do
     t.integer "guests_entry_fee_lowest_denomination"
     t.integer "guests_per_registration_limit"
     t.text "information", size: :medium
+    t.boolean "is_multi_location", default: false, null: false
     t.integer "latitude"
     t.bigint "lead_delegate_id"
     t.integer "longitude"
     t.string "main_event_id"
+    t.bigint "main_venue_id"
     t.string "name", limit: 50, default: "", null: false
     t.string "name_reason"
     t.integer "newcomer_month_reserved_spots"
@@ -468,6 +470,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_000000) do
     t.index ["country_id"], name: "index_Competitions_on_countryId"
     t.index ["end_date"], name: "index_competitions_on_end_date"
     t.index ["lead_delegate_id"], name: "index_competitions_on_lead_delegate_id"
+    t.index ["main_venue_id"], name: "index_competitions_on_main_venue_id"
     t.index ["start_date"], name: "index_competitions_on_start_date"
   end
 
@@ -1649,6 +1652,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_000000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "competitions", "competition_venues", column: "main_venue_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "concise_average_results", "results", on_update: :cascade, on_delete: :cascade
   add_foreign_key "concise_single_results", "results", on_update: :cascade, on_delete: :cascade
   add_foreign_key "external_scramble_sets", "competitions"
