@@ -15,13 +15,13 @@ class RetrofillCompetitionMainVenues < ActiveRecord::Migration[7.1]
         best_timezone = main_venue.timezone_id.presence || guessed_timezone
 
         main_venue.assign_attributes(
-          city: competition.attributes['cityName'],
-          address: competition.attributes['venueAddress'],
-          description: competition.attributes['venueDetails'],
+          city: competition.attributes['city_name'],
+          address: competition.attributes['venue_address'],
+          description: competition.attributes['venue_details'],
           timezone_id: best_timezone,
         )
-      elsif venue_count == 0
-        venue_country = Country.c_find!(competition.attributes['countryId'])
+      elsif venue_count.zero?
+        venue_country = Country.c_find!(competition.attributes['country_id'])
 
         timezone = 'Etc/UTC'
 
@@ -36,9 +36,9 @@ class RetrofillCompetitionMainVenues < ActiveRecord::Migration[7.1]
         main_venue = competition.competition_venues.build(
           wcif_id: 1,
           name: competition.attributes['venue'],
-          city: competition.attributes['cityName'],
-          address: competition.attributes['venueAddress'],
-          description: competition.attributes['venueDetails'],
+          city: competition.attributes['city_name'],
+          address: competition.attributes['venue_address'],
+          description: competition.attributes['venue_details'],
           latitude_microdegrees: comp_latitude,
           longitude_microdegrees: comp_longitude,
           country_iso2: venue_country.iso2,
@@ -46,7 +46,7 @@ class RetrofillCompetitionMainVenues < ActiveRecord::Migration[7.1]
         )
       end
 
-      next unless main_venue.present?
+      next if main_venue.blank?
 
       # Legacy data sometimes does not match modern WCIF conventions. Save anyways.
       main_venue.save(validate: false)
