@@ -96,8 +96,8 @@ class Registration < ApplicationRecord
     Rails.cache.delete(CacheAccess.registration_processing_cache_key(competition_id, user_id))
   end
 
-  def update_lanes!(params, acting_entity_id)
-    Registrations::Lanes::Competing.update!(params, self, acting_entity_id)
+  def update_lanes!(params, acting_user_id, action_source)
+    Registrations::Lanes::Competing.update!(params, self, acting_user_id, action_source)
   end
 
   def guest_limit
@@ -266,8 +266,8 @@ class Registration < ApplicationRecord
     registration_competition_events.reject(&:marked_for_destruction?).map(&:event)
   end
 
-  def add_history_entry(changes, actor_type, actor_id, action, timestamp = Time.now.utc)
-    new_entry = registration_history_entries.create(actor_type: actor_type, actor_id: actor_id, action: action, created_at: timestamp)
+  def add_history_entry(changes, actor_type, actor_id, action_source, action, timestamp = Time.now.utc)
+    new_entry = registration_history_entries.create(actor_type: actor_type, actor_id: actor_id, action_source: action_source, action: action, created_at: timestamp)
     changes.each_key do |key|
       new_entry.registration_history_changes.create(value: changes[key], key: key)
     end
@@ -585,7 +585,7 @@ class Registration < ApplicationRecord
       waitlisted_registrations = competition.registrations.find(competition.waiting_list.entries)
 
       waitlisted_outcomes = waitlisted_registrations.each_with_object({}) do |reg, hash|
-        result = reg.attempt_auto_accept
+        result = reg.attempt_auto_accept(bulk_mode: true)
         hash[reg.id] = result
         break hash unless result[:succeeded]
       end
@@ -597,8 +597,10 @@ class Registration < ApplicationRecord
                             .with_payments
                             .sort_by { |registration| registration.last_positive_payment.paid_at }
 
-    # We dont need to break out of pending registrations because auto accept can still put them on the waiting list
-    pending_outcomes = pending_registrations.index_by(&:id).transform_values(&:attempt_auto_accept)
+    # We don't need to break out of pending registrations because auto accept can still put them on the waiting list
+    pending_outcomes = pending_registrations
+                       .index_by(&:id)
+                       .transform_values { it.attempt_auto_accept(bulk_mode: true) }
 
     waitlisted_outcomes.present? ? waitlisted_outcomes.merge(pending_outcomes) : pending_outcomes
   end
@@ -613,7 +615,7 @@ class Registration < ApplicationRecord
 
   delegate :auto_accept_preference, :auto_accept_preference_disabled?, :auto_accept_preference_bulk?, :auto_accept_preference_live?, to: :competition
 
-  def attempt_auto_accept
+  def attempt_auto_accept(bulk_mode: false)
     failure_reason = auto_accept_failure_reason
     if failure_reason.present?
       log_auto_accept_failure(failure_reason)
@@ -621,7 +623,7 @@ class Registration < ApplicationRecord
     end
 
     new_competing_status = eligible_for_accepted_status? ? Registrations::Helper::STATUS_ACCEPTED : Registrations::Helper::STATUS_WAITING_LIST
-    # String keys because this is mimicing a params payload
+    # String keys because this is mimicking a params payload
     update_payload = { 'user_id' => user_id, 'competing' => { 'status' => new_competing_status } }
 
     updated_registration = Registrations::RegistrationChecker.apply_payload(self, update_payload, clone: false)
@@ -629,7 +631,8 @@ class Registration < ApplicationRecord
     if updated_registration.valid?
       update_lanes!(
         update_payload,
-        AUTO_ACCEPT_ENTITY_ID,
+        self.user_id,
+        bulk_mode ? RegistrationHistoryEntry.action_sources[:bulk_auto_accept] : RegistrationHistoryEntry.action_sources[:live_auto_accept],
       )
       { succeeded: true, info: updated_registration.competing_status }
     else

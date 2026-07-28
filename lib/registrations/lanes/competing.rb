@@ -19,17 +19,17 @@ module Registrations
         RegistrationsMailer.notify_organizers_of_new_registration(registration).deliver_later
         RegistrationsMailer.notify_registrant_of_new_registration(registration).deliver_later
         RegistrationsMailer.notify_delegates_of_formerly_banned_user_registration(registration).deliver_later if registration.user.banned_in_past?
-        registration.add_history_entry(changes, "worker", user_id, "Worker processed")
+        registration.add_history_entry(changes, "User", user_id, RegistrationHistoryEntry.action_sources[:queue_worker], "Worker processed")
       end
 
-      def self.update_raw!(update_params, competition, acting_entity_id)
+      def self.update_raw!(update_params, competition, acting_user_id, action_source)
         user_id = update_params[:user_id]
 
         Registration.find_by(competition: competition, user_id: user_id)
-                    .tap { self.update!(update_params, it, acting_entity_id) }
+                    .tap { self.update!(update_params, it, acting_user_id, action_source) }
       end
 
-      def self.update!(update_params, registration, acting_entity_id)
+      def self.update!(update_params, registration, acting_user_id, action_source)
         registration = Registrations::RegistrationChecker.apply_payload(registration, update_params, clone: false)
 
         # Make sure that a waiting list always exists if you need one during the update
@@ -48,19 +48,15 @@ module Registrations
           #   from when we called `event_ids` in the `apply_payload` method above.
           registration.events.reset
 
-          history_action_type = Registrations::Helper.action_type(update_params, registration.user_id, acting_entity_id)
+          history_action_type = Registrations::Helper.action_type(update_params, registration.user_id, acting_user_id)
 
-          if acting_entity_id == Registration::AUTO_ACCEPT_ENTITY_ID
-            registration.add_history_entry(changes, Registration::SYSTEM_ENTITY_ID, acting_entity_id, history_action_type)
-          else
-            registration.add_history_entry(changes, Registration::USER_ENTITY_ID, acting_entity_id, history_action_type)
-          end
+          registration.add_history_entry(changes, "User", acting_user_id, action_source, history_action_type)
         end
 
-        send_status_change_email(registration, acting_entity_id) if registration.competing_status_previously_changed?
+        send_status_change_email(registration, acting_user_id) if registration.competing_status_previously_changed?
       end
 
-      def self.send_status_change_email(registration, acting_entity_id)
+      def self.send_status_change_email(registration, acting_user_id)
         case registration.competing_status
         when Registrations::Helper::STATUS_WAITING_LIST
           RegistrationsMailer.notify_registrant_of_waitlisted_registration(registration).deliver_later
@@ -69,7 +65,7 @@ module Registrations
         when Registrations::Helper::STATUS_ACCEPTED
           RegistrationsMailer.notify_registrant_of_accepted_registration(registration).deliver_later
         when Registrations::Helper::STATUS_REJECTED, Registrations::Helper::STATUS_DELETED, Registrations::Helper::STATUS_CANCELLED
-          if registration.user_id == acting_entity_id
+          if registration.user_id == acting_user_id
             RegistrationsMailer.notify_organizers_of_deleted_registration(registration).deliver_later
           else
             RegistrationsMailer.notify_registrant_of_deleted_registration(registration).deliver_later

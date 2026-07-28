@@ -121,7 +121,7 @@ class Api::V1::RegistrationsController < Api::V1::ApiController
 
   def update
     if params[:competing]
-      @registration.update_lanes!(@request, @current_user.id)
+      @registration.update_lanes!(@request, @current_user.id, RegistrationHistoryEntry.action_sources[:admin_ui])
       return render json: { status: 'ok', registration: @registration.to_v2_json(admin: true) }, status: :ok
     end
     render json: { status: 'bad request', message: 'You need to supply at least one lane' }, status: :bad_request
@@ -220,7 +220,7 @@ class Api::V1::RegistrationsController < Api::V1::ApiController
     updated_registrations = {}
 
     @update_requests.each do |update|
-      updated_registrations[update['user_id']] = Registrations::Lanes::Competing.update_raw!(update, @competition, @current_user.id)
+      updated_registrations[update['user_id']] = Registrations::Lanes::Competing.update_raw!(update, @competition, @current_user.id, RegistrationHistoryEntry.action_sources[:admin_ui])
     end
 
     render json: { status: 'ok', updated_registrations: updated_registrations }
