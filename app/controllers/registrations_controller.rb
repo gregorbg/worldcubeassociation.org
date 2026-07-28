@@ -205,7 +205,7 @@ class RegistrationsController < ApplicationController
           registration.registration_competition_events.build(competition_event_id: event_id)
         end
         registration.save!
-        registration.add_history_entry({ event_ids: registration.event_ids }, "user", current_user.id, "CSV Import")
+        registration.add_history_entry({ event_ids: registration.event_ids }, current_user.id, RegistrationHistoryEntry.action_sources[:csv_import], "Imported")
       rescue StandardError => e
         raise e.exception(I18n.t("registrations.import.errors.error", registration: registration_row[:name], error: e))
       end
@@ -251,7 +251,7 @@ class RegistrationsController < ApplicationController
         registration.registration_competition_events.build(competition_event_id: competition_event.id)
       end
       registration.save!
-      registration.add_history_entry({ event_ids: registration.event_ids }, "user", current_user.id, "OTS Form")
+      registration.add_history_entry({ event_ids: registration.event_ids }, current_user.id, RegistrationHistoryEntry.action_sources[:ots_form], "Created")
       RegistrationsMailer.notify_registrant_of_locked_account_creation(user, @competition).deliver_later if locked_account_created
     end
     flash[:success] = I18n.t("registrations.flash.added")

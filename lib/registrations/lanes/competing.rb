@@ -19,7 +19,7 @@ module Registrations
         RegistrationsMailer.notify_organizers_of_new_registration(registration).deliver_later
         RegistrationsMailer.notify_registrant_of_new_registration(registration).deliver_later
         RegistrationsMailer.notify_delegates_of_formerly_banned_user_registration(registration).deliver_later if registration.user.banned_in_past?
-        registration.add_history_entry(changes, "User", user_id, RegistrationHistoryEntry.action_sources[:queue_worker], "Worker processed")
+        registration.add_history_entry(changes, user_id, RegistrationHistoryEntry.action_sources[:queue_worker], "Worker processed")
       end
 
       def self.update_raw!(update_params, competition, acting_user_id, action_source)
@@ -50,7 +50,7 @@ module Registrations
 
           history_action_type = Registrations::Helper.action_type(update_params, registration.user_id, acting_user_id)
 
-          registration.add_history_entry(changes, "User", acting_user_id, action_source, history_action_type)
+          registration.add_history_entry(changes, acting_user_id, action_source, history_action_type)
         end
 
         send_status_change_email(registration, acting_user_id) if registration.competing_status_previously_changed?

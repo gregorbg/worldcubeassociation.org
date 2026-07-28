@@ -231,7 +231,7 @@ class Registration < ApplicationRecord
     user_id,
     paid_at: nil
   )
-    add_history_entry({ payment_status: receipt.determine_wca_status, iso_amount: amount_lowest_denomination }, "user", user_id, 'Payment')
+    add_history_entry({ payment_status: receipt.determine_wca_status, iso_amount: amount_lowest_denomination }, user_id, RegistrationHistoryEntry.action_sources[:registration_form], 'Payment')
     registration_payments.create!(
       amount_lowest_denomination: amount_lowest_denomination,
       currency_code: currency_code,
@@ -248,7 +248,7 @@ class Registration < ApplicationRecord
     refunded_registration_payment_id,
     user_id
   )
-    add_history_entry({ payment_status: "refund", iso_amount: paid_entry_fees.cents - amount_lowest_denomination }, "user", user_id, 'Refund')
+    add_history_entry({ payment_status: "refund", iso_amount: paid_entry_fees.cents - amount_lowest_denomination }, user_id, RegistrationHistoryEntry.action_sources[:registration_form], 'Refund')
     registration_payments.create!(
       amount_lowest_denomination: amount_lowest_denomination.abs * -1,
       currency_code: currency_code,
@@ -266,8 +266,8 @@ class Registration < ApplicationRecord
     registration_competition_events.reject(&:marked_for_destruction?).map(&:event)
   end
 
-  def add_history_entry(changes, actor_type, actor_id, action_source, action, timestamp = Time.now.utc)
-    new_entry = registration_history_entries.create(actor_type: actor_type, actor_id: actor_id, action_source: action_source, action: action, created_at: timestamp)
+  def add_history_entry(changes, actor_id, action_source, action, timestamp = Time.now.utc)
+    new_entry = registration_history_entries.create(actor_type: "User", actor_id: actor_id, action_source: action_source, action: action, created_at: timestamp)
     changes.each_key do |key|
       new_entry.registration_history_changes.create(value: changes[key], key: key)
     end
@@ -627,12 +627,13 @@ class Registration < ApplicationRecord
     update_payload = { 'user_id' => user_id, 'competing' => { 'status' => new_competing_status } }
 
     updated_registration = Registrations::RegistrationChecker.apply_payload(self, update_payload, clone: false)
+    action_source = bulk_mode ? RegistrationHistoryEntry.action_sources[:bulk_auto_accept] : RegistrationHistoryEntry.action_sources[:live_auto_accept]
 
     if updated_registration.valid?
       update_lanes!(
         update_payload,
         self.user_id,
-        bulk_mode ? RegistrationHistoryEntry.action_sources[:bulk_auto_accept] : RegistrationHistoryEntry.action_sources[:live_auto_accept],
+        action_source,
       )
       { succeeded: true, info: updated_registration.competing_status }
     else
@@ -653,11 +654,11 @@ class Registration < ApplicationRecord
     Registrations::ErrorCodes::REGISTRATION_NOT_OPEN unless competition.registration_currently_open?
   end
 
-  private def log_auto_accept_failure(reason)
+  private def log_auto_accept_failure(action_source, reason)
     add_history_entry(
       { auto_accept_failure_reasons: reason },
-      SYSTEM_ENTITY_ID,
-      AUTO_ACCEPT_ENTITY_ID,
+      self.user_id,
+      action_source,
       'System reject',
     )
   end
