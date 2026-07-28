@@ -568,7 +568,7 @@ class Registration < ApplicationRecord
 
   DEFAULT_SERIALIZE_OPTIONS = {
     only: %w[id competition_id user_id],
-    methods: ["event_ids"],
+    methods: %w[event_ids],
   }.freeze
 
   def serializable_hash(options = nil)
@@ -577,15 +577,15 @@ class Registration < ApplicationRecord
 
   # Allows us to trigger bulk_auto_accept from within an instance of Registration
   def trigger_bulk_auto_accept
-    self.class.bulk_auto_accept(self.competition)
+    self.class.bulk_auto_accept(self.user_id, self.competition)
   end
 
-  def self.bulk_auto_accept(competition)
+  def self.bulk_auto_accept(acting_user_id, competition)
     if competition.waiting_list.present?
       waitlisted_registrations = competition.registrations.find(competition.waiting_list.entries)
 
       waitlisted_outcomes = waitlisted_registrations.each_with_object({}) do |reg, hash|
-        result = reg.attempt_auto_accept(bulk_mode: true)
+        result = reg.attempt_auto_accept(acting_user_id, bulk_mode: true)
         hash[reg.id] = result
         break hash unless result[:succeeded]
       end
@@ -600,7 +600,7 @@ class Registration < ApplicationRecord
     # We don't need to break out of pending registrations because auto accept can still put them on the waiting list
     pending_outcomes = pending_registrations
                        .index_by(&:id)
-                       .transform_values { it.attempt_auto_accept(bulk_mode: true) }
+                       .transform_values { it.attempt_auto_accept(acting_user_id, bulk_mode: true) }
 
     waitlisted_outcomes.present? ? waitlisted_outcomes.merge(pending_outcomes) : pending_outcomes
   end
@@ -615,10 +615,12 @@ class Registration < ApplicationRecord
 
   delegate :auto_accept_preference, :auto_accept_preference_disabled?, :auto_accept_preference_bulk?, :auto_accept_preference_live?, to: :competition
 
-  def attempt_auto_accept(bulk_mode: false)
+  def attempt_auto_accept(acting_user_id = self.user_id, bulk_mode: false)
+    action_source = bulk_mode ? RegistrationHistoryEntry.action_sources[:bulk_auto_accept] : RegistrationHistoryEntry.action_sources[:live_auto_accept]
     failure_reason = auto_accept_failure_reason
+
     if failure_reason.present?
-      log_auto_accept_failure(failure_reason)
+      log_auto_accept_failure(acting_user_id, action_source, failure_reason)
       return { succeeded: false, info: failure_reason }
     end
 
@@ -627,18 +629,17 @@ class Registration < ApplicationRecord
     update_payload = { 'user_id' => user_id, 'competing' => { 'status' => new_competing_status } }
 
     updated_registration = Registrations::RegistrationChecker.apply_payload(self, update_payload, clone: false)
-    action_source = bulk_mode ? RegistrationHistoryEntry.action_sources[:bulk_auto_accept] : RegistrationHistoryEntry.action_sources[:live_auto_accept]
 
     if updated_registration.valid?
       update_lanes!(
         update_payload,
-        self.user_id,
+        acting_user_id,
         action_source,
       )
       { succeeded: true, info: updated_registration.competing_status }
     else
       error = updated_registration.errors.messages.values.flatten
-      log_auto_accept_failure(error)
+      log_auto_accept_failure(acting_user_id, action_source, error)
       { succeeded: false, info: error }
     end
   end
@@ -654,10 +655,10 @@ class Registration < ApplicationRecord
     Registrations::ErrorCodes::REGISTRATION_NOT_OPEN unless competition.registration_currently_open?
   end
 
-  private def log_auto_accept_failure(action_source, reason)
+  private def log_auto_accept_failure(acting_user_id, action_source, reason)
     add_history_entry(
       { auto_accept_failure_reasons: reason },
-      self.user_id,
+      acting_user_id,
       action_source,
       'System reject',
     )

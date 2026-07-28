@@ -252,7 +252,7 @@ class Api::V1::RegistrationsController < Api::V1::ApiController
   end
 
   def bulk_auto_accept
-    render json: Registration.bulk_auto_accept(@competition)
+    render json: Registration.bulk_auto_accept(@current_user.id, @competition)
   end
 
   def validate_payment_ticket_request
