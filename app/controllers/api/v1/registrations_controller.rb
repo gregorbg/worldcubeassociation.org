@@ -220,7 +220,12 @@ class Api::V1::RegistrationsController < Api::V1::ApiController
     updated_registrations = {}
 
     @update_requests.each do |update|
-      updated_registrations[update['user_id']] = Registrations::Lanes::Competing.update_raw!(update, @competition, @current_user.id, RegistrationHistoryEntry.action_sources[:admin_ui])
+      reg_user_id = update['user_id']
+
+      registration = @competition.registrations.find_by(user_id: reg_user_id)
+      Registrations::Lanes::Competing.update!(update, registration, @current_user.id, RegistrationHistoryEntry.action_sources[:admin_ui])
+
+      updated_registrations[reg_user_id] = registration
     end
 
     render json: { status: 'ok', updated_registrations: updated_registrations }
@@ -273,17 +278,6 @@ class Api::V1::RegistrationsController < Api::V1::ApiController
   end
 
   private
-
-    def action_type(request)
-      self_updating = request[:user_id] == @current_user
-      status = request.dig('competing', 'status')
-      if status == 'cancelled'
-        return self_updating ? 'Competitor delete' : 'Admin delete'
-      end
-
-      self_updating ? 'Competitor update' : 'Admin update'
-    end
-
     def params_by_user_id
       competition_id, user_id = params.require(%i[competition_id user_id])
       [competition_id, user_id.to_i]

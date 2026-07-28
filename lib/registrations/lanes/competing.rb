@@ -8,29 +8,15 @@ module Registrations
                                           user_id: user_id,
                                           registered_at: Time.now.utc)
 
-        # Apply all the information passed in by the user
-        registration = Registrations::RegistrationChecker.apply_payload(registration, lane_params)
-
-        changes = registration.changes.transform_values { |change| change[1] }
-        changes[:event_ids] = registration.changed_event_ids
-
-        registration.save!
+        self.update!(lane_params, registration, user_id, RegistrationHistoryEntry.action_sources[:queue_worker], send_email: false)
 
         RegistrationsMailer.notify_organizers_of_new_registration(registration).deliver_later
         RegistrationsMailer.notify_registrant_of_new_registration(registration).deliver_later
         RegistrationsMailer.notify_delegates_of_formerly_banned_user_registration(registration).deliver_later if registration.user.banned_in_past?
-        registration.add_history_entry(changes, user_id, RegistrationHistoryEntry.action_sources[:queue_worker], "Worker processed")
       end
 
-      def self.update_raw!(update_params, competition, acting_user_id, action_source)
-        user_id = update_params[:user_id]
-
-        Registration.find_by(competition: competition, user_id: user_id)
-                    .tap { self.update!(update_params, it, acting_user_id, action_source) }
-      end
-
-      def self.update!(update_params, registration, acting_user_id, action_source)
-        registration = Registrations::RegistrationChecker.apply_payload(registration, update_params, clone: false)
+      def self.update!(update_params, registration, acting_user_id, action_source, send_email: true)
+        registration = Registrations::RegistrationChecker.apply_payload(registration, update_params, clone: !registration.persisted?)
 
         # Make sure that a waiting list always exists if you need one during the update
         registration.competition.create_waiting_list(entries: []) if registration.waitlistable? && !registration.waiting_list_persisted?
@@ -53,7 +39,7 @@ module Registrations
           registration.add_history_entry(changes, acting_user_id, action_source, history_action_type)
         end
 
-        send_status_change_email(registration, acting_user_id) if registration.competing_status_previously_changed?
+        send_status_change_email(registration, acting_user_id) if send_email && registration.competing_status_previously_changed?
       end
 
       def self.send_status_change_email(registration, acting_user_id)
