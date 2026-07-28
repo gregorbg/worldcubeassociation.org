@@ -45,6 +45,7 @@ export default function RegistrationHistory({ registrationId }) {
             <Table.HeaderCell>{I18n.t('competitions.registration_v2.list.timestamp')}</Table.HeaderCell>
             <Table.HeaderCell>{I18n.t('registrations.registration_history.changes')}</Table.HeaderCell>
             <Table.HeaderCell>{I18n.t('registrations.registration_history.acting_user')}</Table.HeaderCell>
+            <Table.HeaderCell>{I18n.t('registrations.registration_history.action_source')}</Table.HeaderCell>
             <Table.HeaderCell>{I18n.t('registrations.registration_history.action')}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -92,6 +93,7 @@ export default function RegistrationHistory({ registrationId }) {
                   )?.name ?? entry.actor_id
                 }
               </Table.Cell>
+              <Table.Cell>{I18n.t(`registrations.registration_history.action_sources.${entry.action_source}`)}</Table.Cell>
               <Table.Cell>{entry.action}</Table.Cell>
             </Table.Row>
           ))}

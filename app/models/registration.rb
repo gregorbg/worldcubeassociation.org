@@ -294,6 +294,7 @@ class Registration < ApplicationRecord
         actor_type: r.actor_type,
         actor_id: r.actor_id,
         timestamp: r.created_at,
+        action_source: r.action_source,
         action: r.action,
       }
     end

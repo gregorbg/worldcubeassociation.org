@@ -1336,6 +1336,15 @@ en:
       action: "Action"
       changes: "Changes"
       title: "Registration History"
+      action_source: "Action source"
+      action_sources:
+        registration_form: 'Registration Form'
+        admin_ui: 'Admin Registrations UI'
+        queue_worker: 'Queue Worker'
+        live_auto_accept: 'Live Auto Accept'
+        bulk_auto_accept: 'Bulk Auto Accept'
+        ots_form: 'OTS Registration Form'
+        csv_import: 'CSV Import'
     import:
       title: "Import registrations for %{comp}"
       info: "You can import registrations multiple times. Changes will be determined and the database will be updated accordingly."
