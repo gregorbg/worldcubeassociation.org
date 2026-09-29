@@ -445,6 +445,10 @@ const renderHorizontalSplit = (
   const totalCols = leftCols + rightCols;
   const foldMd = level <= 1;
 
+  const baseCols = entry.forceSplit ? totalCols : 1;
+  const baseLeft = entry.forceSplit ? leftCols : 1;
+  const baseRight = entry.forceSplit ? rightCols : 1;
+
   // If a parent horizontal splitter has a `grow` strategy,
   //   it will look weird if children in either half of the splitter don't grow.
   // So make sure that any `grow` splitter passes down "at least" `justify` as a base strategy.
@@ -453,12 +457,20 @@ const renderHorizontalSplit = (
 
   return (
     <SimpleGrid
-      columns={{ base: 1, md: foldMd ? 1 : totalCols, lg: totalCols }}
+      columns={{
+        base: baseCols,
+        md: foldMd ? baseCols : totalCols,
+        lg: totalCols,
+      }}
       gap={HOMEPAGE_SPACING}
       width="full"
     >
       <GridItem
-        colSpan={{ base: 1, md: foldMd ? 1 : leftCols, lg: leftCols }}
+        colSpan={{
+          base: baseLeft,
+          md: foldMd ? baseLeft : leftCols,
+          lg: leftCols,
+        }}
         asChild
       >
         {renderVerticalLayout(
@@ -468,7 +480,11 @@ const renderHorizontalSplit = (
         )}
       </GridItem>
       <GridItem
-        colSpan={{ base: 1, md: foldMd ? 1 : rightCols, lg: rightCols }}
+        colSpan={{
+          base: baseRight,
+          md: foldMd ? baseRight : rightCols,
+          lg: rightCols,
+        }}
         asChild
       >
         {renderVerticalLayout(

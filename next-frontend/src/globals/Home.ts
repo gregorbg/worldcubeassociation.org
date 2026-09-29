@@ -147,6 +147,16 @@ const createTwoBlocks = (depth: number = 1): Block => {
           },
         ],
       },
+      {
+        type: "checkbox",
+        name: "forceSplit",
+        required: false,
+        defaultValue: false,
+        admin: {
+          description:
+            "Force splitting horizontally, even on small (mobile) breakpoints",
+        },
+      },
     ],
   };
 };

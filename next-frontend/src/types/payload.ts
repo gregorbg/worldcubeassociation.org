@@ -1486,6 +1486,10 @@ export interface TwoBlocksLevel2Block {
     | TwoBlocksLevel1Block
   )[];
   growthStrategy?: GrowthStrategy;
+  /**
+   * Force splitting horizontally, even on small (mobile) breakpoints
+   */
+  forceSplit?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'twoBlocksLevel2';
@@ -1515,6 +1519,10 @@ export interface TwoBlocksLevel1Block {
     | TwoBlocksLevel0Block
   )[];
   growthStrategy?: GrowthStrategy;
+  /**
+   * Force splitting horizontally, even on small (mobile) breakpoints
+   */
+  forceSplit?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'twoBlocksLevel1';
@@ -1542,6 +1550,10 @@ export interface TwoBlocksLevel0Block {
     | FeaturedCompetitionsBlock
   )[];
   growthStrategy?: GrowthStrategy;
+  /**
+   * Force splitting horizontally, even on small (mobile) breakpoints
+   */
+  forceSplit?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'twoBlocksLevel0';
@@ -2220,6 +2232,7 @@ export interface TwoBlocksLevel2BlockSelect<T extends boolean = true> {
         twoBlocksLevel1?: T | TwoBlocksLevel1BlockSelect<T>;
       };
   growthStrategy?: T;
+  forceSplit?: T;
   id?: T;
   blockName?: T;
 }
@@ -2252,6 +2265,7 @@ export interface TwoBlocksLevel1BlockSelect<T extends boolean = true> {
         twoBlocksLevel0?: T | TwoBlocksLevel0BlockSelect<T>;
       };
   growthStrategy?: T;
+  forceSplit?: T;
   id?: T;
   blockName?: T;
 }
@@ -2282,6 +2296,7 @@ export interface TwoBlocksLevel0BlockSelect<T extends boolean = true> {
         FeaturedComps?: T | FeaturedCompetitionsBlockSelect<T>;
       };
   growthStrategy?: T;
+  forceSplit?: T;
   id?: T;
   blockName?: T;
 }
