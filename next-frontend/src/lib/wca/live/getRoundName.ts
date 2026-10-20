@@ -1,7 +1,7 @@
 import { getRoundTypeId, parseActivityCode } from "@/lib/wca/wcif/rounds";
 import _ from "lodash";
 import { TFunction } from "i18next";
-import { LiveRoundAdminBase } from "@/types/live";
+import { BaseAdminRound } from "@/types/openapi.schemas";
 import events from "@/lib/wca/data/events";
 import { useAllRoundsInfo, useRoundInfo } from "@/providers/RoundInfoProvider";
 import { useT } from "@/lib/i18n/useI18n";
@@ -9,7 +9,7 @@ import { useT } from "@/lib/i18n/useI18n";
 export function getRoundName(
   roundWcifId: string,
   t: TFunction,
-  rounds: Pick<LiveRoundAdminBase, "id" | "cutoff">[],
+  rounds: Pick<BaseAdminRound, "id" | "cutoff">[],
   withEvent = false,
 ) {
   const roundsByEventId = _.groupBy(

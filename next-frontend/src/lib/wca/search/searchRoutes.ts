@@ -1,7 +1,5 @@
 import { route } from "nextjs-routes";
-import type { components } from "@/types/openapi";
-
-type SearchResult = components["schemas"]["SearchResult"];
+import { SearchResult } from "@/types/openapi.schemas";
 
 // Regulations are anchors into the Regulations and Guidelines documents rather
 // than pages of their own, so they keep the (relative) URL the API gives us.

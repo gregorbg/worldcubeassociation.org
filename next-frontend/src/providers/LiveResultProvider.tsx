@@ -7,13 +7,7 @@ import {
   useContext,
   useState,
 } from "react";
-import {
-  LiveAttempt,
-  LiveCompetitor,
-  LiveResult,
-  LiveRound,
-  PendingLiveResult,
-} from "@/types/live";
+import { LiveResult, PendingLiveResult } from "@/types/live";
 import useAPI from "@/lib/wca/useAPI";
 import useResultsSubscriptions, {
   ConnectionState,
@@ -30,6 +24,11 @@ import {
 import { countCompletedResults } from "@/lib/live/countCompletedResults";
 import { useAllRoundsInfo } from "@/providers/RoundInfoProvider";
 import { SERVER_SEEDED_STALE_TIME } from "@/providers/WCAQueryClientProvider";
+import type {
+  LiveAttempt,
+  LiveCompetitor,
+  LiveRound,
+} from "@/types/openapi.schemas";
 
 export type LiveResultsByRegistrationId = Record<string, LiveResult[]>;
 interface LiveResultContextType {
@@ -111,13 +110,7 @@ export function MultiRoundResultProvider({
 
   const roundQueryOptions = useCallback(
     (roundId: string) => {
-      return api.queryOptions(
-        "get",
-        "/v1/competitions/{competitionId}/live/rounds/{roundId}",
-        {
-          params: { path: { roundId, competitionId } },
-        },
-      );
+      return api.liveByRoundOptions({ path: { roundId, competitionId } });
     },
     [api, competitionId],
   );
@@ -220,21 +213,22 @@ export function MultiRoundResultProvider({
 
       queryClient.setQueryData(
         roundQuery.queryKey,
-        (oldData: LiveRound): LiveRound => ({
-          ...oldData,
-          results: applyDiffToLiveResults({
-            previousResults: oldData.results,
-            updated: decompressedUpdated,
-            created: decompressedCreated,
-            deleted,
-            roundWcifId: roundId,
-          }),
-          state_hash: after_hash,
-          competitors: [
-            ...oldData.competitors,
-            ...created.map((c) => c.user),
-          ].filter((c) => !deletedSet.has(c.id)),
-        }),
+        (oldData) =>
+          oldData && {
+            ...oldData,
+            results: applyDiffToLiveResults({
+              previousResults: oldData.results,
+              updated: decompressedUpdated,
+              created: decompressedCreated,
+              deleted,
+              roundWcifId: roundId,
+            }),
+            state_hash: after_hash,
+            competitors: [
+              ...oldData.competitors,
+              ...created.map((c) => c.user),
+            ].filter((c) => !deletedSet.has(c.id)),
+          },
       );
 
       const newRound = queryClient.getQueryData<LiveRound>(roundQuery.queryKey);

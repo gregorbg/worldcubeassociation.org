@@ -1,6 +1,6 @@
-import { components } from "@/types/openapi";
 import _ from "lodash";
 import { DNF_VALUE, SKIPPED_VALUE } from "@/lib/wca/wcif/attempts";
+import { ExtendedResult, Record_2, Result_2, V1Result } from "@/types/openapi";
 
 function isComplete(attemptResult: number) {
   return attemptResult > 0;
@@ -125,10 +125,7 @@ function cleanAttempts(attempts: number[]) {
   };
 }
 
-export function resultAttempts(
-  result:
-    components["schemas"]["Result"] | components["schemas"]["V1RoundResult"],
-) {
+export function resultAttempts(result: Result_2 | V1Result) {
   return cleanAttempts(result.attempts);
 }
 
@@ -144,9 +141,6 @@ export function maxAttemptCount(results: { attempts: number[] }[]) {
   );
 }
 
-export function recordAttempts(
-  record:
-    components["schemas"]["Record"] | components["schemas"]["ExtendedResult"],
-) {
+export function recordAttempts(record: Record_2 | ExtendedResult) {
   return cleanAttempts(record.attempts);
 }

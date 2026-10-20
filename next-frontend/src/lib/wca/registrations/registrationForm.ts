@@ -1,9 +1,9 @@
 import { useForm } from "@tanstack/react-form";
 import { preselectedEventIds } from "@/lib/wca/registrations/eventSelection";
-import type { components } from "@/types/openapi";
-
-type StepConfig = components["schemas"]["RegistrationConfig"];
-type Registration = components["schemas"]["RegistrationDataV2"];
+import {
+  RegistrationConfig,
+  RegistrationDataV2,
+} from "@/types/openapi.schemas";
 
 export interface RegistrationFormValues {
   comment: string;
@@ -15,7 +15,7 @@ export interface RegistrationFormValues {
 // Which steps the lane has is up to the server, so a fresh registration starts out empty and each
 //   step that is there seeds the fields it asks for.
 const stepDefaultValues = (
-  step: StepConfig,
+  step: RegistrationConfig,
 ): Partial<RegistrationFormValues> => {
   switch (step.key) {
     case "competing":
@@ -26,8 +26,8 @@ const stepDefaultValues = (
 };
 
 export const registrationFormValues = (
-  registration: Registration | null,
-  steps: StepConfig[],
+  registration: RegistrationDataV2 | null,
+  steps: RegistrationConfig[],
 ): RegistrationFormValues =>
   registration === null
     ? steps.reduce<RegistrationFormValues>(
@@ -57,8 +57,8 @@ export function useRegistrationForm({
   steps,
   onSubmit,
 }: {
-  registration: Registration | null;
-  steps: StepConfig[];
+  registration: RegistrationDataV2 | null;
+  steps: RegistrationConfig[];
   onSubmit: (values: RegistrationFormValues, onSubmitted: () => void) => void;
 }) {
   return useForm({

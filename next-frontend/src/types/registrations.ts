@@ -1,3 +1,3 @@
-import { components } from "@/types/openapi";
+import { RegistrationDataV2 } from "@/types/openapi";
 
-export type RegistrationData = components["schemas"]["RegistrationDataV2"];
+export type RegistrationData = RegistrationDataV2;

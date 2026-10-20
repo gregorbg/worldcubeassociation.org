@@ -6,15 +6,10 @@ import {
   roundBackToHour,
   todayWithTime,
 } from "../dates";
-import { localizeActivityCode, WcifEvent, WcifRound } from "./rounds";
+import { localizeActivityCode } from "./rounds";
 
-import type { components } from "@/types/openapi";
 import { TFunction } from "i18next";
-
-export type WcifSchedule = components["schemas"]["WcifSchedule"];
-export type WcifActivity = components["schemas"]["WcifActivity"];
-export type WcifVenue = components["schemas"]["WcifVenue"];
-export type WcifRoom = components["schemas"]["WcifRoom"];
+import { WcifActivity, WcifEvent, WcifRound } from "@/types/openapi.schemas";
 
 // The activity fields the schedule views read. Server components pass these
 // instead of full activities so that `childActivities` and `extensions` — half

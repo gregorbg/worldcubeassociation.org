@@ -2,7 +2,8 @@
 
 import { createContext, ReactNode, useCallback, useContext } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { LiveRoundAdmin, LiveRoundState } from "@/types/live";
+import { LiveRoundState } from "@/types/live";
+import { LiveRoundAdmin } from "@/types/openapi.schemas";
 import { useT } from "@/lib/i18n/useI18n";
 import useAPI from "@/lib/wca/useAPI";
 import { SERVER_SEEDED_STALE_TIME } from "@/providers/WCAQueryClientProvider";
@@ -62,11 +63,10 @@ export function RoundsInfoProvider({
   const api = useAPI();
   const queryClient = useQueryClient();
 
-  const roundsQueryOptions = api.queryOptions(
-    "get",
-    "/v1/competitions/{competitionId}/live/rounds",
-    { params: { path: { competitionId } } },
-  );
+  const roundsQueryOptions = api.liveAdminOptions({
+    path: { competitionId },
+  });
+
   const { queryKey } = roundsQueryOptions;
 
   const { data, isLoading } = useQuery({
@@ -80,9 +80,10 @@ export function RoundsInfoProvider({
     (roundId: string, patch: (round: LiveRoundAdmin) => LiveRoundAdmin) => {
       queryClient.setQueryData(
         queryKey,
-        (old: { rounds: LiveRoundAdmin[] }) => ({
-          rounds: old.rounds.map((r) => (r.id === roundId ? patch(r) : r)),
-        }),
+        (old) =>
+          old && {
+            rounds: old.rounds.map((r) => (r.id === roundId ? patch(r) : r)),
+          },
       );
     },
     [queryClient, queryKey],

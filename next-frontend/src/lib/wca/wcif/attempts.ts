@@ -1,6 +1,4 @@
-import type { components } from "@/types/openapi";
-
-type AttemptResult = components["schemas"]["WcifAttemptResult"];
+import { WcifAttemptResult } from "@/types/openapi.schemas";
 
 export const SKIPPED_VALUE = 0;
 export const DNF_VALUE = -1;
@@ -94,7 +92,7 @@ export function encodeMbldResult({
 }
 
 // See https://www.worldcubeassociation.org/regulations/#9f12c
-export function attemptResultToMbldPoints(attemptResult: AttemptResult) {
+export function attemptResultToMbldPoints(attemptResult: WcifAttemptResult) {
   const { solved, attempted } = decodeMbldResult(attemptResult);
   const missed = attempted - solved;
   return solved - missed;

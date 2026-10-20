@@ -6,30 +6,30 @@ import {
   PersonCell,
 } from "@/components/results/ResultTableCells";
 import { formatAttemptResult } from "@/lib/wca/wcif/attempts";
-import { components } from "@/types/openapi";
 import _ from "lodash";
 import { TFunction } from "i18next";
 import { recordAttempts } from "@/lib/wca/results/attempts";
 import { AttemptsCells } from "@/components/results/TableCells";
 import events from "@/lib/wca/data/events";
+import { Record_2 } from "@/types/openapi.schemas";
 
 interface MixedRecordsRowProp {
-  record: components["schemas"]["Record"];
+  record: Record_2;
   t: TFunction;
 }
 
 interface SeparateRecordsRowProp {
-  record: components["schemas"]["Record"];
+  record: Record_2;
 }
 
 interface HistoryRowProps {
-  record: components["schemas"]["Record"];
+  record: Record_2;
   mixed?: boolean;
 }
 
 interface SlimRecordsRowProp {
-  singles: components["schemas"]["Record"][];
-  averages: components["schemas"]["Record"][];
+  singles: Record_2[];
+  averages: Record_2[];
 }
 
 const maxAttemptCountForEvent = (eventId: string) => {

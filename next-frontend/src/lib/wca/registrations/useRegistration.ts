@@ -2,9 +2,9 @@
 
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { useAPIClient } from "@/lib/wca/useAPI";
-import type { components } from "@/types/openapi";
+import { RegistrationDataV2 } from "@/types/openapi.schemas";
 
-type Registration = components["schemas"]["RegistrationDataV2"];
+type Registration = RegistrationDataV2;
 
 export const registrationQueryKey = (competitionId: string, userId: number) => [
   "registration",
@@ -22,10 +22,9 @@ export const registrationQueryOptions = (
   queryOptions({
     queryKey: registrationQueryKey(competitionId, userId),
     queryFn: async () => {
-      const { data, error, response } = await apiClient.GET(
-        "/v1/competitions/{competitionId}/registrations/{userId}",
-        { params: { path: { competitionId, userId } } },
-      );
+      const { data, error, response } = await apiClient.registrationByUser({
+        path: { competitionId, userId },
+      });
 
       // Not being registered is a normal answer rather than a failure, so it must not reject.
       if (response.status === 404) {

@@ -4,19 +4,18 @@ import {
   centisecondsToClockFormat,
 } from "@/lib/wca/wcif/attempts";
 
-import type { components } from "@/types/openapi";
 import type { TFunction } from "i18next";
+import {
+  BaseWcifRound,
+  WcifCutoff,
+  WcifParticipationSource,
+  WcifQualification,
+  WcifResultCondition as WcifResultConditionOrNull,
+  WcifRound,
+  WcifTimeLimit,
+} from "@/types/openapi.schemas";
 
-export type WcifEvent = components["schemas"]["WcifEvent"];
-export type WcifRound = components["schemas"]["WcifRound"];
-export type WcifTimeLimit = components["schemas"]["WcifTimeLimit"];
-export type WcifCutoff = components["schemas"]["WcifCutoff"];
-export type WcifQualification = components["schemas"]["WcifQualification"];
-export type WcifResultCondition = NonNullable<
-  components["schemas"]["WcifResultCondition"]
->;
-
-type WcifParticipationSource = components["schemas"]["WcifParticipationSource"];
+type WcifResultCondition = NonNullable<WcifResultConditionOrNull>;
 
 // The participation sources competitors can advance from, i.e. everything
 //   except "registrations", which is the only one without a result condition
@@ -27,7 +26,7 @@ type WcifAdvancementSource = Extract<
 
 // A round as rendered without its results, which is what the live admin
 //   endpoints return
-export type WcifRoundBase = components["schemas"]["BaseWcifRound"];
+export type WcifRoundBase = BaseWcifRound;
 
 export type RoundTypeId = "1" | "2" | "3" | "c" | "d" | "e" | "f" | "g";
 

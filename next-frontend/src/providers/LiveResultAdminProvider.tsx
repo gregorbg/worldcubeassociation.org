@@ -14,12 +14,14 @@ import useAPI from "@/lib/wca/useAPI";
 import { Toaster, toaster } from "@/components/ui/toaster";
 import { applyCutoff, applyTimeLimit } from "@/lib/live/attempt-result";
 import { padSkipped } from "@/lib/live/padSkipped";
-import { LiveAttempt, LiveCompetitor } from "@/types/live";
 import { useRoundInfo } from "@/providers/RoundInfoProvider";
-import { components } from "@/types/openapi";
 import useStoredState from "@/lib/hooks/useStoredState";
-
-type BatchEntry = components["schemas"]["SubmitLiveResult"];
+import type {
+  LiveAttempt,
+  LiveCompetitor,
+  SubmitLiveResult,
+} from "@/types/openapi.schemas";
+import { useMutation } from "@tanstack/react-query";
 
 interface AdminResultsContextValue {
   registrationId: number | undefined;
@@ -106,7 +108,7 @@ export function LiveResultAdminProvider({
   const [batchModeEnabled, setBatchModeEnabled] = useState(false);
   // Persisted to localStorage so staged results survive a refresh/crash — the
   // whole point of batch mode is unreliable connections. Cleared on submit.
-  const [storedBatch, setBatch] = useStoredState<BatchEntry[]>(
+  const [storedBatch, setBatch] = useStoredState<SubmitLiveResult[]>(
     [],
     `live-batch-${roundId}`,
   );
@@ -141,125 +143,108 @@ export function LiveResultAdminProvider({
     [getAttemptsForCompetitor],
   );
 
-  const { mutate: mutateUpdate, isPending: isPendingUpdate } = api.useMutation(
-    "patch",
-    "/v1/competitions/{competitionId}/live/rounds/{roundId}",
-    {
-      onSuccess: (_data, variables) => {
-        addPendingLiveResult(variables.body, roundId);
-        toaster.create({
-          description: "Results updated queued",
-          type: "success",
-        });
-        if (clearOnSubmit) {
-          setRegistrationId(undefined);
-          setAttempts(zeroedArrayOfSize(solveCount));
-        }
-      },
-      onError: () => {
-        toaster.create({
-          description: "Failed to enqueue results",
-          type: "error",
-        });
-      },
+  const { mutate: mutateUpdate, isPending: isPendingUpdate } = useMutation({
+    ...api.patchV1CompetitionsCompetitionIdLiveRoundsRoundIdMutation(),
+    onSuccess: (_data, variables) => {
+      addPendingLiveResult(variables.body, roundId);
+      toaster.create({
+        description: "Results updated queued",
+        type: "success",
+      });
+      if (clearOnSubmit) {
+        setRegistrationId(undefined);
+        setAttempts(zeroedArrayOfSize(solveCount));
+      }
     },
-  );
+    onError: () => {
+      toaster.create({
+        description: "Failed to enqueue results",
+        type: "error",
+      });
+    },
+  });
 
-  const { mutate: mutateBatch, isPending: isPendingBatch } = api.useMutation(
-    "post",
-    "/v1/competitions/{competitionId}/live/rounds/{roundId}/batch",
-    {
-      onSuccess: (_data, variables) => {
-        variables.body.results.forEach((entry) =>
-          addPendingLiveResult(entry, roundId),
-        );
-        setBatch([]);
-        toaster.create({
-          description: "Batch queued",
-          type: "success",
-        });
-      },
-      onError: () => {
-        toaster.create({
-          description: "Failed to enqueue batch",
-          type: "error",
-        });
-      },
+  const { mutate: mutateBatch, isPending: isPendingBatch } = useMutation({
+    ...api.postV1CompetitionsCompetitionIdLiveRoundsRoundIdBatchMutation(),
+    onSuccess: (_data, variables) => {
+      variables.body.results.forEach((entry) =>
+        addPendingLiveResult(entry, roundId),
+      );
+      setBatch([]);
+      toaster.create({
+        description: "Batch queued",
+        type: "success",
+      });
     },
-  );
+    onError: () => {
+      toaster.create({
+        description: "Failed to enqueue batch",
+        type: "error",
+      });
+    },
+  });
 
   const { mutateAsync: addCompetitorMutation, isPending: isPendingAdd } =
-    api.useMutation(
-      "put",
-      "/v1/competitions/{competitionId}/live/rounds/{roundId}/{registrationId}",
-      {
-        onSuccess: () => {
-          toaster.create({
-            description: "Successfully added competitor",
-            type: "success",
-          });
-        },
-        onError: () => {
-          toaster.create({
-            description: "Failed to add competitor",
-            type: "error",
-          });
-        },
+    useMutation({
+      ...api.addCompetitorMutation(),
+      onSuccess: () => {
+        toaster.create({
+          description: "Successfully added competitor",
+          type: "success",
+        });
       },
-    );
+      onError: () => {
+        toaster.create({
+          description: "Failed to add competitor",
+          type: "error",
+        });
+      },
+    });
 
   const addCompetitorToRound = useCallback(
     async (registrationId: number) => {
       await addCompetitorMutation({
-        params: {
-          path: {
-            registrationId,
-            competitionId,
-            roundId,
-          },
+        path: {
+          registrationId,
+          competitionId,
+          roundId,
         },
       });
     },
     [addCompetitorMutation, competitionId, roundId],
   );
 
-  const { mutate: mutateQuit, isPending: isPendingQuit } = api.useMutation(
-    "delete",
-    "/v1/competitions/{competitionId}/live/rounds/{roundId}/{registrationId}",
-    {
-      onSuccess: () => {
-        toaster.create({
-          description: "Successfully quit competitor",
-          type: "success",
-        });
-      },
-      onError: () => {
-        toaster.create({
-          description: "Failed to quit competitor",
-          type: "error",
-        });
-      },
+  const { mutate: mutateQuit, isPending: isPendingQuit } = useMutation({
+    ...api.quitCompetitorMutation(),
+    onSuccess: () => {
+      toaster.create({
+        description: "Successfully quit competitor",
+        type: "success",
+      });
     },
-  );
+    onError: () => {
+      toaster.create({
+        description: "Failed to quit competitor",
+        type: "error",
+      });
+    },
+  });
 
-  const { mutate: mutateClear, isPending: isPendingClear } = api.useMutation(
-    "put",
-    "/v1/competitions/{competitionId}/live/rounds/{roundId}/{registrationId}/clear",
-    {
-      onSuccess: () => {
-        toaster.create({
-          description: "Successfully cleared competitor",
-          type: "success",
-        });
-      },
-      onError: () => {
-        toaster.create({
-          description: "Failed to clear competitor",
-          type: "error",
-        });
-      },
+  const { mutate: mutateClear, isPending: isPendingClear } = useMutation({
+    ...api.clearCompetitorMutation(),
+    onSuccess: () => {
+      toaster.create({
+        description: "Successfully cleared competitor",
+        type: "success",
+      });
     },
-  );
+    onError: () => {
+      toaster.create({
+        description: "Failed to clear competitor",
+        type: "error",
+      });
+    },
+  });
 
   const handleAttemptChange = (index: number, value: number) => {
     const newAttempts = [...attempts];
@@ -301,9 +286,7 @@ export function LiveResultAdminProvider({
 
     mutateUpdate(
       {
-        params: {
-          path: { competitionId, roundId },
-        },
+        path: { competitionId, roundId },
         body,
       },
       { onSuccess },
@@ -321,18 +304,14 @@ export function LiveResultAdminProvider({
     if (batch.length === 0) return;
 
     mutateBatch({
-      params: {
-        path: { competitionId, roundId },
-      },
+      path: { competitionId, roundId },
       body: { results: batch },
     });
   };
 
   const clearCompetitorsResults = (toClearId: number) => {
     mutateClear({
-      params: {
-        path: { competitionId, roundId, registrationId: toClearId },
-      },
+      path: { competitionId, roundId, registrationId: toClearId },
     });
     if (registrationId === toClearId) {
       setAttempts(zeroedArrayOfSize(solveCount));
@@ -345,9 +324,7 @@ export function LiveResultAdminProvider({
     toAdvance: LiveCompetitor[],
   ) => {
     mutateQuit({
-      params: {
-        path: { competitionId, roundId, registrationId },
-      },
+      path: { competitionId, roundId, registrationId },
       body: {
         advancing_ids: advanceNext ? toAdvance.map((r) => r.id) : [],
       },
