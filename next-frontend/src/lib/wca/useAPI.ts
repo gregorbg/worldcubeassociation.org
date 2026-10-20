@@ -1,7 +1,7 @@
 import { signOut, useSession } from "@/auth.client";
 import { useMemo } from "react";
 import { authenticatedClient, unauthenticatedClient } from "@/lib/wca/wcaAPI";
-import createQueryClient from "openapi-react-query";
+import { createQueryFactories } from "@/types/openapi.tanstack";
 
 export function useAPIClient() {
   const { data: session } = useSession();
@@ -16,10 +16,11 @@ export function useAPIClient() {
       // drop it so the user is forced through a fresh login rather than
       // continuing to fire requests that 401.
       client.use({
-        onResponse({ response }) {
+        async onResponse(response) {
           if (response.status === 401) {
-            signOut();
+            await signOut();
           }
+
           return response;
         },
       });
@@ -34,5 +35,5 @@ export function useAPIClient() {
 export default function useAPI() {
   const apiClient = useAPIClient();
 
-  return useMemo(() => createQueryClient(apiClient), [apiClient]);
+  return useMemo(() => createQueryFactories(apiClient), [apiClient]);
 }
