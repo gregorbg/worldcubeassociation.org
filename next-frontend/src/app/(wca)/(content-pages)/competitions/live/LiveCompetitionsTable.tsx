@@ -1,3 +1,5 @@
+"use client";
+
 import { HStack, Link as ChakraLink, Table } from "@chakra-ui/react";
 import Link from "next/link";
 import { route } from "nextjs-routes";
@@ -15,11 +17,13 @@ type LiveCompetition = Pick<
 const locationLabel = (competition: LiveCompetition, t: TFunction) =>
   `${competition.city}, ${countryName(competition.country_iso2, t)}`;
 
-export default function LiveCompetitionsTable({
+export default function LiveCompetitionsTable<T extends LiveCompetition>({
   competitions,
+  onRowHover = undefined,
   t,
 }: {
-  competitions: LiveCompetition[];
+  competitions: T[];
+  onRowHover?: (competition: T) => void;
   t: TFunction;
 }) {
   return (
@@ -27,7 +31,10 @@ export default function LiveCompetitionsTable({
       <Table.Root size="sm" variant="competitions">
         <Table.Body>
           {competitions.map((competition) => (
-            <Table.Row key={competition.id}>
+            <Table.Row
+              key={competition.id}
+              onMouseEnter={() => onRowHover?.(competition)}
+            >
               <Table.Cell whiteSpace="normal" width="full">
                 <HStack gap="2">
                   <WcaFlag

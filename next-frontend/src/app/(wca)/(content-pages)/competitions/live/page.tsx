@@ -5,6 +5,7 @@ import { serverClient } from "@/lib/wca/wcaAPI";
 import OpenapiError from "@/components/ui/openapiError";
 import LiveCompetitionsTable from "./LiveCompetitionsTable";
 import LiveCompetitionSearch from "./LiveCompetitionSearch";
+import UpcomingWithGlobe from "@/app/(wca)/(content-pages)/competitions/live/UpcomingWithGlobe";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getT();
@@ -25,7 +26,9 @@ export default async function LiveCompetitionsPage() {
 
   if (error) return <OpenapiError response={response} t={t} />;
 
-  const { upcoming, in_progress, past } = liveCompetitions;
+  const { upcoming, past } = liveCompetitions;
+
+  const in_progress = upcoming.slice(0, 20);
 
   const hasUpcoming = upcoming.length > 0;
   const hasInProgress = in_progress.length > 0;
@@ -56,13 +59,13 @@ export default async function LiveCompetitionsPage() {
         </Tabs.List>
         <Tabs.Content value="upcoming">
           {hasUpcoming ? (
-            <LiveCompetitionsTable competitions={upcoming} t={t} />
+            <UpcomingWithGlobe competitions={upcoming} />
           ) : (
             <Text>{t("competitions.live.overview.no_upcoming")}</Text>
           )}
         </Tabs.Content>
         <Tabs.Content value="in_progress">
-          <LiveCompetitionsTable competitions={in_progress} t={t} />
+          <UpcomingWithGlobe competitions={in_progress} />
         </Tabs.Content>
         <Tabs.Content value="past">
           <LiveCompetitionsTable competitions={past} t={t} />

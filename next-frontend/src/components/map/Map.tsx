@@ -6,12 +6,17 @@ import { Box, Heading, Text, useToken } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { route } from "nextjs-routes";
 import { dateRange, hasPassedEndOfDay } from "@/lib/wca/dates";
-import MapContainer, { Layer, Popup, Source } from "react-map-gl/maplibre";
+import MapContainer, {
+  Layer,
+  Popup,
+  Source,
+  MapRef,
+} from "react-map-gl/maplibre";
 import type { MapEvent, MapLayerMouseEvent } from "react-map-gl/maplibre";
 import type { FeatureCollection, Point } from "geojson";
 import { setWorkerUrl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useState } from "react";
+import { type Ref, useState } from "react";
 
 type MapCompetition = Pick<
   components["schemas"]["CompetitionInfo"],
@@ -27,6 +32,9 @@ type MapCompetition = Pick<
 interface MapProps {
   competitions: MapCompetition[];
   isLoading?: boolean;
+  projection?: "mercator" | "globe";
+  initialZoom?: number;
+  ref?: Ref<MapRef>;
 }
 
 // Limit number of markers on map, especially for "All Past Competitions"
@@ -56,7 +64,13 @@ const PIN_DISPLAY_SIZE = PIN_ICON_SIZE / PIN_ICON_PIXEL_RATIO;
 const pinIconSvg = (color: string, halo: string) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${PIN_ICON_SIZE}" height="${PIN_ICON_SIZE}" viewBox="0 0 24 24"><path fill="${color}" stroke="${halo}" stroke-width="0.75" fill-rule="evenodd" d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0Zm-5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z"/></svg>`;
 
-export default function Map({ competitions, isLoading = false }: MapProps) {
+export default function Map({
+  ref,
+  competitions,
+  isLoading = false,
+  projection = "mercator",
+  initialZoom = 2,
+}: MapProps) {
   const router = useRouter();
   const [hoveredCompetitionId, setHoveredCompetitionId] = useState<string>();
 
@@ -145,8 +159,10 @@ export default function Map({ competitions, isLoading = false }: MapProps) {
         </Box>
       )}
       <MapContainer
-        initialViewState={{ longitude: 0, latitude: 0, zoom: 2 }}
+        ref={ref}
+        initialViewState={{ longitude: 0, latitude: 0, zoom: initialZoom }}
         mapStyle={TILE_STYLE}
+        projection={projection}
         onLoad={registerPinIcon}
         onMouseMove={trackHoveredPin}
         onClick={openClickedCompetition}
