@@ -4582,13 +4582,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.82.0":
-  version: 2.82.0
-  resolution: "@redocly/cli@npm:2.82.0"
+"@redocly/cli@npm:2.83.0":
+  version: 2.83.0
+  resolution: "@redocly/cli@npm:2.83.0"
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10c0/e22bba296ca0c5daa262d655a6c90f10974501dd39ec8917656250d7466755b56b4ffd0be4efb670576dac70f1ef838f6dec6f071975ce061e736c33ee3bd98f
+  checksum: 10c0/779bd1ad39d63333b3fbedff0f9d0937fc202e8919cb86847774f7b29e5198b10b27c6527ddbfd82b39294b41309397bd68d72ce250bb305792daeccec951baf
   languageName: node
   linkType: hard
 
@@ -13018,7 +13018,7 @@ __metadata:
     "@payloadcms/ui": "npm:3.94.1"
     "@rails/actioncable": "npm:^8.1.401"
     "@react-aria/focus": "npm:^3.22.1"
-    "@redocly/cli": "npm:2.82.0"
+    "@redocly/cli": "npm:2.83.0"
     "@stripe/react-stripe-js": "npm:^7.0.0"
     "@stripe/stripe-js": "npm:^10.1.0"
     "@stylistic/eslint-plugin": "npm:^6.0.0"
